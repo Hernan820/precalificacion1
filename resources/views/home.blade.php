@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('js/proceso.js') }}" defer></script>
 
 <style>
