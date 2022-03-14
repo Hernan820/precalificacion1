@@ -17,6 +17,7 @@ class CreateClientesTable extends Migration
             $table->id();
             $table->text("nombre",255);
             $table->text("apellidos",255);
+            $table->text("correo",255);
             $table->text("N_dui",255);
             $table->text("telefono",255);
             $table->text("edad",255);
@@ -28,6 +29,8 @@ class CreateClientesTable extends Migration
             $table->text("viven_juntos",255);
             $table->unsignedBigInteger('id_empresa')->nullable();
             $table->foreign('id_empresa')->references('id')->on('empresas'); 
+            $table->unsignedBigInteger('id_codeudor')->nullable();
+            $table->foreign('id_codeudor')->references('id')->on('codeudor'); 
             $table->timestamps();
         });
     }

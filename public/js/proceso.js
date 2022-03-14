@@ -186,7 +186,9 @@ function siguiente(Pregunta){
 }
 
 function guardardatos(){
-    
+    if(validacionform() == false){
+        return;
+    }
     var datoscliente = new FormData(formdatoscliente);
 
     datoscliente.append("tipo_prestamo", document.querySelector('input[name="preg1"]:checked').value);
@@ -223,7 +225,7 @@ function guardardatos(){
         datoscliente.append("tamaño_empresa_codeudor", document.querySelector('input[name="preg18"]:checked').value);
         datoscliente.append("tiempo_empresa_codeudor", document.querySelector('input[name="preg19"]:checked').value);
         datoscliente.append("politico_codeudor", document.querySelector('input[name="preg20"]:checked').value);
-        datoscliente.append("ingresos_deudor", document.querySelector('input[name="preg21"]:checked').value);
+        datoscliente.append("ingresos_codeudor", document.querySelector('input[name="preg21"]:checked').value);
         datoscliente.append("tiempo_desembolso", document.querySelector('input[name="preg22"]:checked').value);
     }
 
@@ -246,4 +248,30 @@ function guardardatos(){
             console.log(error.response.data);
         }
     });
+}
+
+function validacionform(){
+    var valido = true;
+
+  var  nombre     = $("#nombre").val();
+  var  apellidos = $("#apellidos").val();
+  var  num_dui = $("#num_dui").val();
+  var  correo = $("#correo").val();
+  var  telefono = $("#telefono").val();
+  var  edad = $("#edad").val();
+  var  proyecto = $("#proyecto").val();
+
+    if (nombre === "" ||
+        apellidos === "" ||
+        num_dui === "" ||
+        correo === "" ||
+        telefono === "" ||
+        edad === "" ||
+        proyecto === ""
+    ) {
+        Swal.fire("Complete todos los datos");
+        valido = false;
+    }
+
+    return valido;
 }
