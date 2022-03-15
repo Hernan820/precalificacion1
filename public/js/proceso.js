@@ -131,7 +131,7 @@ if(numero == 1){
 
 function siguiente(Pregunta){
 
-    /* if(Pregunta == 1){
+   /*  if(Pregunta == 1){
         $("#carouselExampleControls").carousel(22);
     }*/
 
@@ -186,7 +186,7 @@ function siguiente(Pregunta){
 }
 
 function guardardatos(){
-    if(validacionform() == false){
+   if(validacionform() == false){
         return;
     }
     var datoscliente = new FormData(formdatoscliente);
@@ -230,7 +230,7 @@ function guardardatos(){
     }
 
     
-    axios.post(principalUrl + "home/precalificacion", datoscliente)
+    axios.post(principalUrl + "home/precalificacion",datoscliente)
     .then((respuesta) => {
         if(respuesta.data == "1"){
             Swal.fire({

@@ -7,7 +7,7 @@ use App\Models\empresa;
 use App\Models\vivienda;
 use App\Models\prestamo;
 use App\Models\codeudor;
-
+use Mail;
 
 
 use Illuminate\Http\Request;
@@ -79,6 +79,16 @@ class ClienteController extends Controller
             $prestamo->id_vivienda =  $vivienda->id;
             $prestamo->save();
 
+
+           $subject = "Precalificacion de prestamo ";
+            $for = $request->correo;
+    
+            Mail::send('email',$request->all(), function($msj) use($subject,$for){
+                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
+                $msj->subject($subject);
+                $msj->to($for);
+            });
+
             return 1;
 
         }else if($request->codeudor == "SI"){
@@ -101,8 +111,6 @@ class ClienteController extends Controller
             $empresa->tamaño_trabajores_planilla = $request->tamaño_empresa;
             $empresa->save();
 
-
-            
             $cliente = new  cliente;
             $cliente->nombre = $request->nombre;
             $cliente->apellidos = $request->apellidos;
@@ -181,5 +189,18 @@ class ClienteController extends Controller
     public function destroy(cliente $cliente)
     {
         //
+    }
+
+    
+    public function contacto(Request $request){
+        $subject = "Precalificacion de prestamo ";
+        $for = "hernanbenitezjosuerodriguez06@gmail.com";
+
+        Mail::send('email',$request->all(), function($msj) use($subject,$for){
+            $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->back();
     }
 }
