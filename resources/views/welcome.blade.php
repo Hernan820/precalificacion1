@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<script src="{{ asset('js/app.js') }}" defer></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
+<script src="https://unpkg.com/imask"></script>
 <script src="{{ asset('js/proceso.js') }}" defer></script>
 
 <style>
@@ -635,7 +637,7 @@
         <div class="carousel-item">
             <div class="container">
                 <div class="abs-center">
-                    <form action="#" id="cliente" class="border p-3 form">
+                    <form action="#" id="clientedatos" class="border p-3 form">
                         {!! csrf_field() !!}
                         <div class="row">
                             <div class="col">
@@ -664,7 +666,7 @@
                                 <div class="form-group">
                                     <label for="correo">Correo electronico</label>
                                     <input type="text" class="form-control" required="" name="correo" id="correo"
-                                        aria-describedby="helpId" placeholder=" " autocomplete="off">
+                                        aria-describedby="helpId" placeholder="Example@gmail.com" autocomplete="off">
                                 </div>
 
 

@@ -80,7 +80,7 @@ class ClienteController extends Controller
             $prestamo->save();
 
 
-           $subject = "Precalificacion de prestamo ";
+           $subject = "calificacion de prestamo ";
             $for = $request->correo;
     
             Mail::send('email',$request->all(), function($msj) use($subject,$for){
@@ -140,6 +140,15 @@ class ClienteController extends Controller
             $prestamo->id_cliente =   $cliente->id;
             $prestamo->id_vivienda =  $vivienda->id;
             $prestamo->save();
+
+            $subject = "calificacion de prestamo ";
+            $for = $request->correo;
+    
+            Mail::send('email',$request->all(), function($msj) use($subject,$for){
+                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
+                $msj->subject($subject);
+                $msj->to($for);
+            });
             return 1;
 
         }
@@ -189,18 +198,5 @@ class ClienteController extends Controller
     public function destroy(cliente $cliente)
     {
         //
-    }
-
-    
-    public function contacto(Request $request){
-        $subject = "Precalificacion de prestamo ";
-        $for = "hernanbenitezjosuerodriguez06@gmail.com";
-
-        Mail::send('email',$request->all(), function($msj) use($subject,$for){
-            $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
-            $msj->subject($subject);
-            $msj->to($for);
-        });
-        return redirect()->back();
     }
 }

@@ -1,18 +1,19 @@
-
-let formdatoscliente = document.getElementById("cliente");
-
+let a = document.getElementById("clientedatos");
 var principalUrl = "http://localhost/precalificacion1/public/";
 
+var t = document.getElementById("telefono");
+var maskOptions = {
+    mask: "(000) 000-0000",
+}; 
+IMask(t, maskOptions);
 
   function inicioproceso(){
     location.href = principalUrl + "home/vista";  
-  }
+  };
 
   $('#carouselExampleControls').carousel({
     interval: false,
   });
-
-
 
 function validarpreguntas(numero){
 
@@ -123,7 +124,12 @@ if(numero == 1){
             Swal.fire("¡Error debe completar todos los datos!");
             valido = false;
             }
-    } 
+    } else if(numero == 22){
+        if(!document.querySelector('input[name="preg22"]:checked')) {
+            Swal.fire("¡Error debe completar todos los datos!");
+            valido = false;
+            }
+    }
     return valido;
 }
 
@@ -135,12 +141,9 @@ function siguiente(Pregunta){
         $("#carouselExampleControls").carousel(22);
     }*/
 
-
-
     if(validarpreguntas(Pregunta) == false){
         return;
     }
-
 
     if(Pregunta == 5){
         var nada =document.querySelector('input[name="preg5"]:checked').value;
@@ -178,18 +181,14 @@ function siguiente(Pregunta){
         $("#edad").val(rango_edad);
         $('#carouselExampleControls').carousel('next')
         $('#carouselExampleControls').carousel('pause')
-
     }
-
-
-
 }
 
 function guardardatos(){
    if(validacionform() == false){
         return;
     }
-    var datoscliente = new FormData(formdatoscliente);
+    var datoscliente = new FormData(a);
 
     datoscliente.append("tipo_prestamo", document.querySelector('input[name="preg1"]:checked').value);
     datoscliente.append("destino_vivienda", document.querySelector('input[name="preg2"]:checked').value  );
@@ -250,6 +249,12 @@ function guardardatos(){
     });
 }
 
+const validateEmail = (correo) => {
+    var format =
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return format.test(correo);
+};
+
 function validacionform(){
     var valido = true;
 
@@ -261,6 +266,10 @@ function validacionform(){
   var  edad = $("#edad").val();
   var  proyecto = $("#proyecto").val();
 
+  if (validateEmail(correo) == false) {
+    Swal.fire("¡El formato del correo no es correcto!");
+    valido = false;
+}
     if (nombre === "" ||
         apellidos === "" ||
         num_dui === "" ||
@@ -275,3 +284,4 @@ function validacionform(){
 
     return valido;
 }
+
