@@ -11,6 +11,12 @@ IMask(t, maskOptions);
     location.href = principalUrl + "home/vista";  
   };
 
+  $(document).ready(function () {
+    $('#clientedatos').trigger("reset");
+    limpiar_raiobutton();
+});
+
+
   $('#carouselExampleControls').carousel({
     interval: false,
   });
@@ -145,9 +151,6 @@ function siguiente(Pregunta){
         return;
     }
 
-    if(Pregunta == 5){
-        var nada =document.querySelector('input[name="preg5"]:checked').value;
-    }
 
     if(Pregunta != 7 && Pregunta != 15 && Pregunta != 22){
         $('#carouselExampleControls').carousel('next')
@@ -179,7 +182,7 @@ function siguiente(Pregunta){
         var rango_edad =document.querySelector('input[name="preg6"]:checked').value;
 
         $("#edad").val(rango_edad);
-        $('#carouselExampleControls').carousel('next')
+    $('#carouselExampleControls').carousel('next')
         $('#carouselExampleControls').carousel('pause')
     }
 }
@@ -226,27 +229,32 @@ function guardardatos(){
         datoscliente.append("politico_codeudor", document.querySelector('input[name="preg20"]:checked').value);
         datoscliente.append("ingresos_codeudor", document.querySelector('input[name="preg21"]:checked').value);
         datoscliente.append("tiempo_desembolso", document.querySelector('input[name="preg22"]:checked').value);
-    }
+    } 
 
-    
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "guardando datos",
+        showConfirmButton: false,
+    });
+   
     axios.post(principalUrl + "home/precalificacion",datoscliente)
     .then((respuesta) => {
         if(respuesta.data == "1"){
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "ya se guardaron los datos",
-                showConfirmButton: false,
-            });
+
+            limpiar_raiobutton();
+
+
+   location.href = principalUrl + "home/vista3";
         }
-        location.reload();
-        $("#popup_cancelar").modal("hide");
     })
     .catch((error) => {
         if (error.response) {
             console.log(error.response.data);
         }
     });
+    
+    
 }
 
 const validateEmail = (correo) => {
@@ -285,3 +293,32 @@ function validacionform(){
     return valido;
 }
 
+function mayus(e) {
+    e.value = e.value.toUpperCase();
+}
+
+function limpiar_raiobutton(){
+    $('input[name=preg1]').prop('checked',false);
+    $('input[name=preg2]').prop('checked',false);
+    $('input[name=preg3]').prop('checked',false);
+    $('input[name=preg4]').prop('checked',false);
+    $('input[name=preg5]').prop('checked',false);
+    $('input[name=preg6]').prop('checked',false);
+    $('input[name=preg7]').prop('checked',false);
+    $('input[name=preg8]').prop('checked',false);
+    $('input[name=preg9]').prop('checked',false);
+    $('input[name=preg10]').prop('checked',false);
+    $('input[name=preg11]').prop('checked',false);
+    $('input[name=preg12]').prop('checked',false);
+    $('input[name=preg13]').prop('checked',false);
+    $('input[name=preg14]').prop('checked',false);
+    $('input[name=preg15]').prop('checked',false);
+    $('input[name=preg16]').prop('checked',false);
+    $('input[name=preg17]').prop('checked',false);
+    $('input[name=preg18]').prop('checked',false);
+    $('input[name=preg19]').prop('checked',false);
+    $('input[name=preg20]').prop('checked',false);
+    $('input[name=preg21]').prop('checked',false);
+    $('input[name=preg22]').prop('checked',false);
+
+}

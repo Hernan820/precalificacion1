@@ -30,8 +30,8 @@ class CreateClientesTable extends Migration
             $table->unsignedBigInteger('id_empresa')->nullable();
             $table->foreign('id_empresa')->references('id')->on('empresas'); 
             $table->unsignedBigInteger('id_codeudor')->nullable();
-            $table->foreign('id_codeudor')->references('id')->on('codeudor'); 
-            $table->timestamps();
+            $table->foreign('id_codeudor')->references('id')->on('codeudors'); 
+            $table->timestamps(); 
         });
     }
 

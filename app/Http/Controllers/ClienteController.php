@@ -84,14 +84,14 @@ class ClienteController extends Controller
             $for = $request->correo;
     
             Mail::send('email',$request->all(), function($msj) use($subject,$for){
-                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
+                $msj->from("benitezhernan820@gmail.com","Teams Acevedo otro mensaje");
                 $msj->subject($subject);
                 $msj->to($for);
             });
 
             return 1;
 
-        }else if($request->codeudor == "SI"){
+            }else if($request->codeudor == "SI"){
             $empresa = new empresa;
             $empresa->tiempo_empresa = $request->tiempo_empresa;
             $empresa->tamaño_trabajores_planilla = $request->tamaño_empresa;
@@ -149,10 +149,12 @@ class ClienteController extends Controller
                 $msj->subject($subject);
                 $msj->to($for);
             });
+
             return 1;
-
         }
+        //return view("calificacion");
 
+        return 2 ;
     }
 
     /**
@@ -161,9 +163,9 @@ class ClienteController extends Controller
      * @param  \App\Models\cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(cliente $cliente)
+    public function show()
     {
-        //
+        return view("calificacion");
     }
 
     /**

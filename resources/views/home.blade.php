@@ -35,40 +35,39 @@
                 </center>
                 <br><br><br>
                 <div class="container">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Requisitos 1</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tipo de vivienda</h5>
+                                    <p class="card-text">Define que tipo de vivienda quieres o estas buscando con nosotros. <br></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Requisitos 2</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
+                        <br>
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tu informacion personal</h5>
+                                    <p class="card-text">Queremos conocerte mejor, cuéntanos de tí y tus datos personales. <br></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Requisitos 3 </h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
+                        <br>
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tu informacion laboral</h5>
+                                    <p class="card-text">El tipo de empresa en que trabajas y el tipo de contrato son 
+                                        importantes para autorizar tu crédito.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-              </div>
                 <br><br><br>
-                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-success">iniciar precalificacion</button> </center>
+                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-success">iniciar
+                        precalificacion</button> </center>
             </div>
         </div>
     </div>
