@@ -18,19 +18,17 @@ class CreateClientesTable extends Migration
             $table->text("nombre",255);
             $table->text("apellidos",255);
             $table->text("correo",255);
-            $table->text("N_dui",255);
+            $table->text("medio_contacto",255);
             $table->text("telefono",255);
-            $table->text("edad",255);
-            $table->text("estatus_laborar",255);
-            $table->text("tiempo_trabajo",255);
-            $table->text("politico",255);
-            $table->text("ingresos",255);
-            $table->text("codeudor",255);
-            $table->text("viven_juntos",255);
-            $table->unsignedBigInteger('id_empresa')->nullable();
-            $table->foreign('id_empresa')->references('id')->on('empresas'); 
-            $table->unsignedBigInteger('id_codeudor')->nullable();
-            $table->foreign('id_codeudor')->references('id')->on('codeudors'); 
+            $table->text("estatus_laboral",255);
+            $table->text("estatus_soscial",255);
+            $table->text("horario_contacto",255);
+            $table->text("comentarios",255);
+            
+            $table->unsignedBigInteger('id_prestamo')->nullable();
+            $table->foreign('id_prestamo')->references('id')->on('prestamos'); 
+            $table->unsignedBigInteger('id_vivienda')->nullable();
+            $table->foreign('id_vivienda')->references('id')->on('viviendas'); 
             $table->timestamps(); 
         });
     }

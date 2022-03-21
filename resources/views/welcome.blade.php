@@ -233,7 +233,7 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" required="" name="record_credito"
                                     id="record_credito" aria-describedby="helpId"
-                                    placeholder="Aproximado de tu record crediticio" autocomplete="off">
+                                    placeholder="Aproximado de tu record crediticio" mask="$000" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                     <div class="respuestas">
                         <div class="container resp">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="" name="mensual" id="mensual"
+                                <input type="text" class="form-control" required="" name="capacidad_mensual" id="capacidad_mensual"
                                     aria-describedby="helpId" placeholder="Aproximado" autocomplete="off">
                             </div>
                         </div>

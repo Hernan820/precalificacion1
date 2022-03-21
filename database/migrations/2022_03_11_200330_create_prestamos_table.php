@@ -16,12 +16,10 @@ class CreatePrestamosTable extends Migration
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
             $table->text("tipo_prestamo",255);
-            $table->text("cantidad",255);
-            $table->text("garantia",255);
-            $table->unsignedBigInteger('id_cliente')->nullable();
-            $table->foreign('id_cliente')->references('id')->on('clientes');
-            $table->unsignedBigInteger('id_vivienda')->nullable();
-            $table->foreign('id_vivienda')->references('id')->on('viviendas'); 
+            $table->text("calificacion_crediticia",255);
+            $table->text("ahorro",255);
+            $table->text("ingreso_hogar",255);
+            $table->text("capacidad_mensual",255);
             $table->timestamps();
         });
     }

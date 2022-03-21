@@ -15,9 +15,10 @@ class CreateViviendasTable extends Migration
     {
         Schema::create('viviendas', function (Blueprint $table) {
             $table->id();
-            $table->text("identificada",255);
             $table->text("estado",255);
-            $table->text("destino",255);
+            $table->text("tiempo_compra",255);
+            $table->text("tipo_vivienda",255);
+            $table->text("agente_inmobiliario",255);
             $table->timestamps();
         });
     }

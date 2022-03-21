@@ -57,9 +57,8 @@
                         <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tu informacion laboral</h5>
-                                    <p class="card-text">El tipo de empresa en que trabajas y el tipo de contrato son 
-                                        importantes para autorizar tu crédito.</p>
+                                    <h5 class="card-title">Tu informacion crediticia</h5>
+                                    <p class="card-text">Tu informacion, record creticio, ingresos, tus ahorros, etc...</p>
                                 </div>
                             </div>
                         </div>

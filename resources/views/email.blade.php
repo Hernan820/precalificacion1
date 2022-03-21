@@ -600,13 +600,13 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    CLIENTE</p>
+                                                                                    Cliente</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$nombre}}&nbsp;{{$apellidos}}</p>
+                                                                                    {{$nombres}}&nbsp;{{$apellidos}}</p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr style="border-collapse:collapse">
@@ -614,7 +614,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    TELEFONO</p>
+                                                                                    Telefono</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -628,7 +628,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    CORREO</p>
+                                                                                    Correo electronico</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -637,19 +637,19 @@ a {text-decoration: none;}
                                                                                     {{$correo}}</p>
                                                                             </td>
                                                                         </tr>
-
+                                                                        
                                                                         <tr style="border-collapse:collapse">
                                                                             <td style="padding:5px 10px 5px 0;Margin:0"
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    EDAD</p>
+                                                                                    Medio por el cual desea ser contactado</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$rango_edad}}</p>
+                                                                                    {{$Medio}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -658,7 +658,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    ESTATUS LABORAL</p>
+                                                                                    Estatus laboral</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -673,13 +673,13 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    TIEMPO LABORAL</p>
+                                                                                    Estatus social</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$tiempo_laborar}}</p>
+                                                                                    {{$Estatus_social}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -688,28 +688,13 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    ES POLITICO?</p>
+                                                                                    Horario en el que desea ser contactado</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$politico}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    INGRESOS</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$ingresos}}</p>
+                                                                                    {{$horario}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -719,383 +704,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    TIENE CODEUDOR</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    CUANTO TIEMPO TIENE LA EMPRESA</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$tiempo_empresa}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    DE CUANNTO ES EL TAMAÑO DE LA
-                                                                                    EMPRESA</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$tamaño_empresa}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-top:10px;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:3px solid #eeeeee;border-bottom:3px solid #eeeeee"
-                                                            width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:15px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td width="80%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                            <td width="20%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-
-
-                                    @if ( $codeudor === "SI" )
-
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-top:20px;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td bgcolor="#eeeeee" align="left"
-                                                                    style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td width="80%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                            <td width="20%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    PARENTESCO DE CODEUDOR</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$parentesco}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    ESTATUS LABORAL</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$estatus_laboral_codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    TIEMPO DE TRABAJO</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$tiempo_laboral_codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    ES POLITICO ?</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$politico_codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    INGRESOS DE CODEUDOR</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$ingresos_codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    INGRESOS DE CODEUDOR</p>
-                                                                            </td>
-                                                                            <td style="padding:5px 0;Margin:0"
-                                                                                width="20%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$ingresos_codeudor}}</p>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-top:10px;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:3px solid #eeeeee;border-bottom:3px solid #eeeeee"
-                                                            width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:15px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td width="80%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                            <td width="20%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    @endif
-
-
-                                    <!-- TABLA DE PRESTAMO ***************************************************************************** -->
-
-
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-top:20px;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td bgcolor="#eeeeee" align="left"
-                                                                    style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td width="80%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                            <td width="20%" style="padding:0;Margin:0">
-                                                                                <h4
-                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
-                                                                                </h4>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="padding:0;Margin:0;padding-left:35px;padding-right:35px">
-                                            <table width="100%" cellspacing="0" cellpadding="0"
-                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                <tr style="border-collapse:collapse">
-                                                    <td valign="top" align="center"
-                                                        style="padding:0;Margin:0;width:530px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
-                                                                    <table
-                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
-                                                                        class="cke_show_border" cellspacing="1"
-                                                                        cellpadding="1" border="0" align="left"
-                                                                        role="presentation">
-
-
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
-                                                                                width="80%" align="left">
-                                                                                <p
-                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    TIPO DE PRESTAMO</p>
+                                                                                    Tipo de prestamo</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -1105,18 +714,52 @@ a {text-decoration: none;}
                                                                             </td>
                                                                         </tr>
 
+
                                                                         <tr style="border-collapse:collapse">
                                                                             <td style="padding:5px 10px 5px 0;Margin:0"
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    YA TIENE IDENTIFICADA SU VIVIENDA</p>
+                                                                                  En que estado desea su vivienda</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$identificada}}</p>
+                                                                                    {{$estado_vivienda}}</p>
+                                                                            </td>
+                                                                        </tr>
+
+
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
+                                                                                width="80%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                     Cual es su tiempo de compra
+                                                                                </p>
+                                                                            </td>
+                                                                            <td style="padding:5px 0;Margin:0"
+                                                                                width="20%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    {{$tiempo_compra}}</p>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
+                                                                                width="80%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                 Cual es el tipo de vivienda que desea </p>
+                                                                            </td>
+                                                                            <td style="padding:5px 0;Margin:0"
+                                                                                width="20%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    {{$tipo_vivienda}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -1125,13 +768,13 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    EN QUE ESTADO DESEA SU VIVIENDA</p>
+                                                                                    Tiene un agente inmobiliario</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$estado}}</p>
+                                                                                    {{$agente_inmobiliario}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -1140,13 +783,13 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    DESTINO DE LA VIVIENDA</p>
+                                                                                    Record crediticio</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$destino_vivienda}}</p>
+                                                                                    {{$record_credito}}</p>
                                                                             </td>
                                                                         </tr>
 
@@ -1155,16 +798,60 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    RANGO DE PRESTAMO QUE SOLICITA</p>
+                                                                                    Cuanto dinero tiene ahorrado</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    {{$rango_prestamo}}</p>
+                                                                                    {{$ahorro}}</p>
                                                                             </td>
                                                                         </tr>
 
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
+                                                                                width="80%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    Cuantos son los ingresos de su hogar</p>
+                                                                            </td>
+                                                                            <td style="padding:5px 0;Margin:0"
+                                                                                width="20%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    {{$ingreso_hogar}}</p>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
+                                                                                width="80%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    Capacidad para pagar mensualmente </p>
+                                                                            </td>
+                                                                            <td style="padding:5px 0;Margin:0"
+                                                                                width="20%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    {{$capacidad_mensual}}</p>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td style="padding:5px 10px 5px 0;Margin:0"
+                                                                                width="80%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    comentarios </p>
+                                                                            </td>
+                                                                            <td style="padding:5px 0;Margin:0"
+                                                                                width="20%" align="left">
+                                                                                <p
+                                                                                    style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
+                                                                                    {{$comentarios}}</p>
+                                                                            </td>
+                                                                        </tr>
 
                                                                     </table>
                                                                 </td>
@@ -1175,10 +862,47 @@ a {text-decoration: none;}
                                             </table>
                                         </td>
                                     </tr>
-
-                                  
-
-
+                                    <tr style="border-collapse:collapse">
+                                        <td align="left"
+                                            style="padding:0;Margin:0;padding-top:10px;padding-left:35px;padding-right:35px">
+                                            <table width="100%" cellspacing="0" cellpadding="0"
+                                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                <tr style="border-collapse:collapse">
+                                                    <td valign="top" align="center"
+                                                        style="padding:0;Margin:0;width:530px">
+                                                        <table
+                                                            style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:3px solid #eeeeee;border-bottom:3px solid #eeeeee"
+                                                            width="100%" cellspacing="0" cellpadding="0"
+                                                            role="presentation">
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:15px">
+                                                                    <table
+                                                                        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px"
+                                                                        class="cke_show_border" cellspacing="1"
+                                                                        cellpadding="1" border="0" align="left"
+                                                                        role="presentation">
+                                                                        <tr style="border-collapse:collapse">
+                                                                            <td width="80%" style="padding:0;Margin:0">
+                                                                                <h4
+                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
+                                                                                </h4>
+                                                                            </td>
+                                                                            <td width="20%" style="padding:0;Margin:0">
+                                                                                <h4
+                                                                                    style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">
+                                                                                </h4>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
 
 
 

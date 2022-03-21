@@ -42,117 +42,50 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->codeudor == "NO"){
 
-            $empresa = new empresa;
-            $empresa->tiempo_empresa = $request->tiempo_empresa;
-            $empresa->tamaño_trabajores_planilla = $request->tamaño_empresa;
-            $empresa->save();
+        $vivienda = new vivienda;
+        $vivienda->estado = $request->estado_vivienda;
+        $vivienda->tiempo_compra = $request->tiempo_compra;
+        $vivienda->tipo_vivienda = $request->tipo_vivienda;
+        $vivienda->agente_inmobiliario = $request->agente_inmobiliario;
+        $vivienda->save();
 
-            $cliente = new  cliente;
-            $cliente->nombre = $request->nombre;
-            $cliente->apellidos = $request->apellidos;
-            $cliente->correo = $request->correo;
-            $cliente->N_dui = $request->num_dui;	
-            $cliente->telefono = $request->telefono	;
-            $cliente->edad = $request->edad;
-            $cliente->estatus_laborar = $request->estatus_laboral;
-            $cliente->tiempo_trabajo = $request->tiempo_laborar;
-            $cliente->politico = $request->politico;
-            $cliente->ingresos = $request->ingresos;
-            $cliente->codeudor = $request->codeudor;
-           // $cliente->viven_juntos = $request->;
-            $cliente->id_empresa = $empresa->id ;
-            $cliente->save();
+        $prestamo = new prestamo;
+        $prestamo->tipo_prestamo = $request->tipo_prestamo;
+        $prestamo->calificacion_crediticia = $request->record_credito;
+        $prestamo->ahorro = $request->ahorro;
+        $prestamo->ingreso_hogar = $request->ingreso_hogar;
+        $prestamo->capacidad_mensual = $request->capacidad_mensual;
+        $prestamo->save();
 
-            $vivienda = new vivienda;
-            $vivienda->identificada =$request->identificada;
-            $vivienda->estado = $request->estado;
-            $vivienda->destino = $request->destino_vivienda;
-            $vivienda->save();
+        $cliente = new  cliente;
+        $cliente->nombre = $request->nombres;
+        $cliente->apellidos = $request->apellidos;
+        $cliente->correo = $request->correo;
+        $cliente->medio_contacto = $request->Medio;	
+        $cliente->telefono = $request->telefono	;
+        $cliente->estatus_laboral = $request->estatus_laboral;
+        $cliente->estatus_social = $request->Estatus_social;
+        $cliente->horario_contacto = $request->horario;
+        $cliente->comentarios = $request->comentarios;
 
-            $prestamo = new prestamo;
-            $prestamo->tipo_prestamo = $request->tipo_prestamo;
-            $prestamo->cantidad = $request->rango_prestamo;
-           // $prestamo->garantia = $request->
-            $prestamo->id_cliente =   $cliente->id;
-            $prestamo->id_vivienda =  $vivienda->id;
-            $prestamo->save();
+        $cliente->id_prestamo  = $prestamo->id;
+        $cliente->id_vivienda  = $vivienda->id;
 
 
-           $subject = "calificacion de prestamo ";
-            $for = "benitezhernan820@gmail.com";
-    
-            Mail::send('email',$request->all(), function($msj) use($subject,$for){
-                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
-                $msj->subject($subject);
-                $msj->to($for);
-            });
+        $cliente->save();
 
-            return 1;
+        $subject = "calificacion de prestamo ";
+        $for = "benitezhernan820@gmail.com";
 
-            }else if($request->codeudor == "SI"){
-            $empresa = new empresa;
-            $empresa->tiempo_empresa = $request->tiempo_empresa;
-            $empresa->tamaño_trabajores_planilla = $request->tamaño_empresa;
-            $empresa->save();
+        Mail::send('email',$request->all(), function($msj) use($subject,$for){
+            $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        
 
-            $codeudor = new codeudor;
-            $codeudor->parentesco = $request->parentesco;
-            $codeudor->estatus_laraboral = $request->estatus_laboral_codeudor;	
-            $codeudor->tiempo_trabajo = $request->tiempo_laboral_codeudor;
-            $codeudor->politico = $request->politico_codeudor;
-            $codeudor->ingresos = $request->ingresos_codeudor;
-            $codeudor->id_empresa = $empresa->id;
-            $codeudor->save();
-
-            $empresa = new empresa;
-            $empresa->tiempo_empresa = $request->tiempo_empresa;
-            $empresa->tamaño_trabajores_planilla = $request->tamaño_empresa;
-            $empresa->save();
-
-            $cliente = new  cliente;
-            $cliente->nombre = $request->nombre;
-            $cliente->apellidos = $request->apellidos;
-            $cliente->correo = $request->correo;
-            $cliente->N_dui = $request->num_dui;	
-            $cliente->telefono = $request->telefono	;
-            $cliente->edad = $request->correo;
-            $cliente->estatus_laborar = $request->estatus_laboral;
-            $cliente->tiempo_trabajo = $request->tiempo_laborar;
-            $cliente->politico = $request->politico;
-            $cliente->ingresos = $request->ingresos;
-            $cliente->codeudor = $request->codeudor;
-            $cliente->viven_juntos = $request->coexistir;
-            $cliente->id_empresa = $empresa->id ;
-            $cliente->id_codeudor  = $codeudor->id ;
-            $cliente->save();
-
-            $vivienda = new vivienda;
-            $vivienda->identificada =$request->identificada;
-            $vivienda->estado = $request->estado;
-            $vivienda->destino = $request->destino_vivienda;
-            $vivienda->save();
-
-            $prestamo = new prestamo;
-            $prestamo->tipo_prestamo = $request->tipo_prestamo;
-            $prestamo->cantidad = $request->rango_prestamo;
-           // $prestamo->garantia = $request->
-            $prestamo->id_cliente =   $cliente->id;
-            $prestamo->id_vivienda =  $vivienda->id;
-            $prestamo->save();
-
-            $subject = "calificacion de prestamo ";
-            $for = "benitezhernan820@gmail.com";
-            Mail::send('email',$request->all(), function($msj) use($subject,$for){
-                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
-                $msj->subject($subject);
-                $msj->to($for);
-            });
-
-            return 1;
-        }
-        return 2 ;
+        return 1 ;
     }
 
     /**
