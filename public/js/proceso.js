@@ -7,6 +7,32 @@ var maskOptions = {
 }; 
 IMask(t, maskOptions);
 
+var record = document.getElementById("record_credito");
+var maskrecord = {
+    mask: "000000000",
+}; 
+IMask(record, maskrecord);
+
+var ahorro = document.getElementById("ahorro");
+var maskahorro = {
+    mask: "$000000000",
+}; 
+IMask(ahorro, maskahorro);
+
+var ingresohogar = document.getElementById("ingreso_hogar");
+var maskingresohogar = {
+    mask: "$000000000",
+}; 
+IMask(ingresohogar, maskingresohogar);
+
+var mensual = document.getElementById("mensual");
+var maskmensual = {
+    mask: "$000000000",
+}; 
+IMask(mensual, maskmensual);
+
+
+
   function inicioproceso(){
     location.href = principalUrl + "home/vista";  
   };
@@ -142,12 +168,15 @@ if(numero == 1){
 
 
 function siguiente(Pregunta){
+    
 
-   /*  if(Pregunta == 1){
-        $("#carouselExampleControls").carousel(22);
-    }*/
 
-    if(validarpreguntas(Pregunta) == false){
+  
+        $('#carouselExampleControls').carousel('next')
+        $('#carouselExampleControls').carousel('pause')
+    
+
+   /* if(validarpreguntas(Pregunta) == false){
         return;
     }
 
@@ -184,7 +213,7 @@ function siguiente(Pregunta){
         $("#edad").val(rango_edad);
     $('#carouselExampleControls').carousel('next')
         $('#carouselExampleControls').carousel('pause')
-    }
+    }*/
 }
 
 function guardardatos(){
@@ -220,7 +249,6 @@ function guardardatos(){
         datoscliente.append("tamaño_empresa", document.querySelector('input[name="preg13"]:checked').value);
         datoscliente.append("politico", document.querySelector('input[name="preg14"]:checked').value);
         datoscliente.append("ingresos", document.querySelector('input[name="preg15"]:checked').value);
-        datoscliente.append("tiempo_desembolso", document.querySelector('input[name="preg22"]:checked').value);
 
         datoscliente.append("estatus_laboral_codeudor", document.querySelector('input[name="preg16"]:checked').value);
         datoscliente.append("tiempo_laboral_codeudor", document.querySelector('input[name="preg17"]:checked').value);

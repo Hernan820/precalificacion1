@@ -17,15 +17,9 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <center>
-                <h2>Gracias por tu tiempo para completar nuestro formulario.
-                    En este momento, según nuestras políticas de crédito no aplicas;
-                    sin embargo si tu situación varía puedes intentarlo nuevamente.</h2>
+                <h2>Gracias por tu tiempo para completar nuestro formulario. Uno de nuestros agentes se contactara con tigo</h2>
             </center>
             <br><br><br>
-            <center>
-                <h5>Estas son algunas de las viviendas que financiamos,
-                    visítalas y haz realidad el sueño de tener un hogar ideal.</h5>
-            </center>
         </div>
     </div>
 </div>

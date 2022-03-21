@@ -55,7 +55,7 @@ class ClienteController extends Controller
             $cliente->correo = $request->correo;
             $cliente->N_dui = $request->num_dui;	
             $cliente->telefono = $request->telefono	;
-            $cliente->edad = $request->correo;
+            $cliente->edad = $request->edad;
             $cliente->estatus_laborar = $request->estatus_laboral;
             $cliente->tiempo_trabajo = $request->tiempo_laborar;
             $cliente->politico = $request->politico;
@@ -81,10 +81,10 @@ class ClienteController extends Controller
 
 
            $subject = "calificacion de prestamo ";
-            $for = $request->correo;
+            $for = "benitezhernan820@gmail.com";
     
             Mail::send('email',$request->all(), function($msj) use($subject,$for){
-                $msj->from("benitezhernan820@gmail.com","Teams Acevedo otro mensaje");
+                $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
                 $msj->subject($subject);
                 $msj->to($for);
             });
@@ -125,6 +125,7 @@ class ClienteController extends Controller
             $cliente->codeudor = $request->codeudor;
             $cliente->viven_juntos = $request->coexistir;
             $cliente->id_empresa = $empresa->id ;
+            $cliente->id_codeudor  = $codeudor->id ;
             $cliente->save();
 
             $vivienda = new vivienda;
@@ -142,8 +143,7 @@ class ClienteController extends Controller
             $prestamo->save();
 
             $subject = "calificacion de prestamo ";
-            $for = $request->correo;
-    
+            $for = "benitezhernan820@gmail.com";
             Mail::send('email',$request->all(), function($msj) use($subject,$for){
                 $msj->from("benitezhernan820@gmail.com","Teams Acevedo");
                 $msj->subject($subject);
@@ -152,8 +152,6 @@ class ClienteController extends Controller
 
             return 1;
         }
-        //return view("calificacion");
-
         return 2 ;
     }
 
