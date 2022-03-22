@@ -30,7 +30,7 @@
                 </center>
                 <br><br>
                 <center>
-                    <h3>En unos momentos podremos ayudarte con tu sueño de tener vivienda o consolidar tus deudas.
+                    <h3>En unos momentos podremos ayudarte con tu sueño de tener tu vivienda.
                         En 3 sencillos pasos, determinaremos si calificas para un préstamo hipotecario.</h3>
                 </center>
                 <br><br><br>

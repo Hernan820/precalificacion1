@@ -2,8 +2,8 @@
 @section('content')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
-<script src="https://unpkg.com/imask"></script>
 <script src="{{ asset('js/proceso.js') }}" defer></script>
+<script src="https://unpkg.com/imask"></script>
 
 <style>
 .sidebar {
@@ -144,13 +144,15 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>¿En que tiempo deseas comprar?</h2>
+                            <h2>¿En cuanto tiempo deseas comprar?</h2>
                         </center>
                     </h5>
                     <div class="respuestas text ">
                         <div class="container resp">
-                            <input type="radio" name="preg3" value="SI" />SI &nbsp; &nbsp;<br />
-                            <input type="radio" name="preg3" value="NO" />NO<br />
+                            <input type="radio" name="preg3" value="Menos de 1 mes" />Menos de 1 mes<br />
+                            <input type="radio" name="preg3" value="Entre 1 a 3 meses" />Entre 1 a 3 meses<br />
+                            <input type="radio" name="preg3" value="Entre 3 a 6 meses" />Entre 3 a 6 meses<br />
+                            <input type="radio" name="preg3" value="Más de 6 meses" />Más de 6 meses<br />
                         </div>
                     </div>
                 </div>
@@ -283,7 +285,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Ingreso aproximado del Hogar </h2>
+                            <h2>Ingreso mensual aproximado del Hogar </h2>
                         </center>
                     </h5>
                     <div class="respuestas">
@@ -437,8 +439,8 @@
                                     <label for="horario">Horario en que desea ser contactado</label>
                                     <select name="horario" id="horario" class="form-control">
                                     <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Mañana">Mañana</option>
-                                        <option value="Tarde">Tarde</option>
+                                        <option value="Mañana">Transcurso de la mañana</option>
+                                        <option value="Tarde">Transcurso de la tarde</option>
                                     </select>
                                 </div>
                             </div>

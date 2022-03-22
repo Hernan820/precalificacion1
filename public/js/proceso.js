@@ -7,7 +7,7 @@ var maskOptions = {
 }; 
 IMask(t, maskOptions);
 
-/*
+
 var record = document.getElementById("record_credito");
 var maskrecord = {
     mask: "000000000",
@@ -26,12 +26,12 @@ var maskingresohogar = {
 }; 
 IMask(ingresohogar, maskingresohogar);
 
-var mensual = document.getElementById("mensual");
+var mensual = document.getElementById("capacidad_mensual");
 var maskmensual = {
     mask: "$000000000",
 }; 
 IMask(mensual, maskmensual);
-*/
+
 
 
   function inicioproceso(){
@@ -113,10 +113,8 @@ function siguiente(Pregunta){
     if(validarpreguntas(Pregunta) == false){
         return;
     }
-
         $('#carouselExampleControls').carousel('next')
         $('#carouselExampleControls').carousel('pause')
-
 }
 
 function guardardatos(){
@@ -144,6 +142,12 @@ function guardardatos(){
         title: "guardando datos",
         showConfirmButton: false,
     });
+
+    
+   var btndatos = document.getElementById('precalificacion');
+   btndatos.disabled = true; 
+
+
    
     axios.post(principalUrl + "home/precalificacion",datoscliente)
     .then((respuesta) => {
@@ -151,7 +155,7 @@ function guardardatos(){
 
             limpiar_raiobutton();
 
-  // location.href = principalUrl + "home/vista3";
+   location.href = principalUrl + "home/vista3";
         }
     })
     .catch((error) => {
