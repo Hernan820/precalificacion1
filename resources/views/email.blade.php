@@ -406,9 +406,6 @@ a {text-decoration: none;}
                                                                         style="Margin:0;line-height:36px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:36px;font-style:normal;font-weight:bold;color:#ffffff">
                                                                         <img style=" width:90px ;" src="https://process.dailyappsetter.com/images/icon/logo.png" class="image" /></h1>
                                                                 
-
-                                                                        
-                                                                        
                                                                     </td>
                                                             </tr>
                                                         </table>
