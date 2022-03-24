@@ -26,12 +26,11 @@
                     </div>
                 </div>
                 <center>
-                    <h1>Bienvenidos al precalificador de Team Acevedo </h1>
+                    <h1>Bienvenidos a Team Acevedo donde hacemos realidad tus sueños de tener tu casa propia</h1>
                 </center>
                 <br><br>
                 <center>
-                    <h3>En unos momentos podremos ayudarte con tu sueño de tener tu vivienda.
-                        En 3 sencillos pasos, determinaremos si calificas para un préstamo hipotecario.</h3>
+                    <h3>Precalifica para tener tu casa propia en 3 sencillos pasos, determinaremos si calificas para un préstamo hipotecario.</h3>
                 </center>
                 <br><br><br>
                 <div class="container">
@@ -48,8 +47,8 @@
                         <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tu informacion personal</h5>
-                                    <p class="card-text">Queremos conocerte mejor, cuéntanos de tí y tus datos personales. <br></p>
+                                    <h5 class="card-title">Tu información personal</h5>
+                                    <p class="card-text">Con tu información personal sera más facil brindarte un mejor servicio. <br></p>
                                 </div>
                             </div>
                         </div>
@@ -57,8 +56,8 @@
                         <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tu informacion crediticia</h5>
-                                    <p class="card-text">Tu informacion, record creticio, ingresos, tus ahorros, etc...</p>
+                                    <h5 class="card-title">Tu información crediticia</h5>
+                                    <p class="card-text">Tu información, record creticio, ingresos,down payment, etc...</p>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +65,7 @@
                 </div>
                 <br><br><br>
                 <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-success">iniciar
-                        precalificacion</button> </center>
+                precalificación</button> </center>
             </div>
         </div>
     </div>

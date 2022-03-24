@@ -88,10 +88,10 @@
                     <div class="respuestas">
                         <div class="container resp">
                             <input type="radio" name="preg1" value="Prestamo para mi primera
-                            casa" />Prestamo para mi primera
+                            casa" /> Prestamo para mi primera
                             casa<br />
                             <input type="radio" name="preg1" value="Prestamo para
-                            refinanciamiento" />Prestamo para
+                            refinanciamiento" /> Prestamo para
                             refinanciamiento<br />
                         </div>
 
@@ -113,16 +113,16 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Donde deseas comprar ?</h2>
+                            <h2>¿Donde deseas comprar?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
                         <div class="container resp">
-                            <input type="radio" name="preg2" value="Smithtown New York" />Smithtown New York<br />
-                            <input type="radio" name="preg2" value="Hackensack New Jerse" />Hackensack New Jerse<br />
-                            <input type="radio" name="preg2" value="Stratford,Connecticut" />Stratford,Connecticut<br />
-                            <input type="radio" name="preg2" value="Pensilvania" />Pensilvania<br />
-                            <input type="radio" name="preg2" value="Florida" />Florida<br />
+                            <input type="radio" name="preg2" value="Nueva York" />  Nueva York<br />
+                            <input type="radio" name="preg2" value="Nueva Jersey" /> Nueva Jersey<br />
+                            <input type="radio" name="preg2" value="Connecticut" /> Connecticut<br />
+                            <input type="radio" name="preg2" value="Pensilvania" /> Pensilvania<br />
+                            <input type="radio" name="preg2" value="Otro Estado" /> Otro Estado<br />
                         </div>
 
                     </div>
@@ -144,15 +144,15 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>¿En cuanto tiempo deseas comprar?</h2>
+                            <h2>¿En cuánto tiempo deseas comprar?</h2>
                         </center>
                     </h5>
                     <div class="respuestas text ">
                         <div class="container resp">
-                            <input type="radio" name="preg3" value="Menos de 1 mes" />Menos de 1 mes<br />
-                            <input type="radio" name="preg3" value="Entre 1 a 3 meses" />Entre 1 a 3 meses<br />
-                            <input type="radio" name="preg3" value="Entre 3 a 6 meses" />Entre 3 a 6 meses<br />
-                            <input type="radio" name="preg3" value="Más de 6 meses" />Más de 6 meses<br />
+                            <input type="radio" name="preg3" value="De 2 meses" /> De 2 meses<br />
+                            <input type="radio" name="preg3" value="Dentro de 6 meses" /> Dentro de 6 meses<br />
+                            <input type="radio" name="preg3" value="Dentro de 8 meses" /> Dentro de 8 meses<br />
+                            <input type="radio" name="preg3" value="El proximo año" /> El proximo año<br />
                         </div>
                     </div>
                 </div>
@@ -178,8 +178,8 @@
                     </h5>
                     <div class="respuestas">
                         <div class="container resp">
-                            <input type="radio" name="preg4" value="Unifamiliar" />Unifamiliar<br />
-                            <input type="radio" name="preg4" value="Duplex" />Duplex<br />
+                            <input type="radio" name="preg4" value="Unifamiliar" /> Unifamiliar<br />
+                            <input type="radio" name="preg4" value="Duplex" /> Duplex<br />
                         </div>
                     </div>
                 </div>
@@ -200,13 +200,13 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Tiene un agente inmobiliario?</h2>
+                            <h2>¿Tiene un agente inmobiliario?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
                         <div class="container resp">
-                            <input type="radio" name="preg5" value="SI" />SI<br />
-                            <input type="radio" name="preg5" value="NO" />NO<br />
+                            <input type="radio" name="preg5" value="SI" /> SI<br />
+                            <input type="radio" name="preg5" value="NO" /> NO<br />
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Calificacion crediticia estimada</h2>
+                            <h2>¿De cuánto es tu calificación crediticia ?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
@@ -235,7 +235,7 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" required="" name="record_credito"
                                     id="record_credito" aria-describedby="helpId"
-                                    placeholder="Aproximado de tu record crediticio" mask="$000" autocomplete="off">
+                                    placeholder="En cuanto esta tu record crediticio" mask="$000" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Cuanto tienes ahorrado</h2>
+                            <h2>¿De cuánto es tu down payment ?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
@@ -285,7 +285,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>Ingreso mensual aproximado del Hogar </h2>
+                            <h2>¿De cuántos son los ingresos aproximados en tu Hogar?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
@@ -315,7 +315,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <center>
-                            <h2>¿Cuanto cree poder pagar al mes?</h2>
+                            <h2>Cuánto cree poder pagar al mes?</h2>
                         </center>
                     </h5>
                     <div class="respuestas">
@@ -418,10 +418,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="estatus_laboral">Estatus laboral </label>
+                                    <label for="estatus_laboral">Tipo de trabajo </label>
                                     <select name="estatus_laboral" id="estatus_laboral" class="form-control">
                                     <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Sales and employmen">Sales and employmen</option>
+                                        <option value="Trabajador por cuenta propia">Trabajador por cuenta propia</option>
                                         <option value="Asalariado">Asalariado</option>
                                     </select>
                                 </div>
@@ -439,8 +439,8 @@
                                     <label for="horario">Horario en que desea ser contactado</label>
                                     <select name="horario" id="horario" class="form-control">
                                     <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Mañana">Transcurso de la mañana</option>
-                                        <option value="Tarde">Transcurso de la tarde</option>
+                                        <option value="Transcurso de la mañana">Transcurso de la mañana</option>
+                                        <option value="Transcurso de la tarde">Transcurso de la tarde</option>
                                     </select>
                                 </div>
                             </div>

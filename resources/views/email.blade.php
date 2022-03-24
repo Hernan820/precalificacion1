@@ -658,7 +658,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    Estatus laboral</p>
+                                                                                    Tipo de trabajo</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -753,7 +753,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                 Cual es el tipo de vivienda que desea </p>
+                                                                                 Cual es el tipo de vivienda que deseas </p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">
@@ -798,7 +798,7 @@ a {text-decoration: none;}
                                                                                 width="80%" align="left">
                                                                                 <p
                                                                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
-                                                                                    Cuanto dinero tiene ahorrado</p>
+                                                                                    De cuánto es tu down payment</p>
                                                                             </td>
                                                                             <td style="padding:5px 0;Margin:0"
                                                                                 width="20%" align="left">

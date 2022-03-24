@@ -17,7 +17,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <center>
-                <h2>Gracias por tu tiempo para completar nuestro formulario. Uno de nuestros agentes se contactara con tigo</h2>
+                <h2>Gracias por tu tiempo para completar nuestro formulario. Uno de nuestros agentes se contactará contigo</h2>
             </center>
             <br><br><br>
         </div>
