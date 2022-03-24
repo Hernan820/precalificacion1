@@ -76,7 +76,7 @@ class ClienteController extends Controller
         $cliente->save();
 
         $subject = "calificacion de prestamo ";
-        $for = "benitezhernan820@gmail.com";
+        $for = "benitezhernan820@gmail.com";  //correo que recibira el mensaje 
 
         Mail::send('email',$request->all(), function($msj) use($subject,$for){
             $msj->from("benitezhernan820@gmail.com","Teams Acevedo");

@@ -351,7 +351,7 @@
                         <div class="container resp">
                         <div class="form-group">
                                 <input type="text" class="form-control" required="" name="comentarios" id="comentarios"
-                                    aria-describedby="helpId" placeholder="Aproximado" autocomplete="off">
+                                    aria-describedby="helpId" placeholder="ingresa tus comentarios" autocomplete="off">
                             </div>
                         </div>
                     </div>
