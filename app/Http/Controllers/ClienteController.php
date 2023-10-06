@@ -8,6 +8,7 @@ use App\Models\vivienda;
 use App\Models\prestamo;
 use App\Models\codeudor;
 use Mail;
+use Illuminate\Support\Facades\Log;
 
 
 use Illuminate\Http\Request;
@@ -43,37 +44,42 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
 
-        $vivienda = new vivienda;
-        $vivienda->estado = $request->estado_vivienda;
-        $vivienda->tiempo_compra = $request->tiempo_compra;
-        $vivienda->tipo_vivienda = $request->tipo_vivienda;
-        $vivienda->agente_inmobiliario = $request->agente_inmobiliario;
-        $vivienda->save();
+        Log::info("informacion del cliente");
+        Log::info($request);
 
-        $prestamo = new prestamo;
-        $prestamo->tipo_prestamo = $request->tipo_prestamo;
-        $prestamo->calificacion_crediticia = $request->record_credito;
-        $prestamo->ahorro = $request->ahorro;
-        $prestamo->ingreso_hogar = $request->ingreso_hogar;
-        $prestamo->capacidad_mensual = $request->capacidad_mensual;
-        $prestamo->save();
+        return $request;
 
-        $cliente = new  cliente;
-        $cliente->nombre = $request->nombres;
-        $cliente->apellidos = $request->apellidos;
-        $cliente->correo = $request->correo;
-        $cliente->medio_contacto = $request->Medio;	
-        $cliente->telefono = $request->telefono	;
-        $cliente->estatus_laboral = $request->estatus_laboral;
-        $cliente->estatus_social = $request->Estatus_social;
-        $cliente->horario_contacto = $request->horario;
-        $cliente->comentarios = $request->comentarios;
+        // $vivienda = new vivienda;
+        // $vivienda->estado = $request->estado_vivienda;
+        // $vivienda->tiempo_compra = $request->tiempo_compra;
+        // $vivienda->tipo_vivienda = $request->tipo_vivienda;
+        // $vivienda->agente_inmobiliario = $request->agente_inmobiliario;
+        // $vivienda->save();
 
-        $cliente->id_prestamo  = $prestamo->id;
-        $cliente->id_vivienda  = $vivienda->id;
+        // $prestamo = new prestamo;
+        // $prestamo->tipo_prestamo = $request->tipo_prestamo;
+        // $prestamo->calificacion_crediticia = $request->record_credito;
+        // $prestamo->ahorro = $request->ahorro;
+        // $prestamo->ingreso_hogar = $request->ingreso_hogar;
+        // $prestamo->capacidad_mensual = $request->capacidad_mensual;
+        // $prestamo->save();
+
+        // $cliente = new  cliente;
+        // $cliente->nombre = $request->nombres;
+        // $cliente->apellidos = $request->apellidos;
+        // $cliente->correo = $request->correo;
+        // $cliente->medio_contacto = $request->Medio;	
+        // $cliente->telefono = $request->telefono	;
+        // $cliente->estatus_laboral = $request->estatus_laboral;
+        // $cliente->estatus_social = $request->Estatus_social;
+        // $cliente->horario_contacto = $request->horario;
+        // $cliente->comentarios = $request->comentarios;
+
+        // $cliente->id_prestamo  = $prestamo->id;
+        // $cliente->id_vivienda  = $vivienda->id;
 
 
-        $cliente->save();
+        // $cliente->save();
 
         $subject = "Calificacion de Prestamo ";
         $for = "hernanbenitezjosuerodriguez06@gmail.com";  //correo que recibira el mensaje 

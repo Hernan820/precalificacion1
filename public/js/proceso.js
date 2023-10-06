@@ -196,19 +196,21 @@ function guardardatos(){
 //    if(validacionform() == false){
 //         return;
 //     }
-    var datoscliente = new FormData(a);
+    var datoscliente = new FormData();
 
-    datoscliente.append("tipo_prestamo", document.querySelector('input[name="preg1"]:checked').value);
-    datoscliente.append("estado_vivienda", document.querySelector('input[name="preg2"]:checked').value  );
-    datoscliente.append("tiempo_compra", document.querySelector('input[name="preg3"]:checked').value );
-    datoscliente.append("tipo_vivienda", document.querySelector('input[name="preg4"]:checked').value   );
-    datoscliente.append("agente_inmobiliario", document.querySelector('input[name="preg5"]:checked').value   );
-   
-    datoscliente.append("record_credito", $("#record_credito").val()  );
-    datoscliente.append("ahorro", $("#ahorro").val());
-    datoscliente.append("ingreso_hogar", $("#ingreso_hogar").val()  );
-    datoscliente.append("capacidad_mensual", $("#capacidad_mensual").val()   );
-    datoscliente.append("comentarios", $("#comentarios").val()   );
+    datoscliente.append("nombre_cliente", $(".datos"));
+
+  
+     datoscliente.append("telefonocliente", $("#telefonocliente").val() );
+     datoscliente.append("estados_casas", $("#estados_casas").val()  );
+     datoscliente.append("precioporhora", $("#precioporhora").val() );
+     datoscliente.append("num_horas", $("#num_horas").val() );
+     datoscliente.append("taxes2021", $("#taxes2021").val() );
+     datoscliente.append("taxes2022", $("#taxes2022").val()  );
+     datoscliente.append("dowpayment", $("#dowpayment").val() );
+     datoscliente.append("informacionextra", $("#informacionextra").val()  );
+     datoscliente.append("status", document.querySelector('input[name="preg4"]:checked').value);
+     datoscliente.append("tipo_trabajo", document.querySelector('input[name="preg5"]:checked').value);
 
     Swal.fire({
         position: "top-end",

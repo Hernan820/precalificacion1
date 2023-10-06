@@ -93,7 +93,7 @@
                                 </h2>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
-                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu nombre">
+                                <input type="text" class="form-control datos" name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu nombre">
                               </div>
                             </center>
 
@@ -119,7 +119,7 @@
                                 </h2>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
-                                <input type="text" class="form-control" id="telefonocliente" placeholder="(000)000-0000">
+                                <input type="text" class="form-control datos" id="telefonocliente" placeholder="(000)000-0000">
                               </div>
                             </center>
                             
@@ -149,7 +149,7 @@
                                 </h2>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
-                                <select class="form-control" name="estados_casas" id="estados_casas"></select>
+                                <select class="form-control datos" name="estados_casas" id="estados_casas"></select>
                               </div>
                             </center>
                             
@@ -252,7 +252,7 @@
                                 <h2>¿Cuánto ganas la hora?</h2>
 
                               <div class="form-group col ">
-                                <input type="text" class="form-control" required="" name="precioporhora"
+                                <input type="text" class="form-control datos" required="" name="precioporhora"
                                     id="precioporhora" aria-describedby="helpId"
                                     placeholder="$" mask="$000" autocomplete="off">
                               </div>
@@ -280,7 +280,7 @@
                                 <h2>¿Cuántas horas trabajas sin contar overtime?</h2>
 
                               <div class="form-group col ">
-                                <input type="text" class="form-control" required="" name="num_horas"
+                                <input type="text" class="form-control datos" required="" name="num_horas"
                                     id="num_horas" aria-describedby="helpId"
                                     placeholder="" mask="$000" autocomplete="off">
                               </div>
@@ -308,7 +308,7 @@
                                 <h2>¿Cuánto declaraste en los taxes de 2021?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control" required="" name="taxes2021"
+                                <input type="number" class="form-control datos" required="" name="taxes2021"
                                     id="taxes2021" aria-describedby="helpId"
                                     placeholder="" mask="$000" autocomplete="off">
                               </div>
@@ -337,7 +337,7 @@
                                 <h2>¿Cuánto declaraste en los taxes de 2022?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control" required="" name="taxes2022"
+                                <input type="number" class="form-control datos" required="" name="taxes2022"
                                     id="taxes2022" aria-describedby="helpId"
                                     placeholder="" mask="$000" autocomplete="off">
                               </div>
@@ -365,7 +365,7 @@
                               <h2>¿Con cuánto dispones de dow payment?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control" required="" name="dowpayment"
+                                <input type="number" class="form-control datos" required="" name="dowpayment"
                                     id="dowpayment" aria-describedby="helpId"
                                     placeholder="" mask="$000" autocomplete="off">
                               </div>
@@ -394,7 +394,7 @@
                               <h2>¿Tienes alguna observación adicional que consideras importante que evaluemos?</h2>
 
                               <div class="form-group col ">
-                                    <textarea class="form-control" name="informacionextra" id="informacionextra" cols="5" rows="5"
+                                    <textarea class="form-control datos" name="informacionextra" id="informacionextra" cols="5" rows="5"
                                     placeholder="Déjanos tu observación adicional"></textarea>
                               </div>
                             </center>
