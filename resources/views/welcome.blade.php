@@ -1,9 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script> --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+
+<script>
+    $('#telefonocliente').mask('(000) 000-0000');    
+</script>
+
 <script src="{{ asset('js/proceso.js') }}" defer></script>
-<script src="https://unpkg.com/imask"></script>
 
 <style>
 .sidebar {
@@ -74,383 +81,334 @@
 <div id="carouselExampleControls" class="carousel slide" data-interval="false">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="card text-center">
-                <div class="card-header">
-                    DATOS DE CASA
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿El prestamo que deseas adquirir es para tu primera vivienda o refinanciar tu vivienda ?
-                            </h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <input type="radio" name="preg1" value="Prestamo para mi primera
-                            casa" /> Prestamo para mi primera
-                            casa<br />
-                            <input type="radio" name="preg1" value="Prestamo para
-                            refinanciamiento" /> Prestamo para
-                            refinanciamiento<br />
-                        </div>
 
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cual es tu nombre ?
+                                </h2>
+                            <div class="form-group col ">
+                                <label for="exampleFormControlInput1"></label>
+                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu nombre">
+                              </div>
+                            </center>
+
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(1)"
-                            id="">Ok,siguiente</button></center>
-                </div>
             </div>
-            <input type="hidden" name="pregunta1" id="pregunta1" value="1" />
+            <center> <button type="button" class="btn btn-success next" onclick="siguiente(1)"
+                id="">Ok,siguiente</button></center>
+                <input type="hidden" name="pregunta1" id="pregunta1" value="1" />
         </div>
 
         <div class="carousel-item">
-            <div class="card text-center">
-                <div class="card-header">
-                    DATOS DE CASA
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿Donde deseas comprar?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <input type="radio" name="preg2" value="Nueva York" />  Nueva York<br />
-                            <input type="radio" name="preg2" value="Nueva Jersey" /> Nueva Jersey<br />
-                            <input type="radio" name="preg2" value="Connecticut" /> Connecticut<br />
-                            <input type="radio" name="preg2" value="Pensilvania" /> Pensilvania<br />
-                            <input type="radio" name="preg2" value="Otro Estado" /> Otro Estado<br />
-                        </div>
 
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(2)"
-                            id="">Ok,siguiente</button></center>
-                </div>
-            </div>
-            <input type="hidden" name="pregunta2" id="pregunta2" value="2" />
-
-        </div>
-
-        <div class="carousel-item">
-            <div class="card text-center">
-                <div class="card-header">
-                    DATOS DE CASA
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿En cuánto tiempo deseas comprar?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas text ">
-                        <div class="container resp">
-                            <input type="radio" name="preg3" value="De 2 meses" /> De 2 meses<br />
-                            <input type="radio" name="preg3" value="Dentro de 6 meses" /> Dentro de 6 meses<br />
-                            <input type="radio" name="preg3" value="Dentro de 8 meses" /> Dentro de 8 meses<br />
-                            <input type="radio" name="preg3" value="El proximo año" /> El proximo año<br />
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>Ingresa tu numero de telefono
+                                </h2>
+                            <div class="form-group col ">
+                                <label for="exampleFormControlInput1"></label>
+                                <input type="text" class="form-control" id="telefonocliente" placeholder="(000)000-0000">
+                              </div>
+                            </center>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(3)"
-                            id="">Ok,siguiente</button></center>
-                </div>
             </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(2)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+            <input type="hidden" name="pregunta2" id="pregunta2" value="2" /> 
 
         </div>
 
         <div class="carousel-item">
 
-            <div class="card text-center">
-                <div class="card-header">
-                    DATOS DE CASA
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>Tipo de vivienda</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <input type="radio" name="preg4" value="Unifamiliar" /> Unifamiliar<br />
-                            <input type="radio" name="preg4" value="Duplex" /> Duplex<br />
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿En qué estado deseas comprar?
+                                </h2>
+                            <div class="form-group col ">
+                                <label for="exampleFormControlInput1"></label>
+                                <select class="form-control" name="estados_casas" id="estados_casas"></select>
+                              </div>
+                            </center>
+                            
                         </div>
                     </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(4)"
-                            id="">Ok,siguiente</button></center>
                 </div>
             </div>
-
-        </div>
-
-        <div class="carousel-item">
-
-            <div class="card text-center">
-                <div class="card-header">
-                    DATOS DE CASA
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿Tiene un agente inmobiliario?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <input type="radio" name="preg5" value="SI" /> SI<br />
-                            <input type="radio" name="preg5" value="NO" /> NO<br />
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(5)"
-                            id="">Ok,siguiente</button></center>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="carousel-item">
-
-            <div class="card text-center">
-                <div class="card-header">
-                    INFORMACION DE CREDITO
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿De cuánto es tu calificación crediticia ?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="" name="record_credito"
-                                    id="record_credito" aria-describedby="helpId"
-                                    placeholder="En cuanto esta tu record crediticio" mask="$000" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(6)"
-                            id="">Ok,siguiente</button></center>
-                </div>
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(3)"
+                        id="">Ok,siguiente</button></center>
             </div>
 
         </div>
         <div class="carousel-item">
 
-            <div class="card text-center">
-                <div class="card-header">
-                    INFORMACION DE CREDITO
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿De cuánto es tu down payment ?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="" name="ahorro" id="ahorro"
-                                    aria-describedby="helpId" placeholder="Aproximado" autocomplete="off">
-                            </div>
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cuál es tu estatus migratorio?</h2>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="preg4" id="flexRadioDefault1"  value="social" >
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                      SOCIAL
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="preg4" id="flexRadioDefault2" value="tax_id" >
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                     TAX ID
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="preg4" id="flexRadioDefault3" value="ninguno" >
+                                    <label class="form-check-label" for="flexRadioDefault3">
+                                     NINGUNO
+                                    </label>
+                                </div>
+                            </center>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(7)"
-                            id="">Ok,siguiente</button></center>
-
-                </div>
             </div>
-        </div>
 
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(4)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+
+        </div>
         <div class="carousel-item">
 
-            <div class="card text-center">
-                <div class="card-header">
-                    INFORMACION DE CREDITO
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>¿De cuántos son los ingresos aproximados en tu Hogar?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="" name="ingreso_hogar"
-                                    id="ingreso_hogar" aria-describedby="helpId" placeholder="Aproximado"
-                                    autocomplete="off">
-                            </div>
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Trabajas con?</h2>
+
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="preg5" id="radiobuton1"  value="w2" >
+                                    <label class="form-check-label" for="radiobuton1">
+                                        W2
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="preg5" id="radiobuton2" value="1099" >
+                                    <label class="form-check-label" for="radiobuton2">
+                                        1099
+                                    </label>
+                                </div>
+                            </center>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(8)"
-                            id="">Ok,siguiente</button></center>
-                </div>
             </div>
 
-        </div>
-
-        <div class="carousel-item">
-
-            <div class="card text-center">
-                <div class="card-header">
-                    INFORMACION DE CREDITO
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>Cuánto cree poder pagar al mes?</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="" name="capacidad_mensual" id="capacidad_mensual"
-                                    aria-describedby="helpId" placeholder="Aproximado" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(9)"
-                            id="">Ok,siguiente</button></center>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="carousel-item">
-
-            <div class="card text-center">
-                <div class="card-header">
-                    INFORMACION DE CREDITO
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <center>
-                            <h2>Comentarios adicionales</h2>
-                        </center>
-                    </h5>
-                    <div class="respuestas">
-                        <div class="container resp">
-                        <div class="form-group">
-                                <input type="text" class="form-control" required="" name="comentarios" id="comentarios"
-                                    aria-describedby="helpId" placeholder="ingresa tus comentarios" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <center> <button type="button" class="btn btn-success next" onclick="siguiente(10)"
-                            id="">Ok,siguiente</button></center>
-                </div>
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(5)"
+                        id="">Ok,siguiente</button></center>
             </div>
         </div>
-
-       
-
-
         <div class="carousel-item">
             <div class="container">
-                <div class="abs-center">
-                    <form action="#" id="clientedatos" class="border p-3 form">
-                        <div class="container text-center" style="border-width:4px;">
-                        <label for="">DATOS PERSONALES</label>
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cuánto ganas la hora?</h2>
 
+                              <div class="form-group col ">
+                                <input type="text" class="form-control" required="" name="precioporhora"
+                                    id="precioporhora" aria-describedby="helpId"
+                                    placeholder="$" mask="$000" autocomplete="off">
+                              </div>
+                            </center>
+                            
                         </div>
-                        {!! csrf_field() !!}
-                        <div class="row">
-                            <div class="col">
-
-                                <div class="form-group">
-                                    <label for="nombre">Nombres</label>
-                                    <input type="text" class="form-control" required="" name="nombres" id="nombres"
-                                        aria-describedby="helpId" placeholder="Escribe los nombres " required=""
-                                        autocomplete="off" onkeyup="mayus(this);">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="apellidos">Apellidos</label>
-                                    <input type="text" class="form-control" name="apellidos" id="apellidos"
-                                        aria-describedby="helpId" placeholder="Escribe los apellidos" required=""
-                                        autocomplete="off" onkeyup="mayus(this);">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="correo">Correo Electronico</label>
-                                    <input type="text" class="form-control" required="" name="correo" id="correo"
-                                        aria-describedby="helpId" placeholder="Example@gmail.com" autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="Medio">Medio por el cual desea ser contactado </label>
-                                    <select name="Medio" id="Medio" class="form-control">
-                                    <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Telefono">Telefono</option>
-                                        <option value="Email">Email</option>
-                                    </select>
-                                </div>
-
-
-                            </div>
-                            <div class="col">
-
-                                <div class="form-group">
-                                    <label for="telefono">Telefono </label>
-                                    <input type="tel" class="form-control" required="" name="telefono" id="telefono"
-                                        aria-describedby="helpId" placeholder="(000) 000-0000" autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="estatus_laboral">Tipo de trabajo </label>
-                                    <select name="estatus_laboral" id="estatus_laboral" class="form-control">
-                                    <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Trabajador por cuenta propia">Trabajador por cuenta propia</option>
-                                        <option value="Asalariado">Asalariado</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="Estatus_social">Social / Itin </label>
-                                    <select name="Estatus_social" id="Estatus_social" class="form-control">
-                                    <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Social">Social</option>
-                                        <option value="Itin">Itin</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="horario">Horario en que desea ser contactado</label>
-                                    <select name="horario" id="horario" class="form-control">
-                                    <option value="" selected disabled ="true" >Seleccione</option>
-                                        <option value="Transcurso de la mañana">Transcurso de la mañana</option>
-                                        <option value="Transcurso de la tarde">Transcurso de la tarde</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <center> <button type="button" class="btn btn-success next" onclick="guardardatos()"
-                                id="precalificacion">Enviar Datos</button></center>
-                    </form>
-
+                    </div>
                 </div>
             </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(6)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+        </div>
+        <div class="carousel-item">
+
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cuántas horas trabajas sin contar overtime?</h2>
+
+                              <div class="form-group col ">
+                                <input type="text" class="form-control" required="" name="num_horas"
+                                    id="num_horas" aria-describedby="helpId"
+                                    placeholder="" mask="$000" autocomplete="off">
+                              </div>
+                            </center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(7)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+        </div>
+        <div class="carousel-item">
+
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cuánto declaraste en los taxes de 2021?</h2>
+
+                              <div class="form-group col ">
+                                <input type="number" class="form-control" required="" name="taxes2021"
+                                    id="taxes2021" aria-describedby="helpId"
+                                    placeholder="" mask="$000" autocomplete="off">
+                              </div>
+                            </center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(8)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+
+        </div>
+        <div class="carousel-item">
+
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                                <h2>¿Cuánto declaraste en los taxes de 2022?</h2>
+
+                              <div class="form-group col ">
+                                <input type="number" class="form-control" required="" name="taxes2022"
+                                    id="taxes2022" aria-describedby="helpId"
+                                    placeholder="" mask="$000" autocomplete="off">
+                              </div>
+                            </center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(9)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+        </div>
+        <div class="carousel-item">
+
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                              <h2>¿Con cuánto dispones de dow payment?</h2>
+
+                              <div class="form-group col ">
+                                <input type="number" class="form-control" required="" name="dowpayment"
+                                    id="dowpayment" aria-describedby="helpId"
+                                    placeholder="" mask="$000" autocomplete="off">
+                              </div>
+                            </center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="siguiente(10)"
+                        id="">Ok,siguiente</button></center>
+            </div>
+
+        </div>
+        <div class="carousel-item">
+            
+            <div class="container">
+                <div style="">
+                    <div class="card border border-primary " style="" id="tarjetacita">
+                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-body text-dark">
+            
+                            <center>
+                              <h2>¿Tienes alguna observación adicional que consideras importante que evaluemos?</h2>
+
+                              <div class="form-group col ">
+                                    <textarea class="form-control" name="informacionextra" id="informacionextra" cols="5" rows="5"
+                                    placeholder="Déjanos tu observación adicional"></textarea>
+                              </div>
+                            </center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                <center> <button type="button" class="btn btn-success next" onclick="guardardatos()"
+                    id="precalificacion">Enviar Datos</button></center>
+            </div>
+
         </div>
 
     </div>

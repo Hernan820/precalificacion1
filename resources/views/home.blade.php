@@ -26,19 +26,25 @@
                     </div>
                 </div>
                 <center>
-                    <h1>Bienvenidos a Team Acevedo donde hacemos realidad tus sueños de tener tu casa propia</h1>
+                    <h1>¡Obtén tu pre-calificación en tan solo minutos!</h1>
                 </center>
-                <br><br>
+                <br>
                 <center>
-                    <h3>Precalifica para tener tu casa propia en 3 sencillos pasos, determinaremos si calificas para un préstamo hipotecario.</h3>
+                    <h3>Completa los datos siguientes con tu información.</h3>
                 </center>
-                <br><br><br>
+                <br>
+                <hr>
+                <center>
+                    <h4>En los campos siguientes de proporcionar tu información para poder hacer los cálculos de tu pre aprobación</h4>
+
+                </center>
+                <br>
                 <div class="container">
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tipo de vivienda</h5>
+                                    <h5 class="card-title">Cual es ttu nombre?</h5>
                                     <p class="card-text">Define que tipo de vivienda quieres o estas buscando con nosotros. <br></p>
                                 </div>
                             </div>
