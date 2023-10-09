@@ -47,7 +47,8 @@
         href="{{ asset('https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css') }}">
     <script type="text/javascript" src="{{ asset('https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js') }}"
         defer></script>
-
+<!-- Option 1: Include in HTML -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Main CSS-->
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="all">
 
@@ -134,7 +135,7 @@
         <div class="page-content--bgf7">
 
             <!-- BREADCRUMB-->
-            <section class="au-breadcrumb2">
+            {{-- <section class="au-breadcrumb2">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -142,15 +143,31 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> --}}
             <!-- END BREADCRUMB-->
             <div class="">
             @yield('content')
 
             </div>
 
-            <!-- COPYRIGHT-->
-            <section class="p-t-60 p-b-20">
+            <!--========================================================== -->
+                        <!--FOOTER-->
+            <!--========================================================== -->
+
+
+            <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap mb-3 mt-3" style="background:#1d3668" >
+                <p class="fs-5 px-3  pt-3 text-white">Copyright © 2023 Contigo Mortgage. All rights reserved</p>
+                <div id="iconos" >
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>  
+                </div>
+                <br><br><br>
+            </footer>
+            
+            
+            <!-- COPYRIGHT -->
+            {{-- <section class="p-t-60 p-b-20">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -160,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> --}}
             <!-- END COPYRIGHT-->
         </div>
     </div>
