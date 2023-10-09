@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('home/vista', [App\Http\Controllers\Controller::class, 'vistaproceso']);
 
-Route::post('home/precalificacion', [App\Http\Controllers\ClienteController::class, 'store']);
+Route::post('home/precalificacion', [App\Http\Controllers\ClientesPreController::class, 'store']);
  
 Route::get('home/vista3', function () {
     return view('calificacion');

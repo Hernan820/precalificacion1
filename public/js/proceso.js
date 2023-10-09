@@ -198,9 +198,7 @@ function guardardatos(){
 //     }
     var datoscliente = new FormData();
 
-    datoscliente.append("nombre_cliente", $(".datos"));
-
-  
+    datoscliente.append("nombre_cliente", $("#nombre_cliente"));
      datoscliente.append("telefonocliente", $("#telefonocliente").val() );
      datoscliente.append("estados_casas", $("#estados_casas").val()  );
      datoscliente.append("precioporhora", $("#precioporhora").val() );
