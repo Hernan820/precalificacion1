@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <br><br><br>
-                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-success">Iniciar precalificación</button> </center>
+                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-primary">Iniciar precalificación</button> </center>
             </div>
         </div>
     </div>

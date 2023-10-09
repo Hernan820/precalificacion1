@@ -75,8 +75,30 @@
     text-align: justify;
     width: fit-content;
 }
+
+#intro-datos {
+    background: linear-gradient(rgba(5,7,12,0.80),rgba(5,7,12,0.80));
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 200px;
+    background-size: cover;
+}
+
+#contenedor-carousel{
+    margin-bottom: 5%;
+
+}
 </style>
 
+<section class="d-flex flex-column justify-content-center align-items-center pt-5  text-center" id="intro-datos" style="background-image: linear-gradient(rgba(5,7,12,0.75),rgba(5,7,12,0.75)), url({{ asset('images/carpenter1.jpg')}}) ;">
+    <h1  class="p-3 fs-2  text-white" > <span class="text-primary">Contigo Mortgage</span>  </h1>
+    <h1 class="p-3 fs-2 border-top border-3 text-white">Registro de tus datos para tu pre-calificación </h1>
+     <p class="p-3  fs-4">
+         {{-- <span class="text-primary">ExpertD.</span> es la agencia donde te ayudamos establecer tu presencia online. SEO, paginas WEB, tiendas virtuales, redes sociales         --}}
+     </p>   
+</section>
+<br>
+<div class="container" id="contenedor-carousel">
 
 <div id="carouselExampleControls" class="carousel slide" data-interval="false">
     <div class="carousel-inner">
@@ -84,7 +106,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -101,7 +123,7 @@
                     </div>
                 </div>
             </div>
-            <center> <button type="button" class="btn btn-success next" onclick="siguiente(1)"
+            <center> <button type="button" class="btn btn-primary next" onclick="siguiente(1)"
                 id="">Ok,siguiente</button></center>
                 <input type="hidden" name="pregunta1" id="pregunta1" value="1" />
         </div>
@@ -110,7 +132,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -129,7 +151,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(2)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(2)"
                         id="">Ok,siguiente</button></center>
             </div>
             <input type="hidden" name="pregunta2" id="pregunta2" value="2" /> 
@@ -140,7 +162,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -158,7 +180,7 @@
                 </div>
             </div>
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(3)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(3)"
                         id="">Ok,siguiente</button></center>
             </div>
 
@@ -167,7 +189,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -200,7 +222,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(4)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(4)"
                         id="">Ok,siguiente</button></center>
             </div>
 
@@ -209,7 +231,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -237,14 +259,14 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(5)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(5)"
                         id="">Ok,siguiente</button></center>
             </div>
         </div>
         <div class="carousel-item">
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -252,7 +274,7 @@
                                 <h2>¿Cuánto ganas la hora?</h2>
 
                               <div class="form-group col ">
-                                <input type="text" class="form-control datos" required="" name="precioporhora"
+                                <input type="number" class="form-control datos" required="" name="precioporhora"
                                     id="precioporhora" aria-describedby="helpId"
                                     placeholder="$" mask="$000" autocomplete="off">
                               </div>
@@ -264,7 +286,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(6)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(6)"
                         id="">Ok,siguiente</button></center>
             </div>
         </div>
@@ -272,7 +294,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -280,7 +302,7 @@
                                 <h2>¿Cuántas horas trabajas sin contar overtime?</h2>
 
                               <div class="form-group col ">
-                                <input type="text" class="form-control datos" required="" name="num_horas"
+                                <input type="number" class="form-control datos" required="" name="num_horas"
                                     id="num_horas" aria-describedby="helpId"
                                     placeholder="" mask="$000" autocomplete="off">
                               </div>
@@ -292,7 +314,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(7)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(7)"
                         id="">Ok,siguiente</button></center>
             </div>
         </div>
@@ -300,7 +322,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -320,7 +342,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(8)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(8)"
                         id="">Ok,siguiente</button></center>
             </div>
 
@@ -329,7 +351,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -349,7 +371,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(9)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(9)"
                         id="">Ok,siguiente</button></center>
             </div>
         </div>
@@ -357,7 +379,7 @@
 
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -377,7 +399,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="siguiente(10)"
+                <center> <button type="button" class="btn btn-primary next" onclick="siguiente(10)"
                         id="">Ok,siguiente</button></center>
             </div>
 
@@ -386,7 +408,7 @@
             
             <div class="container">
                 <div style="">
-                    <div class="card border border-primary " style="" id="tarjetacita">
+                    <div class="card border rounded border-primary " style="" id="tarjetacita">
                         <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
@@ -405,7 +427,7 @@
             </div>
 
             <div class="card-footer text-muted">
-                <center> <button type="button" class="btn btn-success next" onclick="guardardatos()"
+                <center> <button type="button" class="btn btn-primary next" onclick="guardardatos()"
                     id="precalificacion">Enviar Datos</button></center>
             </div>
 
@@ -413,4 +435,7 @@
 
     </div>
 </div>
+
+</div>
+
 @endsection
