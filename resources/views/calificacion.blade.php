@@ -50,7 +50,7 @@
              Uno de nuestros asesores se pondrá en contacto contigo pronto. <br>
              Si tienes alguna consulta adicional puedes llamarnos al:      
          </p>
-         <p id="telefono-company"><a href="tel:+6316099108"> 631-609-9108</a>
+         <p id="telefono-company"><a href="tel:+16316099108"> 631-609-9108</a>
          </p>   
     </section>
 
