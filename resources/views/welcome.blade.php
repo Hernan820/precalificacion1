@@ -111,7 +111,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cual es tu nombre ?
+                                <h2>¿Cuál es tu nombre?
                                 </h2>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
@@ -137,7 +137,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>Ingresa tu numero de telefono
+                                <h2>Ingresa tu número de teléfono.
                                 </h2>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
@@ -236,7 +236,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Trabajas con?</h2>
+                                <h2>¿Cuál es tu tipo de empleo?</h2>
 
                                 
                                 <div class="form-check">
@@ -271,7 +271,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuánto ganas la hora?</h2>
+                                <h2>¿Cuánto ganas por hora?</h2>
 
                               <div class="form-group col ">
                                 <input type="number" class="form-control datos" required="" name="precioporhora"
@@ -384,7 +384,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                              <h2>¿Con cuánto dispones de dow payment?</h2>
+                              <h2>¿Con cuánto dispones de down payment?</h2>
 
                               <div class="form-group col ">
                                 <input type="number" class="form-control datos" required="" name="dowpayment"
