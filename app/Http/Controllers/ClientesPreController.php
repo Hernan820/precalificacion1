@@ -48,6 +48,8 @@ class ClientesPreController extends Controller
         $cliente_precalificacion->dowpayment     = $request->dowpayment;
         $cliente_precalificacion->comentarios    = $request->informacionextra;
         $cliente_precalificacion->save();
+
+        return 1 ;
     }
 
     /**
