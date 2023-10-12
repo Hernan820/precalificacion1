@@ -27,7 +27,7 @@
 
 
     <section class="d-flex flex-column justify-content-center align-items-center pt-5  text-center" id="intro" style="background-image: linear-gradient(rgba(5,7,12,0.50),rgba(5,7,12,0.50)), url({{ asset('images/carpenter1.jpg')}}) ;">
-        <h1  class="p-3 fs-2  text-white" > <span class="text-primary">Contigo Mortgage</span>  </h1>
+        <h1  class="p-3 fs-2  text-white" > <span class="text-white">Contigo Mortgage</span>  </h1>
         <h1 class="p-3 fs-2 border-top border-3 text-white">¡Obtén tu pre-calificación en tan solo minutos! </h1>
          <p class="p-3  fs-4">
              {{-- <span class="text-primary">ExpertD.</span> es la agencia donde te ayudamos establecer tu presencia online. SEO, paginas WEB, tiendas virtuales, redes sociales         --}}
