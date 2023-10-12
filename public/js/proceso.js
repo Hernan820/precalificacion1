@@ -223,7 +223,7 @@ function guardardatos(){
    
     axios.post(principalUrl + "home/precalificacion",datoscliente)
     .then((respuesta) => {
-        if(respuesta.data == "1"){
+        if(respuesta.data != ""){
 
             limpiar_raiobutton();
 

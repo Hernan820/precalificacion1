@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\clientes_pre;
 use Illuminate\Http\Request;
+use App\Events\MensajeEvents;
 
 class ClientesPreController extends Controller
 {
@@ -48,6 +49,8 @@ class ClientesPreController extends Controller
         $cliente_precalificacion->dowpayment     = $request->dowpayment;
         $cliente_precalificacion->comentarios    = $request->informacionextra;
         $cliente_precalificacion->save();
+
+        event(new MensajeEvents($cliente_precalificacion));
 
         return 1 ;
     }
