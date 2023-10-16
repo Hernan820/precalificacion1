@@ -31,17 +31,8 @@ class NotyDatosClients
     public function handle(MensajeEvents $event)
     {
 
-        Log::info("datos de cliente");
-        Log::info($event->cliente_precalificacion);
-
-        Log::info("datos de cliente en forech ");
         $datos_cliente_array = json_decode($event->cliente_precalificacion, true);
 
-        foreach ($datos_cliente_array as $key => $value) {
-            Log::info("dentro del foreach");
-            Log::info($key);
-            Log::info($value);
-        }
 
         require base_path("vendor/autoload.php");
     
@@ -73,7 +64,7 @@ class NotyDatosClients
             
             $mail->isHTML(true); 
             
-            $mail->Subject = 'PRUEBA 0';
+            $mail->Subject = 'Cliente Pre-calificación ';
             $mensajededatos   = '<html dir="ltr">
             <head>
                 <meta charset="UTF-8">
@@ -152,7 +143,7 @@ class NotyDatosClients
                                                                      <tbody>
                                                                          <tr>
                                                                              <td valign="top"
-                                                                                 style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px"
+                                                                                 style="padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px"
                                                                                  class="mcnTextContent">
             
                                                                                  <table align="left" border="0" cellpadding="0"
@@ -227,7 +218,7 @@ class NotyDatosClients
             if( !$mail->send() ) {
 
                 Log::info("falloCorreo electrónico no enviado.");
-            // return "";
+             return "";
             }
                     
             else {
@@ -238,7 +229,7 @@ class NotyDatosClients
         } catch (Exception $e) {
             Log::info("errorNo se pudo enviar el mensaje.");
             Log::info($e);
-           // return '  '.$e;
+            return 'errorNo se pudo enviar el mensaje  '.$e;
         }
     }
 }

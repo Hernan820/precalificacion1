@@ -232,6 +232,8 @@ function guardardatos(){
     })
     .catch((error) => {
         if (error.response) {
+            location.href = principalUrl + "home/vista3";
+
             console.log(error.response.data);
         }
     });
