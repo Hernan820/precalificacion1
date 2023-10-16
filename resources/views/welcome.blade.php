@@ -7,7 +7,10 @@
 <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
 
 <script>
-    $('#telefonocliente').mask('(000) 000-0000');    
+    $('#telefonocliente').mask('(000) 000-0000');   
+   $('#precioporhora,#dowpayment,#taxes2021,#taxes2022').mask('$000000', {
+      reverse: false
+    });
 </script>
 
 <script src="{{ asset('js/proceso.js') }}" defer></script>
@@ -274,9 +277,9 @@
                                 <h2>¿Cuánto ganas por hora?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control datos" required="" name="precioporhora"
+                                <input type="text" class="form-control datos" required="" name="precioporhora"
                                     id="precioporhora" aria-describedby="helpId"
-                                    placeholder="$" mask="$000" autocomplete="off">
+                                    placeholder="$_________" mask="$000" autocomplete="off">
                               </div>
                             </center>
                             
@@ -330,9 +333,9 @@
                                 <h2>¿Cuánto declaraste en los taxes de 2021?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control datos" required="" name="taxes2021"
+                                <input type="text" class="form-control datos" required="" name="taxes2021"
                                     id="taxes2021" aria-describedby="helpId"
-                                    placeholder="" mask="$000" autocomplete="off">
+                                    placeholder="$_________" mask="$000" autocomplete="off">
                               </div>
                             </center>
                             
@@ -359,9 +362,9 @@
                                 <h2>¿Cuánto declaraste en los taxes de 2022?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control datos" required="" name="taxes2022"
+                                <input type="text" class="form-control datos" required="" name="taxes2022"
                                     id="taxes2022" aria-describedby="helpId"
-                                    placeholder="" mask="$000" autocomplete="off">
+                                    placeholder="$_________" mask="$000" autocomplete="off">
                               </div>
                             </center>
                             
@@ -387,9 +390,9 @@
                               <h2>¿Con cuánto dispones de down payment?</h2>
 
                               <div class="form-group col ">
-                                <input type="number" class="form-control datos" required="" name="dowpayment"
+                                <input type="text" class="form-control datos" required="" name="dowpayment"
                                     id="dowpayment" aria-describedby="helpId"
-                                    placeholder="" mask="$000" autocomplete="off">
+                                    placeholder="$_________" mask="$000" autocomplete="off">
                               </div>
                             </center>
                             
