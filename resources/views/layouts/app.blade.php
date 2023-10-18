@@ -91,7 +91,7 @@
                         <div class="header-button-item js-item-menu">
                         </div>
                         <div class="account-wrap">
-                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                            {{-- <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
                                     <img src="{{ asset('images/icon/avatar-01.jpg') }}" alt="John Doe" />
                                 </div>
@@ -99,7 +99,7 @@
                                     <a class="js-acc-btn" href="#"></a>
                                 </div>
 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

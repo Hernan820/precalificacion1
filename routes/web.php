@@ -24,3 +24,7 @@ Route::post('home/precalificacion', [App\Http\Controllers\ClientesPreController:
 Route::get('home/vista3', function () {
     return view('calificacion');
 });
+
+//Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
