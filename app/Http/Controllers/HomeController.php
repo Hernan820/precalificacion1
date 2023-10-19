@@ -25,4 +25,19 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    /**
+     * 
+     * 
+     */
+    public function Vista_login(){
+        return view('auth.login');
+    }
+    /**
+     * 
+     * 
+     * 
+     */
+    public function Vista_registro(){
+        return view('auth.register');
+    }
 }

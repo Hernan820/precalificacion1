@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('home');
 });
@@ -25,6 +27,9 @@ Route::get('home/vista3', function () {
     return view('calificacion');
 });
 
-//Auth::routes();
+Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
+
+Route::get('register_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
+
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
