@@ -57,7 +57,7 @@ class NotyDatosClients
             $mail->Username ='hernanjosuebenitez@gmail.com'; 
             $mail->Password = 'gnvcryrridikdrfd'; 
             //Agregar destinatario
-            $mail->setFrom('hernanjosuebenitez@gmail.com', 'Hernan');
+            $mail->setFrom('hernanjosuebenitez@gmail.com', 'ContigoMortgage');
             $mail->AddAddress('benitezhernan820@gmail.com');//A quien mandar email
             $mail->SMTPKeepAlive = true;  
             $mail->Mailer = "smtp"; 

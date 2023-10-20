@@ -66,7 +66,7 @@ function muestra_estados(){
 }
 
 function inicioproceso(){
-    location.href = principalUrl + "home/vista";  
+    location.href = principalUrl + "precalificacion";  
 };
 
 $(document).ready(function () {
@@ -227,12 +227,12 @@ function guardardatos(){
 
             limpiar_raiobutton();
 
-   location.href = principalUrl + "home/vista3";
+   location.href = principalUrl + "agradecimiento";
         }
     })
     .catch((error) => {
         if (error.response) {
-            location.href = principalUrl + "home/vista3";
+            location.href = principalUrl + "agradecimiento";
 
             console.log(error.response.data);
         }

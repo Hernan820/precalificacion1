@@ -11,6 +11,7 @@
 
     <!-- Required meta tags-->
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon/cropped-logo-black.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="au theme template">
     <meta name="author" content="Team Acevedo">
@@ -62,7 +63,6 @@
             background: #1d3668 !important ;
         }
     </style>
-
         <!-- HEADER DESKTOP-->
         <header class="header-desktop3 d-none d-lg-block" style="background:#1d3668">
             <div class="section__content section__content--p35" style="background: #1d3668;">
