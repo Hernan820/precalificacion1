@@ -131,9 +131,9 @@
                 </div>
             </nav>
         </header>
-        <div class="sub-header-mobile-2 d-block d-lg-none">
+        {{-- <div class="sub-header-mobile-2 d-block d-lg-none">
           
-        </div>
+        </div> --}}
         <!-- END HEADER MOBILE -->
 
         <!-- PAGE CONTENT-->

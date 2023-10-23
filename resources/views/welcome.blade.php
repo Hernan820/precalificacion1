@@ -94,8 +94,8 @@
 </style>
 
 <section class="d-flex flex-column justify-content-center align-items-center pt-5  text-center" id="intro-datos" style="background-image: linear-gradient(rgba(5,7,12,0.75),rgba(5,7,12,0.75)), url({{ asset('images/carpenter1.jpg')}}) ;">
-    <h1  class="p-3 fs-2  text-white" > <span class="text-white">Contigo Mortgage</span>  </h1>
-    <h1 class="p-3 fs-2 border-top border-3 text-white">Registro de tus datos para tu pre-calificación </h1>
+    <h1  class="p-3 fs-2  text-white" style="font-size: 30px;" > <span class="text-white">Contigo Mortgage</span>  </h1>
+    <h1 class="p-3 fs-2 border-top border-3 text-white" style="font-size: 30px;" >Registro de tus datos para tu pre-calificación </h1>
      <p class="p-3  fs-4">
          {{-- <span class="text-primary">ExpertD.</span> es la agencia donde te ayudamos establecer tu presencia online. SEO, paginas WEB, tiendas virtuales, redes sociales         --}}
      </p>   
@@ -110,12 +110,12 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuál es tu nombre?
-                                </h2>
+                                <h3>¿Cuál es tu nombre?
+                                </h3>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
                                 <input type="text" class="form-control datos" name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu nombre">
@@ -136,12 +136,12 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>Ingresa tu número de teléfono.
-                                </h2>
+                                <h3>Ingresa tu número de teléfono.
+                                </h3>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
                                 <input type="text" class="form-control datos" id="telefonocliente" placeholder="(000)000-0000">
@@ -166,12 +166,12 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿En qué estado deseas comprar?
-                                </h2>
+                                <h3>¿En qué estado deseas comprar?
+                                </h3>
                             <div class="form-group col ">
                                 <label for="exampleFormControlInput1"></label>
                                 <select class="form-control datos" name="estados_casas" id="estados_casas"></select>
@@ -193,11 +193,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuál es tu estatus migratorio?</h2>
+                                <h3>¿Cuál es tu estatus migratorio?</h3>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="preg4" id="flexRadioDefault1"  value="social" >
@@ -235,11 +235,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuál es tu tipo de empleo?</h2>
+                                <h3>¿Cuál es tu tipo de empleo?</h3>
 
                                 
                                 <div class="form-check">
@@ -270,11 +270,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuánto ganas por hora?</h2>
+                                <h3>¿Cuánto ganas por hora?</h3>
 
                               <div class="form-group col ">
                                 <input type="text" class="form-control datos" required="" name="precioporhora"
@@ -298,11 +298,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuántas horas trabajas sin contar overtime?</h2>
+                                <h3>¿Cuántas horas trabajas sin contar overtime?</h3>
 
                               <div class="form-group col ">
                                 <input type="number" class="form-control datos" required="" name="num_horas"
@@ -326,11 +326,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuánto declaraste en los taxes de 2021?</h2>
+                                <h3>¿Cuánto declaraste en los taxes de 2021?</h3>
 
                               <div class="form-group col ">
                                 <input type="text" class="form-control datos" required="" name="taxes2021"
@@ -355,11 +355,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                                <h2>¿Cuánto declaraste en los taxes de 2022?</h2>
+                                <h3>¿Cuánto declaraste en los taxes de 2022?</h3>
 
                               <div class="form-group col ">
                                 <input type="text" class="form-control datos" required="" name="taxes2022"
@@ -383,11 +383,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                              <h2>¿Con cuánto dispones de down payment?</h2>
+                              <h3>¿Con cuánto dispones de down payment?</h3>
 
                               <div class="form-group col ">
                                 <input type="text" class="form-control datos" required="" name="dowpayment"
@@ -412,11 +412,11 @@
             <div class="container">
                 <div style="">
                     <div class="card border rounded border-primary " style="" id="tarjetacita">
-                        <div class="card-header" style=" text-align: center;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
+                        <div class="card-header" style=" text-align: center; font-size: 15px;"> <strong> DATOS PARA TU PRE-CALIFICAION </strong></div>
                         <div class="card-body text-dark">
             
                             <center>
-                              <h2>¿Tienes alguna observación adicional que consideras importante que evaluemos?</h2>
+                              <h3>¿Tienes alguna observación adicional que consideras importante que evaluemos?</h3>
 
                               <div class="form-group col ">
                                     <textarea class="form-control datos" name="informacionextra" id="informacionextra" cols="5" rows="5"
