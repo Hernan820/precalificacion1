@@ -233,9 +233,8 @@ function guardardatos(){
     })
     .catch((error) => {
         if (error.response) {
-            location.href = principalUrl + "agradecimiento";
-
             console.log(error.response.data);
+            location.href = principalUrl + "agradecimiento";
         }
     });
     
