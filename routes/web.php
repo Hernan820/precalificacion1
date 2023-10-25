@@ -34,8 +34,9 @@ Route::get('agradecimiento', function () {
 
 Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
 
- //Route::get('register_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
 
-Auth::routes();
+Route::middleware(['auth'])->group(function () {
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('lista_cliente', [App\Http\Controllers\ClientesPreController::class, 'show']);
+
+});

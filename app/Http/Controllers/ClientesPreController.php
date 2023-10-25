@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\clientes_pre;
 use Illuminate\Http\Request;
 use App\Events\MensajeEvents;
-
+use DateTime;
+use DateInterval;
 class ClientesPreController extends Controller
 {
     /**
@@ -63,7 +64,16 @@ class ClientesPreController extends Controller
      */
     public function show(clientes_pre $clientes_pre)
     {
-        //
+        
+        $actualfecha = new DateTime();  
+        $actualfecha->sub(new DateInterval('P3M'));  
+        $fechahacetresmeses = $actualfecha->format('Y-m-d');
+        
+        $lista_clientes_pre = clientes_pre::select("clientes_pres.*")
+        ->where("clientes_pres.created_at",">",$fechahacetresmeses)
+        ->get();
+
+        return response()->json($lista_clientes_pre);
     }
 
     /**
