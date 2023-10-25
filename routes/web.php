@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/home', function () {
+    return view('manager');
+});
+
+
 Route::get('precalificacion', [App\Http\Controllers\Controller::class, 'vistaproceso']);
 
 Route::post('home/precalificacion', [App\Http\Controllers\ClientesPreController::class, 'store']);
@@ -29,4 +34,8 @@ Route::get('agradecimiento', function () {
 
 Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
 
-Route::get('register_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
+ //Route::get('register_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
+
+Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
