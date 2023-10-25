@@ -2,20 +2,6 @@ var principalUrl = "http://localhost/precalificacion1/public/";
 
 $(document).ready(function () {
 
-    axios.get(principalUrl + "lista_cliente")
-    .then((respuesta) => {
-        
-      console.log(respuesta.data);
-     })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-
-
-
-
 
     $("#registro_clientes").DataTable({
         language: {
@@ -43,7 +29,5 @@ $(document).ready(function () {
             { data: "comentarios" }, 
         ],
     });
-
-  //  document.getElementById("descripcion").value = "texthere\\\ntexttext";
 
 });

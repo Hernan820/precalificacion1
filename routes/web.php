@@ -32,8 +32,7 @@ Route::get('agradecimiento', function () {
     return view('calificacion');
 });
 
-Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
-
+//Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
 
 Route::middleware(['auth'])->group(function () {
 

@@ -82,27 +82,45 @@
                         </ul>
                     </div>
 
-                    <div class="header__tool">
 
+                    <div class="header__tool">
                         <div class="header-button-item has-noti js-item-menu">
 
                         </div>
                         <div class="header-button-item js-item-menu">
+
                         </div>
                         <div class="account-wrap">
-                            {{-- <div class="account-item account-item--style2 clearfix js-item-menu">
-                                <div class="image">
-                                    <img src="{{ asset('images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <ul class="navbar-nav ms-auto">
+                                    <!-- Authentication Links -->
+                                    @guest
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }}
+                                        </a>
+        
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                                  Logout
+                                            </a>
+        
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                @endguest
+                                </ul>
+                            </div>
                         </div>
-                        <div class="content">
-                            <a class="js-acc-btn" href="#"></a>--}}
-                        </div>
-
                     </div>
                 </div>
             </div>
         </header>
-    </div>
 
     <!-- END HEADER DESKTOP-->
 
@@ -168,6 +186,7 @@
             </div>
             <br><br><br>
         </footer>
+    </div>
 
         <!-- COPYRIGHT -->
         {{-- <section class="p-t-60 p-b-20">
