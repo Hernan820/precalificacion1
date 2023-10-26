@@ -125,47 +125,44 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- HEADER MOBILE-->
-    <header class="header-mobile header-mobile-2 d-block d-lg-none ventana" style="background-color:1d3668;">
-        <div class="header-mobile__bar" style="background-color:#1d3668">
-            <div class="container-fluid">
-                <div class="header-mobile-inner" style="background: #1d3668;">
-                    <a class="image" href="{{ url('/')}}">
-                        <img class="image" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}"
-                            alt="Cool Admin" />
-                    </a>
-
-                    <button class="hamburger hamburger--slider" type="button">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light "  style="background:#1d3668">
+        <a class="image d-lg-none" href="{{ url('/')}}">
+            <img class="image d-lg-none" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}" />
+        </a>        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <!-- Contenido del menú -->
+                       <!-- Authentication Links -->
+                       @guest
+                       @else
+                           <li class="nav-item dropdown d-lg-none">
+                               <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                   {{ Auth::user()->name }}
+                               </a>
+                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                   <a class="dropdown-item" href="{{ route('logout') }}"
+                                      onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                         Logout
+                                   </a>
+                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                       @csrf
+                                   </form>
+                               </div>
+                           </li>
+                       @endguest
+                </li>
+            </ul>
         </div>
-        <nav class="navbar-mobile">
-            <div class="container-fluid">
-
-            </div>
-        </nav>
-    </header>
-    {{-- <div class="sub-header-mobile-2 d-block d-lg-none">
-          
-        </div> --}}
-    <!-- END HEADER MOBILE -->
+    </nav>
 
     <!-- PAGE CONTENT-->
     <div class="page-content--bgf7">
 
-        <!-- BREADCRUMB-->
-        {{-- <section class="au-breadcrumb2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                        </div>
-                    </div>
-                </div>
-            </section> --}}
         <!-- END BREADCRUMB-->
         <div class="">
             @yield('content')
@@ -187,20 +184,6 @@
             <br><br><br>
         </footer>
     </div>
-
-        <!-- COPYRIGHT -->
-        {{-- <section class="p-t-60 p-b-20">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>Copyright © 2023 Contigo Mortgage. All rights reserved.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> --}}
-        <!-- END COPYRIGHT-->
 
     <!-- Jquery JS-->
     <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>
