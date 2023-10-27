@@ -38,6 +38,6 @@ class HomeController extends Controller
      * 
      */
     public function Vista_registro(){
-        return view('auth.register');
+        return view('auth.registro_usuarios');
     }
 }

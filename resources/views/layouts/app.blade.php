@@ -7,7 +7,7 @@
 
     <!-- Required meta tags-->
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="{{ asset('images/icon/cropped-logo-black.png') }}">
+    {{-- <link rel="icon" type="image/png" href="{{ asset('images/icon/cropped-logo-black.png') }}"> --}}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="au theme template">
     <meta name="author" content="Team Acevedo">
@@ -82,38 +82,44 @@
                         </ul>
                     </div>
 
-
                     <div class="header__tool">
-                        <div class="header-button-item has-noti js-item-menu">
 
+                        <div class="account-wrap  pr-5">
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item ">
+                                        <a class=" text-white" id="" onclick="vistaregistro()" >
+                                            USUARIOS
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="header-button-item js-item-menu">
 
-                        </div>
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <ul class="navbar-nav ms-auto">
                                     <!-- Authentication Links -->
                                     @guest
-                                @else
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            {{ Auth::user()->name }}
-                                        </a>
-        
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
-                                                  Logout
+                                    @else
+                                        <li class="nav-item dropdown">
+                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                {{ Auth::user()->name }}
                                             </a>
-        
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endguest
+            
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                      onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                    Logout
+                                                </a>
+            
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </li>
+                                    @endguest
                                 </ul>
                             </div>
                         </div>
@@ -139,6 +145,10 @@
                        <!-- Authentication Links -->
                        @guest
                        @else
+                       <li class="nav-item active">
+                        <a class="nav-link text-white" href="{{ asset('vis_usuarios') }}">USUARIOS</a>
+                      </li>
+
                            <li class="nav-item dropdown d-lg-none">
                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                    {{ Auth::user()->name }}

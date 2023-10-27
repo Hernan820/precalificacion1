@@ -19,9 +19,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', function () {
-    return view('manager');
-});
 
 
 Route::get('precalificacion', [App\Http\Controllers\Controller::class, 'vistaproceso']);
@@ -36,6 +33,13 @@ Route::get('agradecimiento', function () {
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/home', function () {
+        return view('manager');
+    });
+    
+
     Route::get('lista_cliente', [App\Http\Controllers\ClientesPreController::class, 'show']);
+
+    Route::get('vis_usuarios', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
 
 });

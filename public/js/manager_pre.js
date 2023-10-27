@@ -31,3 +31,8 @@ $(document).ready(function () {
     });
 
 });
+
+function vistaregistro(){
+    location.href = principalUrl + "vis_usuarios";
+
+}
