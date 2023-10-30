@@ -3,55 +3,10 @@ var principalUrl = "http://localhost/precalificacion1/public/";
 //var principalUrl = "https://miprecalificacion.contigomortgage.com/";
 
 var estados_usa = [
-    "Alaska",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Carolina del Norte",
-    "Carolina del Sur",
-    "Colorado",
     "Connecticut",
-    "Dakota del Norte",
-    "Dakota del Sur",
-    "Delaware",
-    "Florida",
-    "Georgia",
-    "Hawái",
-    "Idaho",
-    "Illinois",
-    "Indiana",
-    "Iowa",
-    "Kansas",
-    "Kentucky",
-    "Luisiana",
-    "Maine",
-    "Maryland",
-    "Massachusetts",
-    "Míchigan",
-    "Minnesota",
-    "Misisipi",
-    "Misuri",
-    "Montana",
-    "Nebraska",
-    "Nevada",
-    "New Jersey",
     "New York",
-    "New Hampshire",
-    "New México",
-    "Ohio",
-    "Oklahoma",
-    "Oregón",
-    "Pensilvania",
-    "Rhode Island",
-    "Tennessee",
-    "Texas",
-    "Utah",
-    "Vermont",
-    "Virginia",
-    "Virginia Occidental",
-    "Washington",
-    "Wisconsin",
-    "Wyoming",
+    "New Jersey ",
+    "Otro Estado",
 ];
 
 function muestra_estados(){
@@ -180,7 +135,7 @@ function siguiente(Pregunta){
             $('#carouselExampleControls').carousel(7);
             $('#carouselExampleControls').carousel('pause')
         }
-    }else if(Pregunta == 7){
+    }else if(Pregunta == 6){
         var formatrabajo =document.querySelector('input[name="preg5"]:checked').value;
         if(formatrabajo == "w2"){
             $('#carouselExampleControls').carousel(9);

@@ -44,7 +44,7 @@ class ClientesPreController extends Controller
         $cliente_precalificacion->tipo_trabajo   = $request->tipo_trabajo;
         $cliente_precalificacion->estatus        = $request->status;
         $cliente_precalificacion->hora_precio    = $request->precioporhora ?? '';
-        $cliente_precalificacion->num_hora       = $request->num_horas ?? '';
+       // $cliente_precalificacion->num_hora       = $request->num_horas ?? '';
         $cliente_precalificacion->taxes2021      = $request->taxes2021 ?? '';
         $cliente_precalificacion->taxes2022      = $request->taxes2022 ?? '';
         $cliente_precalificacion->dowpayment     = $request->dowpayment;

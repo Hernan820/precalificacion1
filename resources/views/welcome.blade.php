@@ -274,7 +274,7 @@
                         <div class="card-body text-dark">
             
                             <center>
-                                <h3>¿Cuánto ganas por hora?</h3>
+                                <h3>¿Cuánto son tus ingresos al año?</h3>
 
                               <div class="form-group col ">
                                 <input type="text" class="form-control datos" required="" name="precioporhora"

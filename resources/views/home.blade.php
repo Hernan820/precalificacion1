@@ -85,30 +85,30 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-3">
                             <div class="card border border-secondary h-90">
-                                <img src="{{ asset('images/tipo-casa.png')}}" class="card-img-top border border-primary mx-auto"  alt="...">
+                                <img src="{{ asset('images/archivo.png')}}" class="card-img-top mx-auto"  alt="...">
                                 <div class="card-body text-center d-flex flex-column">
-                                    <h5 class="card-title">Tipo de vivienda</h5>
-                                    <p class="card-text">Estamos aquí para ayudarte a encontrar la vivienda que deseas. Define qué tipo de vivienda quieres o estás buscando con nosotros. </p>
+                                    <h5 class="card-title">Programas </h5>
+                                    <p class="card-text">Especiales sin verificación de ingresos, down payment desde 20%. </p>
                                 </div>
                             </div>
                         </div>
                 
                         <div class="col-sm-3">
                             <div class="card border border-secondary h-90">
-                                <img src="{{ asset('images/datos.png')}}" class="card-img-top border border-primary mx-auto"  alt="...">
+                                <img src="{{ asset('images/tipo-casa.png')}}" class="card-img-top mx-auto"  alt="...">
                                 <div class="card-body text-center d-flex flex-column">
-                                    <h5 class="card-title">Tu información personal</h5>
-                                    <p class="card-text">Para ofrecerte un servicio más personalizado, nos sería de gran ayuda contar con tus datos personales. <br><br></p>
+                                    <h5 class="card-title">Comprar, reparar y vender.</h5>
+                                    <p class="card-text"> Aplica con tan solo 10% Down Payment, no requiere que tengas una LLC. <br></p>
                                 </div>
                             </div>
                         </div>
                 
                         <div class="col-sm-3">
                             <div class="card border border-secondary h-90">
-                                <img src="{{ asset('images/archivo.png')}}" class="card-img-top border border-primary mx-auto"  alt="...">
+                                <img src="{{ asset('images/tienda.png')}}" class="card-img-top mx-auto"  alt="...">
                                 <div class="card-body text-center d-flex flex-column">
-                                    <h5 class="card-title">Tu información crediticia</h5>
-                                    <p class="card-text">Tu información, historial crediticio, ingresos, pago inicial, etc... <br><br><br></p>
+                                    <h5 class="card-title">Prestamos comerciales</h5>
+                                    <p class="card-text">Compra una propiedad comercial o de uso mixto fácil y rápido<br></p>
                                 </div>
                             </div>
                         </div>
