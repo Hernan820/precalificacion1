@@ -14,4 +14,8 @@ class Controller extends BaseController
     public function vistaproceso(){
         return view('welcome');
     }
+
+    public function vista_user(){
+        return view('auth.registro_usuarios');
+    }
 }

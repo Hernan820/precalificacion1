@@ -4,6 +4,7 @@
 <head>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/master.js') }}" defer></script>
 
     <!-- Required meta tags-->
     <meta charset="UTF-8">
@@ -83,19 +84,6 @@
                     </div>
 
                     <div class="header__tool">
-
-                        <div class="account-wrap  pr-5">
-                            <div class="account-item account-item--style2 clearfix js-item-menu">
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item ">
-                                        <a class=" text-white" id="" onclick="vistaregistro()" >
-                                            USUARIOS
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <ul class="navbar-nav ms-auto">
@@ -108,6 +96,10 @@
                                             </a>
             
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" onclick="vistaregister()" >Usuarios</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" onclick="vista_home()" >Home</a>
+                                                <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                                       onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
@@ -140,14 +132,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item d-lg-none ">
+                    <a class="nav-link text-white" href="{{ asset('ususarios') }}">Usuarios</a>
+                </li>
                 <li class="nav-item active">
                     <!-- Contenido del menú -->
                        <!-- Authentication Links -->
                        @guest
                        @else
-                       <li class="nav-item active">
-                        <a class="nav-link text-white" href="{{ asset('vis_usuarios') }}">USUARIOS</a>
-                      </li>
+                    
 
                            <li class="nav-item dropdown d-lg-none">
                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -1,6 +1,4 @@
 let a = document.getElementById("clientedatos");
-var principalUrl = "http://localhost/precalificacion1/public/";
-//var principalUrl = "https://miprecalificacion.contigomortgage.com/";
 
 var estados_usa = [
     "Connecticut",

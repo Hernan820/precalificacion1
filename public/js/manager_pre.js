@@ -1,4 +1,3 @@
-var principalUrl = "http://localhost/precalificacion1/public/";
 
 $(document).ready(function () {
 
