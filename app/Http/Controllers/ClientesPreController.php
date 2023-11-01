@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Events\MensajeEvents;
 use DateTime;
 use DateInterval;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 class ClientesPreController extends Controller
 {
     /**
@@ -24,9 +28,14 @@ class ClientesPreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_user(Request $request)
     {
-        //
+        $usuario= new User;
+        $usuario->name     = $request->nombre; 
+        $usuario->email    = $request->email;
+        $usuario->password = Hash::make($request->contra);
+        $usuario->save();
+        $usuario->assignRole($request['rol']); 
     }
 
     /**

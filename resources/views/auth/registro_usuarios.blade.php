@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
+<script src="{{ asset('js/registro.js') }}" defer></script>
+
+
 <div class="container pt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -8,14 +14,14 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+                    <form id="frmresgitro_usuarios">
+                        {{-- @csrf --}}
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus>
+                                <input id="name"  name="name" type="text" class="form-control" required autocomplete="off" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -26,10 +32,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off">
+                                <input id="email" type="email" class="form-control " name="email" value="" required autocomplete="off">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -40,10 +46,22 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Rol') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="off">
+                                <select name="rol" id="rol" class="form-control" required autocomplete="off">
+                                    <option value="" selected>Roles</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="agente">Agente</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control" name="password" required autocomplete="off">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -54,7 +72,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirma Contraseña') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
@@ -63,8 +81,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                <button id="btnregistrar" type="button" onclick="registro_usuario()" class="btn btn-primary"  >
+                                    {{ __('Registrar') }}
                                 </button>
                             </div>
                         </div>
@@ -73,5 +91,26 @@
             </div>
         </div>
     </div>
+
+    <div class="table-responsive pt-5">
+        <div class="col-md-12 table-responsive">
+            <table id="tblusuarios" class="table table-striped table-bordered dt-responsive nowrap datatable table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Pais</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="insertarUsusarios" scope="row">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
+
+
 @endsection

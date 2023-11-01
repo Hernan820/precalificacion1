@@ -81,7 +81,10 @@
                         <div class="overview-wrap"></div>
                     </div>
                 </div>
-                <br><div class="container">
+                <br>
+                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-primary">Iniciar precalificación</button> </center>
+                <br>
+                <div class="container">
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-3">
                             <div class="card border border-secondary h-90">
@@ -116,7 +119,6 @@
                 </div>
                 
                 <br>
-                <center> <button type="button" onclick="inicioproceso()" id="botonvista" class="btn btn-primary">Iniciar precalificación</button> </center>
             </div>
         </div>
     </div>

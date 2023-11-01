@@ -43,4 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('vis_usuarios', [App\Http\Controllers\HomeController::class, 'Vista_registro']);
 
     Route::get('usuarios', [App\Http\Controllers\Controller::class, 'vista_user'])->name('usuarios');
+
+    Route::post('registro/guardar', [App\Http\Controllers\ClientesPreController::class, 'create_user']);
+
 });
