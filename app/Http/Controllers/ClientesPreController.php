@@ -28,14 +28,9 @@ class ClientesPreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_user(Request $request)
+    public function create(Request $request)
     {
-        $usuario= new User;
-        $usuario->name     = $request->nombre; 
-        $usuario->email    = $request->email;
-        $usuario->password = Hash::make($request->contra);
-        $usuario->save();
-        $usuario->assignRole($request['rol']); 
+        //............
     }
 
     /**

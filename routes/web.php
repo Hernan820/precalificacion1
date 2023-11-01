@@ -44,6 +44,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('usuarios', [App\Http\Controllers\Controller::class, 'vista_user'])->name('usuarios');
 
-    Route::post('registro/guardar', [App\Http\Controllers\ClientesPreController::class, 'create_user']);
+    Route::post('registro/guardar', [App\Http\Controllers\UserController::class, 'create_user']);
+
+    Route::get('usuarios/mostrar', [App\Http\Controllers\UserController::class, 'show']);
+
 
 });

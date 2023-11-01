@@ -52,7 +52,7 @@
                                 <select name="rol" id="rol" class="form-control" required autocomplete="off">
                                     <option value="" selected>Roles</option>
                                     <option value="administrador">Administrador</option>
-                                    <option value="agente">Agente</option>
+                                    <option value="usuario">Usuario</option>
                                 </select>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirma Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
+                                <input id="password_confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
                             </div>
                         </div>
 
@@ -99,7 +99,6 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Correo</th>
-                        <th scope="col">Pais</th>
                         <th scope="col">Rol</th>
                         <th scope="col"></th>
                     </tr>
