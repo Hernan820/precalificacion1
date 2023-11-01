@@ -21,7 +21,8 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name"  name="name" type="text" class="form-control" required autocomplete="off" autofocus>
+                                <input id="name"  name="name" type="text" class="form-control" required autocomplete="off" autofocus
+                                placeholder="Nombre">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -35,13 +36,8 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control " name="email" value="" required autocomplete="off">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="email" type="email" class="form-control " name="email" required autocomplete="off"
+                                placeholder="example@example.com">
                             </div>
                         </div>
 
@@ -61,13 +57,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required autocomplete="off">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control" name="password" required autocomplete="off"
+                                placeholder="contraseña">
                             </div>
                         </div>
 
@@ -75,7 +66,8 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirma Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password_confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
+                                <input id="password_confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off"
+                                placeholder="contraseña">
                             </div>
                         </div>
 
