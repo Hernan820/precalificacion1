@@ -53,6 +53,18 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3" id="bqcontra" style="display: none;">
+                            <label for="name" class="col-md-4 col-form-label text-md-end"></label>
+
+                            <div class="col-md-6 ml-4">
+                                <input class="form-check-input" type="checkbox" id="cambiar_contra"
+                                    name="cambiar_contra">
+                                <label class="form-check-label" for="cambiar_contra">
+                                    Cambiar contraseña
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
@@ -76,8 +88,12 @@
                                 <button id="btnregistrar" type="button" onclick="registro_usuario()" class="btn btn-primary"  >
                                     {{ __('Registrar') }}
                                 </button>
+                                <button id="btnnuevo" type="button" onclick="limpiarForm();" class="btn btn-primary"  style="display: none;" >
+                                    {{ __('Nuevo') }}
+                                </button>
                             </div>
                         </div>
+                        <input type="hidden" name="id_usuario" id="id_usuario">
                     </form>
                 </div>
             </div>

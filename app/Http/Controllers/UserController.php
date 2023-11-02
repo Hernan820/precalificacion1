@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class UserController extends Controller
 {
@@ -68,7 +69,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuarios = User::join('model_has_roles','model_has_roles.model_id','=','users.id')
+        ->join('roles','roles.id','=','model_has_roles.role_id')
+        ->select("roles.*","users.*","roles.name as nombre_rol","users.id as userid")
+        ->where("users.id","=",$id)
+        ->get();
+        
+        return (response()->json($usuarios));
     }
 
     /**
@@ -78,9 +85,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $role = DB::table('roles') ->join('model_has_roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->select('roles.id', 'roles.name', 'model_has_roles.model_id') 
+       ->where('model_id',"=",$request->id_usuarioactualizar) 
+       ->get()
+       ->first();
+
+       $User= User::find($request->id_usuarioactualizar);
+       $User ->name = $request-> nombre;
+       $User ->email = $request-> email ;
+
+        if($request->cambiarcontra == "si"){
+           $User->password = Hash::make($request->contra);
+        }
+
+       $User->save();
+
+        if($request->rol != $role){
+            $User->roles()->detach();
+            $User->assignRole($request->rol ); 
+        }
+
     }
 
     /**

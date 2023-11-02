@@ -48,5 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('usuarios/mostrar', [App\Http\Controllers\UserController::class, 'show']);
 
+    Route::post('usuario/editar/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+
+    Route::post('registro/actualizar', [App\Http\Controllers\UserController::class, 'update']);
 
 });
