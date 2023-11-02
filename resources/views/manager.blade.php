@@ -24,11 +24,59 @@
                     <th class="col-md-">Taxes 2023</th>
                     <th class="col-md-"> Down Payment</th>
                     <th class="col-md-"> Comentario</th>
+                    <th class="col-md-"> </th>
                 </tr>
             </thead>
             <tbody id="insertadatoshoras" scope="row">
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- Modal Notas-->
+<div class="modal fade" id="modal_seguimiento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Agregar Seguimiento
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="frmseguimiento">
+
+                    {!! csrf_field() !!}
+                    <div class="form-group ">
+                        <label for="start">Seguimiento:</label>
+                        <textarea name="nota" rows="2" required="" id="nota" class="form-control" cols="50"></textarea>
+                    </div>
+                    <input type="hidden" name="registropre_id" id="registropre_id" value="" />
+                    
+                <button type="button" class="btn btn-success" id="btnNota">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="table-responsive">
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col-3">Usuario</th>
+                                    <th scope="col-3">fecha</th>
+                                    <th scope="col-6">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblseguimientos" scope="row">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

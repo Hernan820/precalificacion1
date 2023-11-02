@@ -26,6 +26,14 @@ $(document).ready(function () {
             { data: "taxes2022" }, 
             { data: "dowpayment" },
             { data: "comentarios" }, 
+            { data: "id",
+            render: function (data, type, row) {
+                return (
+                    '<select id="usuario_opcion" onchange="opcionesprecalificacion(this,' + data +
+                    ')" class="form-control opciones"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></selec>'
+                );
+            }
+        },
         ],
     });
 
@@ -33,5 +41,45 @@ $(document).ready(function () {
 
 function vistaregistro(){
     location.href = principalUrl + "vis_usuarios";
+}
 
+function opcionesprecalificacion(option, id) {
+    var opt = $(option).val();
+    if (opt == 1) {
+        $("#registropre_id").val(id);
+        $("#modal_seguimiento").modal("show");
+
+    } else if (opt == 2) {
+        Swal.fire({
+            title: "Eliminar",
+            text: "¿Estas seguro de eliminar el registro?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .post(principalUrl + "registro/eliminar_registro/" + id)
+                    .then((respuesta) => {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registro eliminado",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else {
+            }
+        });
+    }
+    $(option).prop("selectedIndex", 0);
 }
