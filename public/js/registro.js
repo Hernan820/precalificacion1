@@ -193,7 +193,7 @@ function opcionusuarios(option, id) {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .post(principalUrl + "registro/eliminarUsuario/" + id)
+                    .post(principalUrl + "registro/eliminar/" + id)
                     .then((respuesta) => {
                         Swal.fire({
                             position: "top-end",
@@ -202,7 +202,8 @@ function opcionusuarios(option, id) {
                             showConfirmButton: false,
                             timer: 1200,
                         });
-                        mostrarusuarios();
+                        limpiarForm();
+                        tblusuarios();
                     })
                     .catch((error) => {
                         if (error.response) {

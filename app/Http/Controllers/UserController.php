@@ -27,9 +27,11 @@ class UserController extends Controller
     public function  create_user(Request $request)
     {
         $usuario= new User;
-        $usuario->name     = $request->nombre; 
-        $usuario->email    = $request->email;
-        $usuario->password = Hash::make($request->contra);
+        $usuario->name        = $request->nombre; 
+        $usuario->email       = $request->email;
+        $usuario->estado_user = 1;
+        $usuario->site = 1;
+        $usuario->password    = Hash::make($request->contra);
         $usuario->save();
         $usuario->assignRole($request['rol']); 
     }
@@ -56,6 +58,7 @@ class UserController extends Controller
         $usuarios = User::join('model_has_roles','model_has_roles.model_id','=','users.id')
         ->join('roles','roles.id','=','model_has_roles.role_id')
         ->select("roles.*","users.*","roles.name as nombre_rol","users.id as userid")
+        ->where("users.estado_user","=",1)
         ->get();
 
         return (response()->json($usuarios));
@@ -118,6 +121,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $User= User::find($id);
+        $User->estado_user = 0;
+        $User->save();
+        
     }
 }

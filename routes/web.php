@@ -52,4 +52,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/actualizar', [App\Http\Controllers\UserController::class, 'update']);
 
+    Route::post('registro/eliminar/{id}', [App\Http\Controllers\UserController::class, 'destroy']);
+
 });
