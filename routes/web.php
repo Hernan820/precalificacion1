@@ -58,4 +58,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/listado/{id}', [App\Http\Controllers\SeguimientoController::class, 'show']);
 
+    Route::post('registro/eliminar_registro/{id}', [App\Http\Controllers\ClientesPreController::class, 'destroy']);
+
 });

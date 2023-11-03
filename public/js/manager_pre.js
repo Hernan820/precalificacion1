@@ -1,6 +1,14 @@
 
 $(document).ready(function () {
-    $("#registro_clientes").DataTable({
+    tblprecalificaciones();
+});
+
+function tblprecalificaciones(){
+
+    var tblpre = $("#registro_clientes").DataTable();
+    tblpre.destroy();
+
+   tblpre = $("#registro_clientes").DataTable({
         language: {
             url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         },
@@ -34,7 +42,7 @@ $(document).ready(function () {
         },
         ],
     });
-});
+}
 
 function vistaregistro(){
     location.href = principalUrl + "vis_usuarios";
@@ -58,9 +66,9 @@ function opcionesprecalificacion(option, id) {
             cancelButtonText: "Cancelar",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios
-                    .post(principalUrl + "registro/eliminar_registro/" + id)
+                axios.post(principalUrl + "registro/eliminar_registro/" + id)
                     .then((respuesta) => {
+                        tblprecalificaciones();
                         Swal.fire({
                             position: "top-end",
                             icon: "success",

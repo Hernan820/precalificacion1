@@ -53,6 +53,7 @@ class ClientesPreController extends Controller
         $cliente_precalificacion->taxes2022      = $request->taxes2022 ?? '';
         $cliente_precalificacion->dowpayment     = $request->dowpayment;
         $cliente_precalificacion->comentarios    = $request->informacionextra;
+        $cliente_precalificacion->estado_registro = 1;
         $cliente_precalificacion->save();
 
         event(new MensajeEvents($cliente_precalificacion));
@@ -75,6 +76,7 @@ class ClientesPreController extends Controller
         
         $lista_clientes_pre = clientes_pre::select("clientes_pres.*")
         ->where("clientes_pres.created_at",">",$fechahacetresmeses)
+        ->where("clientes_pres.estado_registro","=",1)
         ->get();
 
         return response()->json($lista_clientes_pre);
@@ -109,8 +111,11 @@ class ClientesPreController extends Controller
      * @param  \App\Models\clientes_pre  $clientes_pre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(clientes_pre $clientes_pre)
+    public function destroy($id)
     {
-        //
+        $segui = clientes_pre::find($id);
+        $segui->estado_registro = 0;
+        $segui->save();
+
     }
 }
