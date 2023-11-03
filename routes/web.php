@@ -56,4 +56,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/guardar_seguimiento', [App\Http\Controllers\SeguimientoController::class, 'create']);
 
+    Route::post('registro/listado/{id}', [App\Http\Controllers\SeguimientoController::class, 'show']);
+
 });

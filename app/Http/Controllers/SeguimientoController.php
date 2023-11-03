@@ -49,9 +49,12 @@ class SeguimientoController extends Controller
      * @param  \App\Models\seguimiento  $seguimiento
      * @return \Illuminate\Http\Response
      */
-    public function show(seguimiento $seguimiento)
+    public function show($id)
     {
-        //
+        $seguimientos = seguimiento::join('users','users.id','=','seguimientos.id_usuario')
+        ->select("users.*","seguimientos.*","seguimientos.created_at as fecha")
+        ->where("seguimientos.id_precalificacion","=",$id)->get();
+        return response()->json($seguimientos);
     }
 
     /**

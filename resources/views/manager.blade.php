@@ -41,7 +41,7 @@
                 <h5 class="modal-title">
                     Agregar Seguimiento
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -56,7 +56,7 @@
                     <input type="hidden" name="registropre_id" id="registropre_id" value="" />
                     
                 <button type="button" class="btn btn-success" id="btnseguimiento">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -67,10 +67,11 @@
                                 <tr>
                                     <th scope="col-3">Usuario</th>
                                     <th scope="col-3">fecha</th>
-                                    <th scope="col-6">Nota</th>
+                                    <th scope="col-6">Seguimiento</th>
                                 </tr>
                             </thead>
                             <tbody id="tblseguimientos" scope="row">
+                                
                             </tbody>
                         </table>
                     </div>

@@ -1,7 +1,5 @@
 
 $(document).ready(function () {
-
-
     $("#registro_clientes").DataTable({
         language: {
             url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
@@ -36,7 +34,6 @@ $(document).ready(function () {
         },
         ],
     });
-
 });
 
 function vistaregistro(){
@@ -46,9 +43,9 @@ function vistaregistro(){
 function opcionesprecalificacion(option, id) {
     var opt = $(option).val();
     if (opt == 1) {
+        lista_seguimientos(id);
         $("#registropre_id").val(id);
         $("#modal_seguimiento").modal("show");
-
     } else if (opt == 2) {
         Swal.fire({
             title: "Eliminar",
@@ -84,23 +81,17 @@ function opcionesprecalificacion(option, id) {
     $(option).prop("selectedIndex", 0);
 }
 
-
-
 $('#btnseguimiento').on('click', function() {
-
     var id = $("#registropre_id").val();
-
     var datos = new FormData();
     datos.append("id_registro",id); 
     datos.append("txtseguimiento",$("#txtseguimiento").val()); 
 
-
     axios.post(principalUrl + "registro/guardar_seguimiento", datos)
     .then((respuesta) => {
-
         $("#txtseguimiento").val("");
         $("#txtseguimiento").focus();
-
+        lista_seguimientos(id);
         Swal.fire({
             position: "top-end",
             icon: "success",
@@ -114,6 +105,22 @@ $('#btnseguimiento').on('click', function() {
             console.log(error.response.data);
         }
     });
-    
-
 });
+
+function lista_seguimientos(id){
+
+    axios.post(principalUrl + "registro/listado/" + id)
+    .then((respuesta) => {
+        $("#tblseguimientos").html("");
+        respuesta.data.forEach(function (element) {
+            $("#tblseguimientos").append(
+                "<tr><td>" +element.name +"</td><td>" +moment(element.fecha, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY")+"</td><td>" +element.seguimiento +"</td></tr>"
+            );
+        });
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
