@@ -54,4 +54,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/eliminar/{id}', [App\Http\Controllers\UserController::class, 'destroy']);
 
+    Route::post('registro/guardar_seguimiento', [App\Http\Controllers\SeguimientoController::class, 'create']);
+
 });

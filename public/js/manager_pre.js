@@ -83,3 +83,37 @@ function opcionesprecalificacion(option, id) {
     }
     $(option).prop("selectedIndex", 0);
 }
+
+
+
+$('#btnseguimiento').on('click', function() {
+
+    var id = $("#registropre_id").val();
+
+    var datos = new FormData();
+    datos.append("id_registro",id); 
+    datos.append("txtseguimiento",$("#txtseguimiento").val()); 
+
+
+    axios.post(principalUrl + "registro/guardar_seguimiento", datos)
+    .then((respuesta) => {
+
+        $("#txtseguimiento").val("");
+        $("#txtseguimiento").focus();
+
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Registro creado exitosamente!",
+            showConfirmButton: false,
+            timer: 1200,
+        });
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+    
+
+});

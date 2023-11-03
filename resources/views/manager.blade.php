@@ -51,11 +51,11 @@
                     {!! csrf_field() !!}
                     <div class="form-group ">
                         <label for="start">Seguimiento:</label>
-                        <textarea name="nota" rows="2" required="" id="nota" class="form-control" cols="50"></textarea>
+                        <textarea name="txtseguimiento" rows="2" required="" id="txtseguimiento" class="form-control" cols="50"></textarea>
                     </div>
                     <input type="hidden" name="registropre_id" id="registropre_id" value="" />
                     
-                <button type="button" class="btn btn-success" id="btnNota">Guardar</button>
+                <button type="button" class="btn btn-success" id="btnseguimiento">Guardar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </form>
             </div>

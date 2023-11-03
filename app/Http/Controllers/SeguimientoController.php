@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\seguimiento;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class SeguimientoController extends Controller
 {
@@ -22,9 +23,13 @@ class SeguimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $seguimiento = new seguimiento;
+        $seguimiento->seguimiento         = $request->txtseguimiento;
+        $seguimiento->id_precalificacion  = $request->id_registro;
+        $seguimiento->id_usuario          = auth()->user()->id;
+        $seguimiento->save();
     }
 
     /**
