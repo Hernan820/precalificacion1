@@ -123,7 +123,7 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- HEADER MOBILE-->
-    <nav class="navbar navbar-expand-lg navbar-light "  style="background:#1d3668">
+    <nav class="navbar navbar-expand-dark navbar-dark  d-lg-none "  style="background:#1d3668">
         <a class="image d-lg-none" href="{{ url('/')}}">
             <img class="image d-lg-none" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}" />
         </a>        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -133,7 +133,10 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item d-lg-none ">
-                    <a class="nav-link text-white" href="{{ asset('ususarios') }}">Usuarios</a>
+                    <a class="nav-link text-white" onclick="vistaregister()" >Usuarios</a>
+                </li>
+                <li class="nav-item d-lg-none ">
+                    <a class="nav-link text-white" onclick="vista_home()" >Home</a>
                 </li>
                 <li class="nav-item active">
                     <!-- Contenido del menú -->
@@ -180,9 +183,10 @@
             style="background:#1d3668">
             <p class="fs-5 px-3  pt-3 text-white">Copyright © 2023 Contigo Mortgage. All rights reserved</p>
             <div id="iconos">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-twitter"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i class="bi bi-instagram"></i></a>
+                <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
+                <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
             </div>
             <br><br><br>
         </footer>

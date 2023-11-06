@@ -36,7 +36,7 @@ function tblprecalificaciones(){
             render: function (data, type, row) {
                 return (
                     '<select id="usuario_opcion" onchange="opcionesprecalificacion(this,' + data +
-                    ')" class="form-control opciones"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></selec>'
+                    ')" class="form-control opciones"  placeholder="prubeanomas"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></selec>'
                 );
             }
         },

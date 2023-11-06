@@ -9,7 +9,7 @@
 <div class="container-fluid pt-5">
     <div class="col-md-12 table-responsive">
         <table id="registro_clientes"
-            class="table table-striped table-bordered dt-responsive nowrap datatable text-center table-sm" class="display"
+            class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
             cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
             <thead>
                 <tr>
@@ -18,16 +18,16 @@
                     <th class="col-md-">Estado Elegido</th>
                     <th class="col-md-"> Estatus</th>
                     <th class="col-md-"> Tipo Empleo</th>
-                    <th class="col-md-"> Precio por Hora</th>
+                    <th class="col-md-"> Ingresos por Año</th>
                     <th class="col-md-"> Cantidad Horas</th>
                     <th class="col-md-"> Taxes 2022</th>
                     <th class="col-md-">Taxes 2023</th>
                     <th class="col-md-"> Down Payment</th>
                     <th class="col-md-"> Comentario</th>
-                    <th class="col-md-"> </th>
+                    <th class="col-md-2"> </th>
                 </tr>
             </thead>
-            <tbody id="insertadatoshoras" scope="row">
+            <tbody  scope="row">
             </tbody>
         </table>
     </div>

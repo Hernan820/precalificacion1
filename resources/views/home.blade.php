@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('js/proceso.js') }}" defer></script>
 
 <style>
@@ -41,7 +40,7 @@
     }
     .col-sm-3 .card {
         width: 160px; 
-        height: 255px; 
+        height: 200px; 
     }
 
     .col-sm-3 .card img {
@@ -55,7 +54,7 @@
     }
 
     .card{
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 }
 </style>
