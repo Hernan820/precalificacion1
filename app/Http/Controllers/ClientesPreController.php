@@ -10,6 +10,7 @@ use DateInterval;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class ClientesPreController extends Controller
 {
@@ -117,5 +118,15 @@ class ClientesPreController extends Controller
         $segui->estado_registro = 0;
         $segui->save();
 
+    }
+    /**
+     * 
+     * 
+     */
+    public function datosform(){
+        $sql = "SELECT  wp_wpforms_db.form_id,  wp_wpforms_db.form_value FROM wp_wpforms_db ";
+
+        $datosfomr = DB::select($sql);
+        return response()->json($datosfomr);
     }
 }

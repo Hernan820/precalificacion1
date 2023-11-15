@@ -16,15 +16,8 @@
                     <th class="col-md-">Nombre Cliente</th>
                     <th class="col-md-">Numero Telefono</th>
                     <th class="col-md-">Estado Elegido</th>
-                    <th class="col-md-"> Estatus</th>
-                    <th class="col-md-"> Tipo Empleo</th>
-                    <th class="col-md-"> Ingresos por Año</th>
-                    <th class="col-md-"> Cantidad Horas</th>
-                    <th class="col-md-"> Taxes 2022</th>
-                    <th class="col-md-">Taxes 2023</th>
-                    <th class="col-md-"> Down Payment</th>
-                    <th class="col-md-"> Comentario</th>
-                    <th class="col-md-2"> </th>
+                    <th class="col-md-"> Opciones</th>
+
                 </tr>
             </thead>
             <tbody  scope="row">

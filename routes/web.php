@@ -29,6 +29,8 @@ Route::get('agradecimiento', function () {
     return view('calificacion');
 });
 
+Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
+
 //Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
 
 Route::middleware(['auth'])->group(function () {

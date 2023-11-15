@@ -18,8 +18,8 @@ class CreateSeguimientosTable extends Migration
             $table->text("seguimiento")->nullable();  
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
-            $table->unsignedBigInteger('id_precalificacion');
-            $table->foreign('id_precalificacion')->references('id')->on('clientes_pres');
+            $table->unsignedBigInteger('id_fomrscontigo');
+            $table->foreign('id_fomrscontigo')->references('form_id')->on('wp_wpforms_db');
             $table->timestamps();
         });
     }
