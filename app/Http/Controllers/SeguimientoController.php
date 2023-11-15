@@ -27,7 +27,7 @@ class SeguimientoController extends Controller
     {
         $seguimiento = new seguimiento;
         $seguimiento->seguimiento         = $request->txtseguimiento;
-        $seguimiento->id_precalificacion  = $request->id_registro;
+        $seguimiento->id_fomrscontigo   = $request->id_registro;
         $seguimiento->id_usuario          = auth()->user()->id;
         $seguimiento->save();
     }
@@ -53,7 +53,7 @@ class SeguimientoController extends Controller
     {
         $seguimientos = seguimiento::join('users','users.id','=','seguimientos.id_usuario')
         ->select("users.*","seguimientos.*","seguimientos.created_at as fecha")
-        ->where("seguimientos.id_precalificacion","=",$id)->get();
+        ->where("seguimientos.id_fomrscontigo","=",$id)->get();
         return response()->json($seguimientos);
     }
 

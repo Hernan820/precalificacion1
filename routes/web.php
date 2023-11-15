@@ -29,7 +29,6 @@ Route::get('agradecimiento', function () {
     return view('calificacion');
 });
 
-Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
 
 //Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);
 
@@ -39,6 +38,12 @@ Route::middleware(['auth'])->group(function () {
         return view('manager');
     });
     
+
+    Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
+
+
+    Route::post('registro/listado/{id}', [App\Http\Controllers\SeguimientoController::class, 'show']);
+
 
     Route::get('lista_cliente', [App\Http\Controllers\ClientesPreController::class, 'show']);
 
@@ -58,7 +63,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/guardar_seguimiento', [App\Http\Controllers\SeguimientoController::class, 'create']);
 
-    Route::post('registro/listado/{id}', [App\Http\Controllers\SeguimientoController::class, 'show']);
 
     Route::post('registro/eliminar_registro/{id}', [App\Http\Controllers\ClientesPreController::class, 'destroy']);
 
