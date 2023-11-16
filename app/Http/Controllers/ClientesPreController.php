@@ -124,7 +124,7 @@ class ClientesPreController extends Controller
      * 
      */
     public function datosform(){
-        $sql = "SELECT  wp_wpforms_db.form_id,  wp_wpforms_db.form_value FROM wp_wpforms_db ";
+        $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date FROM wp_wpforms_db ";
 
         $datosfomr = DB::select($sql);
         return response()->json($datosfomr);

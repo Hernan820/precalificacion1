@@ -76,7 +76,7 @@
                             <li class="nav-item">
                             <li class="has-sub text-white" style="padding-top: 35px;">
                                 <header class="container-fluid bg-primary d-flex justify-content-center rounded">
-                                    <p class="text-light mb-0 p-2 fs-6">Contactanos (631) 841-8105</p>
+                                    {{-- <p class="text-light mb-0 p-2 fs-6">Contactanos (631) 841-8105</p> --}}
                                 </header>
                             </li>
 
@@ -96,10 +96,20 @@
                                             </a>
             
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                @guest
+
+                                                @else
+                                                @if (Route::has('login'))
+                                                @if(@Auth::user()->hasRole('administrador'))
+
                                                 <a class="dropdown-item" onclick="vistaregister()" >Usuarios</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" onclick="vista_home()" >Home</a>
                                                 <div class="dropdown-divider"></div>
+
+                                                @endif
+                                                @endif
+                                                @endguest
                                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                                       onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
@@ -132,12 +142,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
+
+                @guest
+                @else
+                @if (Route::has('login'))
+                @if(@Auth::user()->hasRole('administrador'))
+
                 <li class="nav-item d-lg-none ">
                     <a class="nav-link text-white" onclick="vistaregister()" >Usuarios</a>
                 </li>
                 <li class="nav-item d-lg-none ">
                     <a class="nav-link text-white" onclick="vista_home()" >Home</a>
                 </li>
+
+                @endif
+                @endif
+                @endguest
+
+
                 <li class="nav-item active">
                     <!-- Contenido del menú -->
                        <!-- Authentication Links -->

@@ -6,6 +6,13 @@
 
 <script src="{{ asset('js/manager_pre.js') }}" defer></script>
 
+
+<style>
+    table.dataTable tbody td {
+    padding: 3px 5px !important;
+}
+</style>
+
 <div class="container-fluid pt-5">
     <div class="col-md-12 table-responsive">
         <table id="registro_clientes"
@@ -13,6 +20,7 @@
             cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
             <thead>
                 <tr>
+                    <th class="col-md-">Fechas</th>
                     <th class="col-md-">Nombre Cliente</th>
                     <th class="col-md-">Numero Telefono</th>
                     <th class="col-md-">Estado Elegido</th>

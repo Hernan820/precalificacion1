@@ -21,10 +21,13 @@ function datosforms(){
     const ayudaPart = parts[parts.indexOf('s:21:"Como podemos ayudarte"') + 1];
     const ayudaValue = ayudaPart.slice(4, -1).replace(/^"+/, ''); 
 
+    var fechasformat =   moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
+    
     return {
-        Nombre: nombreValue.slice(1, -1), 
-        Teléfono: telefonoValue.slice(1, -1), 
+        Nombre: nombreValue.slice(1), 
+        Teléfono: telefonoValue.slice(2, -1), 
         'Como podemos ayudarte': ayudaValue.slice(1, -1),
+        fechaform : fechasformat,
         id_forms: item.form_id 
     };
 
@@ -55,6 +58,7 @@ function tblformulario(datosFiltrados){
         order: [[0, "desc"]],
         data: datosFiltrados,
         columns: [
+            { data: 'fechaform' },
             { data: 'Nombre' },
             { data: 'Teléfono' },
             { data: 'Como podemos ayudarte' },
@@ -62,12 +66,52 @@ function tblformulario(datosFiltrados){
             render: function (data, type, row) {
                 return (
                     '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control opciones"  placeholder="prubeanomas"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></selec>'
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></selec>'
                 );
             }
         },
         ],
+        columnDefs: [
+            {
+                targets: 0,
+                type: 'date-ddmmyyyy' 
+            }
+        ]
     });
+
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        'date-ddmmyyyy-pre': function (a) {
+            // Formato: vie. 10 nov. 2023 06:54 PM
+            var months = {
+                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
+                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
+            };
+    
+            var dateParts = a.split(' ');
+            var day = parseInt(dateParts[1]);
+            var month = months[dateParts[2].toLowerCase()];
+            var year = parseInt(dateParts[3]);
+            var timeParts = dateParts[4].split(':');
+            var hour = parseInt(timeParts[0]);
+            var minutes = parseInt(timeParts[1]);
+            var period = dateParts[5].toUpperCase();
+    
+            if (period === 'PM' && hour < 12) {
+                hour += 12;
+            }
+    
+            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
+            return isoDate;
+        },
+        'date-ddmmyyyy-asc': function (a, b) {
+            return a.localeCompare(b);
+        },
+        'date-ddmmyyyy-desc': function (a, b) {
+            return b.localeCompare(a);
+        }
+    });
+    
+    
 }
 
 function vistaregistro(){

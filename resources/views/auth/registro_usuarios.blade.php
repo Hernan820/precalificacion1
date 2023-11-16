@@ -2,6 +2,14 @@
 
 @section('content')
 
+
+@if (Route::has('login'))
+@if(@Auth::user()->hasRole('administrador'))
+
+
+
+
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
 <script src="{{ asset('js/registro.js') }}" defer></script>
@@ -119,5 +127,9 @@
 
 </div>
 
+@else
+<h2>No tienes permisos para ver esta pagina.</h2>
+@endif
+@endif
 
 @endsection
