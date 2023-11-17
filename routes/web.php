@@ -27,9 +27,9 @@ Route::get('precalificacion', [App\Http\Controllers\Controller::class, 'vistapro
 
 Route::post('home/precalificacion', [App\Http\Controllers\ClientesPreController::class, 'store']);
  
-Route::get('agradecimiento', function () {
-    return view('calificacion');
-});
+// Route::get('agradecimiento', function () {
+//     return view('calificacion');
+// });
 
 
 //Route::get('login_preaproval', [App\Http\Controllers\HomeController::class, 'Vista_login']);

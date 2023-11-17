@@ -11,6 +11,34 @@
     table.dataTable tbody td {
     padding: 3px 5px !important;
 }
+
+
+.datatable {
+        Word-wrap: break-Word;
+    }
+
+    table {
+        table-layout: fixed;
+    }
+
+    table td {
+        word-wrap: break-word;
+        max-width: 400px;
+    }
+
+    #registro_clientes td {
+        white-space: inherit;
+    }
+
+    @media only screen and (max-width: 600px) {
+    .table td {
+        width: 100px;
+    }
+}
+
+    .morecontent {
+        display: none;
+    }
 </style>
 
 <div class="container-fluid pt-5">
@@ -23,7 +51,9 @@
                     <th class="col-md-">Fechas</th>
                     <th class="col-md-">Nombre Cliente</th>
                     <th class="col-md-">Numero Telefono</th>
-                    <th class="col-md-">Estado Elegido</th>
+                    <th class="col-md-">Comentario</th>
+                    <th class="col-md-"></th>
+
                     <th class="col-md-"> Opciones</th>
 
                 </tr>
