@@ -127,7 +127,11 @@ class ClientesPreController extends Controller
         $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,wp_wpforms_db.form_post_id,
         (SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id   ) as total_seguimiento 
         FROM wp_wpforms_db
-        LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id GROUP BY wp_wpforms_db.form_id;";
+        LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
+        LEFT JOIN estadoregistros on estadoregistros.id_form = wp_wpforms_db.form_id
+        WHERE estadoregistros.id_form IS NULL
+        GROUP BY wp_wpforms_db.form_id
+        ";
 
         $datosfomr = DB::select($sql);
         return response()->json($datosfomr);

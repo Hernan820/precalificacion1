@@ -116,7 +116,7 @@ function tblformulario(datosFiltrados){
             render: function (data, type, row) {
                 return (
                     '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></selec>'
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></select>'
                 );
             }
         },
@@ -184,7 +184,7 @@ function opcionesformcontigo(option, id) {
             if (result.isConfirmed) {
                 axios.post(principalUrl + "registro/eliminar_registro/" + id)
                     .then((respuesta) => {
-                        tblprecalificaciones();
+                        datosforms();
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
