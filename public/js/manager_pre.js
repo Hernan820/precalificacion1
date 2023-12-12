@@ -133,7 +133,7 @@ function tblformulario(datosFiltrados){
                 if(rol_usuario === "administrador"){
                 return (
                     '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></select>'
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option></select>'
                 );
                 }else if(rol_usuario === "usuario"){
                     return (
@@ -261,7 +261,7 @@ function lista_seguimientos(id){
         $("#tblseguimientos").html("");
         respuesta.data.forEach(function (element) {
             $("#tblseguimientos").append(
-                "<tr><td>" +element.name +"</td><td>" +moment(element.fecha, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY")+"</td><td>" +element.seguimiento +"</td></tr>"
+                "<tr><td>" +element.name +"</td><td>" +moment(element.fecha, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY  hh:mm A")+"</td><td>" +element.seguimiento +"</td></tr>"
             );
         });
     })

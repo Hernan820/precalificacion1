@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\estadoregistro;
 use Illuminate\Http\Request;
+use App\Models\bitacora;
+
 
 class EstadoregistroController extends Controller
 {
@@ -84,5 +86,14 @@ class EstadoregistroController extends Controller
         $estado->estado = 0;
         $estado->id_form = $id;
         $estado->save();
+
+        
+        $bitacora = new bitacora;
+        $bitacora->fecha = date('Y-m-d H:i:s');
+        $bitacora->accion = "Eliminó registro";
+        $bitacora->nombre_usuario = auth()->user()->name;
+        $bitacora->id_usuario  = auth()->user()->id;
+        $bitacora->id_registrocliente   = $id;
+        $bitacora-> save();
     }
 }
