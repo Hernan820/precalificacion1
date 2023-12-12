@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\estadoregistro;
 use Illuminate\Http\Request;
 use App\Models\bitacora;
+date_default_timezone_set("America/New_York");
 
 
 class EstadoregistroController extends Controller

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\bitacora;
 use Illuminate\Http\Request;
+date_default_timezone_set("America/New_York");
 
 class BitacoraController extends Controller
 {
@@ -44,9 +45,13 @@ class BitacoraController extends Controller
      * @param  \App\Models\bitacora  $bitacora
      * @return \Illuminate\Http\Response
      */
-    public function show(bitacora $bitacora)
+    public function show($id)
     {
-        //
+        $bitacora = bitacora::join("users","users.id","=","bitacoras.id_usuario")
+                    ->where("bitacoras.id_registrocliente","=",$id)
+                    ->get();
+
+      return $bitacora ;
     }
 
     /**

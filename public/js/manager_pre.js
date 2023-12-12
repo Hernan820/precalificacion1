@@ -224,6 +224,36 @@ function opcionesformcontigo(option, id) {
             } else {
             }
         });
+    }else if (opt == 3) {
+
+        axios.post(principalUrl + "registro/bitacora/"+id)
+        .then((respuesta) => {
+            $('#lista_bitacora').html('');
+
+            if(respuesta.data.length === 0){
+                Swal.fire({
+                    position: "top-center",
+                    icon: "info",
+                    title: "No tiene bitacoras",
+                    showConfirmButton: false,
+                });
+                return;
+            }
+            respuesta.data.forEach(function (element) {
+                if(element.accion != 'Se creo la cita' || element.accion != 'reagendado'  ){
+                    $("#lista_bitacora").append(
+                        "<tr class='filas'><td>" +element.name+"</td><td>" + moment(element.fecha, "YYYY-MM-DD hh:mm A").format("DD-MMM-YY")  + "</td><td>" + moment(element.fecha, "YYYY-MM-DD hh:mm A").format("hh:mm A")  + "</td><td>" + element.accion +"</td></tr>"
+                    );
+                }
+            });     
+            $("#modal_bitacora_fmr").modal("show");
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+
     }
     $(option).prop("selectedIndex", 0);
 }

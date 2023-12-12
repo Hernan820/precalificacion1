@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\seguimiento;
 use Illuminate\Http\Request;
 use App\Models\User;
+date_default_timezone_set("America/New_York");
 
 class SeguimientoController extends Controller
 {

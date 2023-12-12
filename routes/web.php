@@ -68,4 +68,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/eliminar_registro/{id}', [App\Http\Controllers\EstadoregistroController::class, 'destroy']);
 
+    Route::post('registro/bitacora/{id}', [App\Http\Controllers\BitacoraController::class, 'show']);
+
 });
