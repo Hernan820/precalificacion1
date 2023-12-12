@@ -17,7 +17,13 @@ function datosforms(){
     const nombrePart = parts[parts.indexOf('s:6:"Nombre"') + 1];
     const nombreValue = nombrePart.slice(4, -1); 
 
-    const telefonoPart = parts[parts.indexOf('s:9:"Teléfono"') + 1];
+    let telefonoPart ;
+    if(parts[4] === 's:0:\"\"'){   
+         telefonoPart = parts[parts.indexOf('s:0:\"\"') + 1];
+    }else{
+         telefonoPart = parts[parts.indexOf('s:9:"Teléfono"') + 1];  
+    }
+
     const telefonoValue = telefonoPart.substring(4, telefonoPart.length - 1);
 
     var ayudaPart='';
@@ -59,8 +65,16 @@ function datosforms(){
     
     });
 
-    var arrFiltrado = datosFiltrados.filter(function(elemento) {
-        return elemento !== undefined;
+    var arrFiltrado = datosFiltrados.filter(function(elemento,i) {
+
+        const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
+
+         if( elemento !== undefined   ){    
+            if (telefonoRegex.test(elemento.Teléfono)) {
+                return elemento;
+             }      
+           }
+
       });
       
     tblformulario(arrFiltrado);
