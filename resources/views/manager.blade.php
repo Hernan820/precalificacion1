@@ -4,8 +4,13 @@
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<script src="{{ asset('js/manager_pre.js') }}" defer></script>
+<script src="{{ asset('js/manager_pre.js?v=abcdefg121387') }}" defer></script>
 
+@if(@Auth::user()->hasRole('administrador'))
+<input type="hidden" name="rol" id="rol" value="administrador" />
+@elseif (@Auth::user()->hasRole('usuario'))
+<input type="hidden" name="rol" id="rol" value="usuario" />
+@endif
 
 <style>
     table.dataTable tbody td {

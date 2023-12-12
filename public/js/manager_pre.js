@@ -89,6 +89,7 @@ function datosforms(){
 }
 
 function tblformulario(datosFiltrados){
+    var rol_usuario = $("#rol").val();
    var tblfomrcontigo = $("#registro_clientes").DataTable();
    tblfomrcontigo.destroy();
 
@@ -128,10 +129,18 @@ function tblformulario(datosFiltrados){
             { data: "id_forms",
             width: "100px" ,
             render: function (data, type, row) {
+
+                if(rol_usuario === "administrador"){
                 return (
                     '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
                     ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option></select>'
                 );
+                }else if(rol_usuario === "usuario"){
+                    return (
+                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
+                    );
+                }
             }
         },
         ],
