@@ -102,7 +102,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col-3">Usuario</th>
-                                    <th scope="col-3">fecha</th>
+                                    <th scope="col-3">Fecha</th>
                                     <th scope="col-6">Seguimiento</th>
                                 </tr>
                             </thead>
