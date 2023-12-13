@@ -10,7 +10,7 @@ function datosforms(){
     .then((respuesta) => {
 
     let datosformulario = respuesta.data;
- 
+    let datos_eliminaos =[] ;
     var datosFiltrados = datosformulario.map(item => {
     
     const parts = item.form_value.split(';');
@@ -53,32 +53,49 @@ function datosforms(){
     var fechasformat =   moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
 
     if(telefonoValue.length < 20){
-        return {
-            Nombre: nombreValue.slice(1), 
-            Teléfono: telefonoValue.replace(/[:"]/g, ''), 
-            'Como podemos ayudarte': ayudaValue,
-            fechaform : fechasformat,
-            id_forms: item.form_id ,
-            total_segui: item.total_seguimiento
-        };
+
+        if(item.estado != 0){
+            return {
+                Nombre: nombreValue.slice(1), 
+                Teléfono: telefonoValue.replace(/[:"]/g, ''), 
+                'Como podemos ayudarte': ayudaValue,
+                fechaform : fechasformat,
+                id_forms: item.form_id ,
+                total_segui: item.total_seguimiento
+               };
+        }else{
+            datos_eliminaos.push({
+                Nombre: nombreValue.slice(1),
+                Teléfono: telefonoValue.replace(/[:"]/g, ''),
+                'Como podemos ayudarte': ayudaValue,
+                fechaform: fechasformat,
+                id_forms: item.form_id,
+                total_segui: item.total_seguimiento
+            });
+        }
     }
-    
     });
 
     var arrFiltrado = datosFiltrados.filter(function(elemento,i) {
-
         const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
-
          if( elemento !== undefined   ){    
             if (telefonoRegex.test(elemento.Teléfono)) {
                 return elemento;
              }      
            }
+      });
 
+      var arrFiltrado_elimin = datos_eliminaos.filter(function(elemento,i) {
+        const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
+         if( elemento !== undefined   ){    
+            if (telefonoRegex.test(elemento.Teléfono)) {
+                return elemento;
+             }      
+           }
       });
       
     tblformulario(arrFiltrado);
-
+    tblformulario_eliminados(arrFiltrado_elimin);
     })
     .catch((error) => {
         if (error.response) {
@@ -102,6 +119,101 @@ function tblformulario(datosFiltrados){
         bInfo: false,
         order: [[0, "desc"]],
         data: datosFiltrados,
+        columns: [
+            { data: 'fechaform',
+            width: "100px" },
+            { data: 'Nombre' ,
+            width: "100px" },
+            { data: 'Teléfono' ,
+            width: "100px" },
+            { data: 'Como podemos ayudarte',
+            width: "100px" },
+            {
+                data: "total_segui",
+                width: "25px",
+                className: "text-center",
+                render: function (data, type, row) {
+                  //  var id_notacita = row['id'];
+                    return `<td>
+                    <button type="button" class="btn btn-primary">
+                    <i class="bi bi-bell bi-3x icono_notas"></i> <span class="badge badge-light">`+data+`</span>
+                    <span class="sr-only">unread messages</span>
+                  </button>
+                  </td>
+                  `;
+                },
+            },
+            { data: "id_forms",
+            width: "100px" ,
+            render: function (data, type, row) {
+
+                if(rol_usuario === "administrador"){
+                return (
+                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option></select>'
+                );
+                }else if(rol_usuario === "usuario"){
+                    return (
+                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
+                    );
+                }
+            }
+        },
+        ],
+        columnDefs: [
+            {
+                targets: 0,
+                type: 'date-ddmmyyyy' 
+            }
+        ]
+    });
+
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        'date-ddmmyyyy-pre': function (a) {
+            // Formato: vie. 10 nov. 2023 06:54 PM
+            var months = {
+                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
+                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
+            };
+            var dateParts = a.split(' ');
+            var day = parseInt(dateParts[1]);
+            var month = months[dateParts[2].toLowerCase()];
+            var year = parseInt(dateParts[3]);
+            var timeParts = dateParts[4].split(':');
+            var hour = parseInt(timeParts[0]);
+            var minutes = parseInt(timeParts[1]);
+            var period = dateParts[5].toUpperCase();
+    
+            if (period === 'PM' && hour < 12) {
+                hour += 12;
+            }
+            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
+            return isoDate;
+        },
+        'date-ddmmyyyy-asc': function (a, b) {
+            return a.localeCompare(b);
+        },
+        'date-ddmmyyyy-desc': function (a, b) {
+            return b.localeCompare(a);
+        }
+    });
+}
+
+function tblformulario_eliminados(datosFiltrados_eliminados){
+    var rol_usuario = $("#rol").val();
+   var tblfomrcontigo = $("#registro_clientes_eliminados").DataTable();
+   tblfomrcontigo.destroy();
+
+    tblfomrcontigo = $("#registro_clientes_eliminados").DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        },
+        lengthChange: false,
+        pageLength: 20,
+        bInfo: false,
+        order: [[0, "desc"]],
+        data: datosFiltrados_eliminados,
         columns: [
             { data: 'fechaform',
             width: "100px" },

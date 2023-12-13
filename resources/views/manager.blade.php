@@ -4,7 +4,7 @@
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<script src="{{ asset('js/manager_pre.js?v=abcdefg121387') }}" defer></script>
+<script src="{{ asset('js/manager_pre.js?v=abcdefg1821387') }}" defer></script>
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -45,29 +45,66 @@
         display: none;
     }
 </style>
+<br><br>
 
-<div class="container-fluid pt-5">
-    <div class="col-md-12 table-responsive">
-        <table id="registro_clientes"
-            class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
-            cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
-            <thead>
-                <tr>
-                    <th class="col-md-">Fechas</th>
-                    <th class="col-md-">Nombre Cliente</th>
-                    <th class="col-md-">Numero Telefono</th>
-                    <th class="col-md-">Comentario</th>
-                    <th class="col-md-"></th>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Registros clientes</a>
+      @if(@Auth::user()->hasRole('administrador'))
 
-                    <th class="col-md-"> Opciones</th>
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Eliminados</a>
+      @endif
 
-                </tr>
-            </thead>
-            <tbody  scope="row">
-            </tbody>
-        </table>
     </div>
-</div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+        <div class="container-fluid pt-5">
+            <div class="col-md-12 table-responsive">
+                <table id="registro_clientes"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
+                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody  scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+        <div class="container-fluid pt-5">
+            <div class="col-md-12 table-responsive">
+                <table id="registro_clientes_eliminados"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
+                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody  scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
 
 <!-- Modal Notas-->
 <div class="modal fade" id="modal_seguimiento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
