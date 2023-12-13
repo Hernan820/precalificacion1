@@ -35,6 +35,10 @@
         white-space: inherit;
     }
 
+    #registro_clientes_eliminados td {
+        white-space: inherit;   
+    }
+
     @media only screen and (max-width: 600px) {
     .table td {
         width: 100px;
