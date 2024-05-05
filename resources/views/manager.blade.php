@@ -54,14 +54,16 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Registros clientes</a>
-      @if(@Auth::user()->hasRole('administrador'))
+      <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab" aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
 
+      @if(@Auth::user()->hasRole('administrador'))
       <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Eliminados</a>
       @endif
-
     </div>
   </nav>
+
   <div class="tab-content" id="nav-tabContent">
+
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
         <div class="container-fluid pt-5">
@@ -85,8 +87,32 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
+    <div class="tab-pane fade" id="nav-seminarios" role="tabpanel" aria-labelledby="tab-seminarios">
+        <div class="container-fluid pt-5">
+            <div class="col-md-12 table-responsive">
+                <table id="registro_clientes_seminarios"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
+                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Estado</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody  scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
         <div class="container-fluid pt-5">
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_eliminados"
@@ -108,6 +134,7 @@
             </div>
         </div>
     </div>
+
   </div>
 
 <!-- Modal Notas-->

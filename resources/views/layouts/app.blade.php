@@ -104,12 +104,13 @@
 
                                                 <a class="dropdown-item" onclick="vistaregister()" >Usuarios</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" onclick="vista_home()" >Home</a>
-                                                <div class="dropdown-divider"></div>
 
                                                 @endif
                                                 @endif
                                                 @endguest
+                                                
+                                                <a class="dropdown-item" onclick="vista_home()" >Home</a>
+                                                <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                                       onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
