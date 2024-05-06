@@ -89,7 +89,18 @@
     </div>
 
     <div class="tab-pane fade" id="nav-seminarios" role="tabpanel" aria-labelledby="tab-seminarios">
-        <div class="container-fluid pt-5">
+        <div class="container-fluid pt-2">
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
+                        <div class="form-group mb-1">
+                            <input class="btn btn-primary text-center" id="modalcampanapersonalizada" type="button" value="Campaña Personalizada">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_seminarios"
                     class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
@@ -227,6 +238,67 @@
         </div>
     </div>
 </div>
+
+    <!-- Modal CAMPÀNA DE MENSAJE-->
+    <div class="modal fade" id="modal_campana_perso" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Campaña Personalizada
+                    </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="frmmensaje">
+
+                        {!! csrf_field() !!}
+                        <div class="form-group ">
+                            <label for="start">Agrega mensaje personalizado:</label>
+                            <textarea name="txtmensaje_per" rows="5" required="" id="txtmensaje_per"
+                                class="form-control" cols="75"></textarea>
+                        </div>
+                        <div class="text-">
+                            <div class="form-check mr-5">
+                                <input class="form-check-input estados_citas" type="checkbox" value="new_york"
+                                    name="seminario_ny" id="seminario_ny">
+                                <label class="form-check-label" for="seminario_ny">
+                                   Seminario New york
+                                </label>
+                            </div>
+                            <div class="form-check mr-5">
+                                <input class="form-check-input estados_citas" type="checkbox" value="new_jersey"
+                                    name="seminario_nj" id="seminario_nj">
+                                <label class="form-check-label" for="seminario_nj">
+                                    Seminario New Jersey
+                                </label>
+                            </div>
+                            <div class="form-check mr-5">
+                                <input class="form-check-input estados_citas" type="checkbox" value="connecticut"
+                                    name="seminario_ct" id="seminario_ct">
+                                <label class="form-check-label" for="seminario_ct">
+                                    Seminario Connecticut
+                                </label>
+                            </div>
+                            <div class="form-check mr-5">
+                                <input class="form-check-input estados_citas" type="checkbox" value="pensilvania"
+                                    name="seminario_pa" id="seminario_pa">
+                                <label class="form-check-label" for="seminario_pa">
+                                    Seminario Pensilvania
+                                </label>
+                            </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btncampana_personalizad">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

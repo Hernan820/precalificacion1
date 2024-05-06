@@ -68,4 +68,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('registro/bitacora/{id}', [App\Http\Controllers\BitacoraController::class, 'show']);
 
+    Route::post('campana/mensajes', [App\Http\Controllers\ClientesPreController::class, 'Envio_campana']);
+
 });

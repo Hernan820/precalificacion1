@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Twilio\Rest\Client;
+use App\Models\seguimiento;
+
+date_default_timezone_set("America/New_York");
 
 class ClientesPreController extends Controller
 {
+    // credenciales de Twilio
+
+    public  $sid = "clave_sid";
+    public  $token  = "token clave";
+    public  $from= "numbertel";
+        
     /**
      * Display a listing of the resource.
      *
@@ -135,5 +145,94 @@ class ClientesPreController extends Controller
 
         $datosfomr = DB::select($sql);
         return response()->json($datosfomr);
+    }
+    /**
+     * 
+     * 
+     * 
+     */
+    public function Envio_campana(Request $request) {
+
+        $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,wp_wpforms_db.form_post_id,
+        (SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id   ) as total_seguimiento , 
+        estadoregistros.estado
+        FROM wp_wpforms_db
+        LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
+        LEFT JOIN estadoregistros on estadoregistros.id_form = wp_wpforms_db.form_id
+        GROUP BY wp_wpforms_db.form_id";
+
+        $datosfomr = DB::select($sql);
+
+        $frmnuevos = [];
+
+        foreach ($datosfomr as $item) {
+            if($item->form_post_id != 919 && $item->form_post_id != 782 && $item->form_post_id != 7){
+                if($item->estado == ''){
+
+                $total_seguimientoform = $item->total_seguimiento;
+                $date_time = new DateTime($item->form_date);
+                $formatted_date = $date_time->format("D d M Y h:i A");
+
+                array_push($frmnuevos, $item->form_value.";fecha:".$formatted_date.";id_forms:".$item->form_id.";total:".$total_seguimientoform.";vacio");
+
+               }
+            }
+        }
+
+        $datos_limpios = array_map(function($form) {
+            $form = substr($form, 6, -1);
+            $elements = explode(";", $form);
+            $cleanData = [];
+        
+            foreach ($elements as $element) {
+                $keyValue = explode(":", $element);
+                $key = trim(trim($keyValue[count($keyValue) - 1]), '"');
+        
+                if ($key == "Nombre" || $key == "Teléfono" || $key == "estado" || $key == "Comentario") {
+                    $formSiguiente = explode(":", $elements[array_search($element, $elements) + 1]);
+                    $valor = trim(trim($formSiguiente[count($formSiguiente) - 1]), '"');
+                    $cleanData[$key] = $valor;
+                } elseif ($keyValue[0] == "fecha" || $keyValue[0] == "total" || $keyValue[0] == "id_forms") {
+                    $dato = $keyValue[0];
+                    $valor = $keyValue[1];
+                    if ($keyValue[1] == '') {
+                        $valor = 0;
+                    }
+                    $cleanData[$dato] = $valor;
+                }
+            }
+        
+            return $cleanData;
+        }, $frmnuevos);
+
+        $arrayestados = explode(',', $request->estado_citas);
+
+        foreach ($datos_limpios as $cliente) {
+
+            $tel_cliente = "+". preg_replace("/[^0-9]/", "", $cliente['Teléfono']);
+
+            Log::info("muestar tel de cliente");
+            Log::info($tel_cliente);
+
+            if (in_array($cliente['estado'], $arrayestados)) {
+
+            try {
+                $twilio = new Client($this->sid, $this->token);
+                $twilio->messages->create($tel_cliente, ['from' => $this->from,'body' => $request->mensajetext,] );
+                Log::info("envio de mensaje ".$twilio);
+            } catch (\Exception $e) {
+                $res_twlio = false;
+                Log::error('Error en el envío de mensaje: ' . $e->getMessage());
+            }
+            $res_twlio = true;
+
+            $seguimiento = new seguimiento;
+            $seguimiento->seguimiento         = "Se envio informacion por medio de sms \n sms enviado:".$res_twlio." \n ". $request->mensajetext ;
+            $seguimiento->id_fomrscontigo   = $cliente['id_forms'];
+            $seguimiento->id_usuario          = auth()->user()->id;
+            $seguimiento->save();
+
+            }
+        }
     }
 }
