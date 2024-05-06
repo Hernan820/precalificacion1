@@ -1,8 +1,26 @@
 
 $(document).ready(function () {
-
     datosforms();
 });
+
+function mostrarAnimacion(mensaje_noti) {
+    let timerInterval;
+    Swal.fire({
+      title: mensaje_noti,
+      //html: "I will close in <b></b> milliseconds.",
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    });
+  }
 
 document.getElementById("modalcampanapersonalizada").addEventListener("click", function () {
     $(".estados_citas").prop("checked", false);
@@ -14,10 +32,10 @@ document.getElementById("btncampana_personalizad").addEventListener("click", fun
     var mensaje_per = $("#txtmensaje_per").val();
 
     if (mensaje_per === ""){Swal.fire("¡Agrega un mensaje personalizado antes de enviar la campaña!");return;}
-    if ($(".estados_citas:checked").length == 0) {Swal.fire("¡Selecciona a que citas quieres enviar tu campaña!");return;}
+    if ($(".estados_citas:checked").length == 0) {Swal.fire("¡Selecciona a que estados quieres enviar la campaña!");return;}
 
     Swal.fire({
-        text: "¿Estás seguro de enviar un mensaje a todas las citas registradas a tu nombre en este cupo?",
+        text: "¿Estás seguro de enviar un mensaje a todos los clientes registrado a los estados que has seleccionado?",
         icon: "info",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -36,9 +54,7 @@ document.getElementById("btncampana_personalizad").addEventListener("click", fun
                 }
             });
 
-
-           // return;
-          //  mostrarAnimacion("Enviando campaña");
+            mostrarAnimacion("Enviando campaña");
 
             var datosmensaje = new FormData();
                datosmensaje.append("mensajetext",mensaje_per);
@@ -46,57 +62,17 @@ document.getElementById("btncampana_personalizad").addEventListener("click", fun
 
             axios.post(principalUrl + "campana/mensajes",datosmensaje)
                 .then((respuesta) => {
-                   // Swal.close();
-
+                    Swal.close();
+                  if (respuesta.data == 1) {
+                    
                    Swal.fire({
                     position: "top-center",
                     icon: "success",
-                    title: "campa;a enviada para los clientes de los estados!",
+                    title: "Campaña enviada de manera exitosa!",
                     showConfirmButton: false,
-                });
-
-                    // if (respuesta.data.clientes.length == 0) {
-                    //     Swal.fire({
-                    //         position: "top-center",
-                    //         icon: "warning",
-                    //         title: "Campaña no se envió. No tienes citas con los estados elegidos en este cupo!",
-                    //         showConfirmButton: false,
-                    //     });
-                    //     //$('#modal_campana_perso').modal('hide');
-                    // } else {
-                    //     let successMessage = "Campaña enviada exitosamente!";
-                    //     let infoMessage;
-                    
-                    //     if (respuesta.data.res_twlio && respuesta.data.respuestawhat) {
-                    //         Swal.fire({
-                    //             position: "top-end",
-                    //             icon: "success",
-                    //             title: successMessage,
-                    //             showConfirmButton: false,
-                    //         });
-                    //         $('#modal_campana_perso').modal('hide');
-                    //     } else {
-                    //         if (respuesta.data.respuestawhat) {
-                    //             infoMessage = "Campaña enviada a tus clientes por medio de WhatsApp, pero a los de SMS texto no se envió!";
-                    //         } else if (respuesta.data.res_twlio) {
-                    //             infoMessage = "Campaña enviada a tus clientes por medio de SMS texto, pero a los de WhatsApp no se envió!";
-                    //         } else {
-                    //             infoMessage = "Fallo el envío de mensajes de WhatsApp y SMS texto!";
-                    //         }
-                    
-                    //         Swal.fire({
-                    //             title: "Información",
-                    //             text: infoMessage,
-                    //             icon: "info",
-                    //             showCancelButton: false,
-                    //             confirmButtonColor: "#3085d6",
-                    //             cancelButtonColor: "#d33",
-                    //             confirmButtonText: "Entendido!"
-                    //         }).then((result) => {
-                    //            $('#modal_campana_perso').modal('hide');
-                    //         });
-                    //     }
-                    // }
+                   });
+                   location.reload();
+                  } 
                 })
                 .catch((error) => {
                     if (error.response) {

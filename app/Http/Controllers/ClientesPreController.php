@@ -19,9 +19,8 @@ date_default_timezone_set("America/New_York");
 class ClientesPreController extends Controller
 {
     // credenciales de Twilio
-
     public  $sid = "clave_sid";
-    public  $token  = "token clave";
+    public  $token  = "clave_token";
     public  $from= "numbertel";
         
     /**
@@ -168,13 +167,10 @@ class ClientesPreController extends Controller
         foreach ($datosfomr as $item) {
             if($item->form_post_id != 919 && $item->form_post_id != 782 && $item->form_post_id != 7){
                 if($item->estado == ''){
-
                 $total_seguimientoform = $item->total_seguimiento;
                 $date_time = new DateTime($item->form_date);
                 $formatted_date = $date_time->format("D d M Y h:i A");
-
                 array_push($frmnuevos, $item->form_value.";fecha:".$formatted_date.";id_forms:".$item->form_id.";total:".$total_seguimientoform.";vacio");
-
                }
             }
         }
@@ -211,28 +207,29 @@ class ClientesPreController extends Controller
 
             $tel_cliente = "+". preg_replace("/[^0-9]/", "", $cliente['Teléfono']);
 
-            Log::info("muestar tel de cliente");
-            Log::info($tel_cliente);
-
             if (in_array($cliente['estado'], $arrayestados)) {
+            
+            $res_twlio ;
 
             try {
                 $twilio = new Client($this->sid, $this->token);
                 $twilio->messages->create($tel_cliente, ['from' => $this->from,'body' => $request->mensajetext,] );
-                Log::info("envio de mensaje ".$twilio);
+
+                $res_twlio = "enviado";
             } catch (\Exception $e) {
-                $res_twlio = false;
                 Log::error('Error en el envío de mensaje: ' . $e->getMessage());
+                $res_twlio = "fallo envio";
             }
-            $res_twlio = true;
 
             $seguimiento = new seguimiento;
-            $seguimiento->seguimiento         = "Se envio informacion por medio de sms \n sms enviado:".$res_twlio." \n ". $request->mensajetext ;
+            $seguimiento->seguimiento       = "Se envio informacion por medio de sms <br> sms enviado:".$res_twlio." <br> ". $request->mensajetext ;
             $seguimiento->id_fomrscontigo   = $cliente['id_forms'];
-            $seguimiento->id_usuario          = auth()->user()->id;
+            $seguimiento->id_usuario        = auth()->user()->id;
             $seguimiento->save();
 
             }
         }
+
+        return 1;
     }
 }

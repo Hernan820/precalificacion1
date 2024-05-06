@@ -256,6 +256,17 @@
                     <form action="" id="frmmensaje">
 
                         {!! csrf_field() !!}
+
+                        <div class="form-group ">
+                            <div class="row pl-2 pr-2">
+                                <div class="col-md-12 border border-danger rounded">
+                                    <p class="mb-0"> Ten en cuenta que la campaña será enviada únicamente a los clientes listados en la tabla y
+                                         que se encuentren en los estados que selecciones.
+                                          Los clientes que hayan sido eliminados no recibirán la campaña. </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group ">
                             <label for="start">Agrega mensaje personalizado:</label>
                             <textarea name="txtmensaje_per" rows="5" required="" id="txtmensaje_per"
@@ -293,7 +304,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btncampana_personalizad">Guardar</button>
+                    <button type="button" class="btn btn-success" id="btncampana_personalizad">Enviar compaña</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
