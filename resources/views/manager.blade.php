@@ -57,6 +57,7 @@
       <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab" aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
 
       @if(@Auth::user()->hasRole('administrador'))
+      <a class="nav-item nav-link" id="tab-seminarios-eliminados" data-toggle="tab" href="#nav-seminarios-eliminado" role="tab" aria-controls="nav-seminarios-eliminado" aria-selected="false">Seminarios eliminados</a>
       <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Eliminados</a>
       @endif
     </div>
@@ -103,6 +104,31 @@
 
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_seminarios"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
+                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Estado</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody  scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-seminarios-eliminado" role="tabpanel" aria-labelledby="tab-seminarios">
+        <div class="container-fluid pt-2">
+
+            <div class="col-md-12 table-responsive">
+                <table id="registro_clientes_seminarios_eliminados"
                     class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
                     cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
                     <thead>

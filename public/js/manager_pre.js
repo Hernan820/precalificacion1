@@ -91,6 +91,7 @@ function datosforms(){
         let datosformulario = respuesta.data;
         let datos_eliminaos =[] ;
         let frmnuevos = [];
+        let frmseminarios_eliminado = [];
 
         var datosFiltrados = datosformulario.map(item => {
         
@@ -134,6 +135,9 @@ function datosforms(){
                 if(item.estado != 0){
                 var total_seguimientoform =item.total_seguimiento;
                 frmnuevos.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+               }else{
+                var total_seguimientoform =item.total_seguimiento;
+                frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
                }
             }
             return;
@@ -214,6 +218,55 @@ function datosforms(){
     });
 
 
+    var datos_seminarios_eliminados = frmseminarios_eliminado.map(function(form) {
+        form = form.slice(6, -1);
+    
+        var elements = form.split(";");
+    
+        var cleanData = {};
+        
+        elements.forEach(function(element,i) {
+            var keyValue = element.split(":");
+            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
+
+            if(key == "Nombre"  ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Teléfono" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "estado" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Comentario" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(keyValue[0] == "fecha" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "total" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                if(keyValue[1] == ''){
+                    valor = 0;
+                }
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "id_forms" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }
+        });
+    
+        return cleanData;
+    });
+
+
         var arrFiltrado = datosFiltrados.filter(function(elemento,i) {
             const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
             if( elemento !== undefined   ){    
@@ -233,7 +286,8 @@ function datosforms(){
         });
 
        tblformulario(arrFiltrado);
-       tblformulario_seminarios(datos_limpios)
+       tblformulario_seminarios(datos_limpios);
+       tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
        tblformulario_eliminados(arrFiltrado_elimin);
     })
     .catch((error) => {
@@ -430,6 +484,97 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
     });
 }
 
+function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
+    var rol_usuario = $("#rol").val();
+   var tblfomrseminaio_eliminado = $("#registro_clientes_seminarios_eliminados").DataTable();
+   tblfomrseminaio_eliminado.destroy();
+
+    tblfomrseminaio_eliminado = $("#registro_clientes_seminarios_eliminados").DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        },
+        lengthChange: false,
+        pageLength: 20,
+        bInfo: false,
+        order: [[0, "desc"]],
+        data: datosFiltrados_seminarios,
+        columns: [
+            { data: 'fecha',
+            width: "100px" },
+            { data: 'Nombre' ,
+            width: "100px" },
+            { data: 'Teléfono' ,
+            width: "100px" },
+            { data: 'estado' ,
+            width: "100px" },
+            { data: 'Comentario',
+            width: "100px" },
+            {
+                data: "total",
+                width: "25px",
+                className: "text-center",
+                render: function (data, type, row) {
+                  //  var id_notacita = row['id'];
+                    return `<td>
+                    <button type="button" class="btn btn-primary">
+                    <i class="bi bi-bell bi-3x icono_notas"></i> <span class="badge badge-light">`+data+`</span>
+                    <span class="sr-only">unread messages</span>
+                  </button>
+                  </td>
+                  `;
+                },
+            },
+            { data: "id_forms",
+            width: "100px"  ,
+            render: function (data, type, row) {
+
+                if(rol_usuario === "administrador"){
+                return (
+                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="3">Bitacora</option></select>'
+                );
+                }else if(rol_usuario === "usuario"){
+                    return (
+                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
+                    );
+                }
+            }
+        },
+        ]
+    });
+
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        'date-ddmmyyyy-pre': function (a) {
+            // Formato: vie. 10 nov. 2023 06:54 PM
+            var months = {
+                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
+                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
+            };
+            var dateParts = a.split(' ');
+            var day = parseInt(dateParts[1]);
+            var month = months[dateParts[2].toLowerCase()];
+            var year = parseInt(dateParts[3]);
+            var timeParts = dateParts[4].split(':');
+            var hour = parseInt(timeParts[0]);
+            var minutes = parseInt(timeParts[1]);
+            var period = dateParts[5].toUpperCase();
+    
+            if (period === 'PM' && hour < 12) {
+                hour += 12;
+            }
+            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
+            return isoDate;
+        },
+        'date-ddmmyyyy-asc': function (a, b) {
+            return a.localeCompare(b);
+        },
+        'date-ddmmyyyy-desc': function (a, b) {
+            return b.localeCompare(a);
+        }
+    });
+}
+
 function tblformulario_eliminados(datosFiltrados_eliminados){
     var rol_usuario = $("#rol").val();
    var tblfomrcontigo = $("#registro_clientes_eliminados").DataTable();
@@ -475,7 +620,7 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
                 if(rol_usuario === "administrador"){
                 return (
                     '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option></select>'
+                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="3">Bitacora</option></select>'
                 );
                 }else if(rol_usuario === "usuario"){
                     return (
