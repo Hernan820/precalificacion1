@@ -108,6 +108,7 @@
                     cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
                     <thead>
                         <tr>
+                            <th class="col-md-">#</th>
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>
@@ -133,6 +134,7 @@
                     cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
                     <thead>
                         <tr>
+                            <th class="col-md-">#</th>
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>

@@ -134,7 +134,9 @@ function datosforms(){
             if(item.form_post_id != 919){
                 if(item.estado != 0){
                 var total_seguimientoform =item.total_seguimiento;
-                frmnuevos.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+                var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
+
+                frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
                }else{
                 var total_seguimientoform =item.total_seguimiento;
                 frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
@@ -198,8 +200,10 @@ function datosforms(){
                 cleanData[key] = valor;
             }else if(keyValue[0] == "fecha" ){
                 var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
+                var valor = keyValue[1].split(" ");
+                    valor.pop();
+                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
+                cleanData[dato] = ordenado;
             }else if(keyValue[0] == "total" ){
                 var dato = keyValue[0];
                 var valor = keyValue[1];
@@ -247,8 +251,11 @@ function datosforms(){
                 cleanData[key] = valor;
             }else if(keyValue[0] == "fecha" ){
                 var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
+
+                var valor = keyValue[1].split(" ");
+                    valor.pop();
+                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
+                cleanData[dato] = ordenado;
             }else if(keyValue[0] == "total" ){
                 var dato = keyValue[0];
                 var valor = keyValue[1];
@@ -396,7 +403,7 @@ function tblformulario(datosFiltrados){
 function tblformulario_seminarios(datosFiltrados_seminarios){
     var rol_usuario = $("#rol").val();
    var tblfomrseminario = $("#registro_clientes_seminarios").DataTable();
-   tblfomrseminario.destroy();
+       tblfomrseminario.destroy();
 
     tblfomrseminario = $("#registro_clientes_seminarios").DataTable({
         language: {
@@ -405,9 +412,11 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
-        order: [[0, "desc"]],
+        order: [[0,"desc"]],
         data: datosFiltrados_seminarios,
         columns: [
+            { data: 'id_forms',"className": "hidden-xs"
+            },
             { data: 'fecha',
             width: "100px" },
             { data: 'Nombre' ,
@@ -418,8 +427,7 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
             width: "100px" },
             { data: 'Comentario',
             width: "100px" },
-            {
-                data: "total",
+            { data: "total",
                 width: "25px",
                 className: "text-center",
                 render: function (data, type, row) {
@@ -449,39 +457,45 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
                     );
                 }
             }
-        },
+            },
+        ],
+        columnDefs: [
+            {
+                target: [0],
+                visible: false
+            }
         ]
     });
 
-    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-        'date-ddmmyyyy-pre': function (a) {
-            // Formato: vie. 10 nov. 2023 06:54 PM
-            var months = {
-                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
-                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
-            };
-            var dateParts = a.split(' ');
-            var day = parseInt(dateParts[1]);
-            var month = months[dateParts[2].toLowerCase()];
-            var year = parseInt(dateParts[3]);
-            var timeParts = dateParts[4].split(':');
-            var hour = parseInt(timeParts[0]);
-            var minutes = parseInt(timeParts[1]);
-            var period = dateParts[5].toUpperCase();
+    // jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+    //     'date-ddmmyyyy-pre': function (a) {
+    //         // Formato: vie. 10 nov. 2023 06:54 PM
+    //         var months = {
+    //             'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
+    //             'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
+    //         };
+    //         var dateParts = a.split(' ');
+    //         var day = parseInt(dateParts[1]);
+    //         var month = months[dateParts[2].toLowerCase()];
+    //         var year = parseInt(dateParts[3]);
+    //         var timeParts = dateParts[4].split(':');
+    //         var hour = parseInt(timeParts[0]);
+    //         var minutes = parseInt(timeParts[1]);
+    //         var period = dateParts[5].toUpperCase();
     
-            if (period === 'PM' && hour < 12) {
-                hour += 12;
-            }
-            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
-            return isoDate;
-        },
-        'date-ddmmyyyy-asc': function (a, b) {
-            return a.localeCompare(b);
-        },
-        'date-ddmmyyyy-desc': function (a, b) {
-            return b.localeCompare(a);
-        }
-    });
+    //         if (period === 'PM' && hour < 12) {
+    //             hour += 12;
+    //         }
+    //         var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
+    //         return isoDate;
+    //     },
+    //     'date-ddmmyyyy-asc': function (a, b) {
+    //         return a.localeCompare(b);
+    //     },
+    //     'date-ddmmyyyy-desc': function (a, b) {
+    //         return b.localeCompare(a);
+    //     }
+    // });
 }
 
 function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
@@ -496,9 +510,11 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
-        order: [[0, "desc"]],
+        order: [[0,"desc"]],
         data: datosFiltrados_seminarios,
         columns: [
+            { data: 'id_forms',
+            width: "100px" },
             { data: 'fecha',
             width: "100px" },
             { data: 'Nombre' ,
@@ -544,35 +560,35 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
         ]
     });
 
-    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-        'date-ddmmyyyy-pre': function (a) {
-            // Formato: vie. 10 nov. 2023 06:54 PM
-            var months = {
-                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
-                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
-            };
-            var dateParts = a.split(' ');
-            var day = parseInt(dateParts[1]);
-            var month = months[dateParts[2].toLowerCase()];
-            var year = parseInt(dateParts[3]);
-            var timeParts = dateParts[4].split(':');
-            var hour = parseInt(timeParts[0]);
-            var minutes = parseInt(timeParts[1]);
-            var period = dateParts[5].toUpperCase();
+    // jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+    //     'date-ddmmyyyy-pre': function (a) {
+    //         // Formato: vie. 10 nov. 2023 06:54 PM
+    //         var months = {
+    //             'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
+    //             'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
+    //         };
+    //         var dateParts = a.split(' ');
+    //         var day = parseInt(dateParts[1]);
+    //         var month = months[dateParts[2].toLowerCase()];
+    //         var year = parseInt(dateParts[3]);
+    //         var timeParts = dateParts[4].split(':');
+    //         var hour = parseInt(timeParts[0]);
+    //         var minutes = parseInt(timeParts[1]);
+    //         var period = dateParts[5].toUpperCase();
     
-            if (period === 'PM' && hour < 12) {
-                hour += 12;
-            }
-            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
-            return isoDate;
-        },
-        'date-ddmmyyyy-asc': function (a, b) {
-            return a.localeCompare(b);
-        },
-        'date-ddmmyyyy-desc': function (a, b) {
-            return b.localeCompare(a);
-        }
-    });
+    //         if (period === 'PM' && hour < 12) {
+    //             hour += 12;
+    //         }
+    //         var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
+    //         return isoDate;
+    //     },
+    //     'date-ddmmyyyy-asc': function (a, b) {
+    //         return a.localeCompare(b);
+    //     },
+    //     'date-ddmmyyyy-desc': function (a, b) {
+    //         return b.localeCompare(a);
+    //     }
+    // });
 }
 
 function tblformulario_eliminados(datosFiltrados_eliminados){
