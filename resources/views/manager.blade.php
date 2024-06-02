@@ -95,8 +95,16 @@
             <div class="row mb-3">
                 <div class="col-md-12">
                     <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
-                        <div class="form-group mb-1">
+                        <div class="form-group mb-1 mr-3">
                             <input class="btn btn-primary text-center" id="modalcampanapersonalizada" type="button" value="Campaña Personalizada">
+                        </div>
+                        <div class="form-group col-md-2 mb-1 ml-3">
+                            <select class="form-control" id="seletc_estados">
+                                <option readonly value="">Seleciona estado</option>
+                                <option value="new_york">New York</option>
+                                <option value="new_jersey">New Jersey</option>
+                                <option value="connecticut">Connecticut</option>
+                              </select>
                         </div>
                     </div>
                 </div>
@@ -115,7 +123,7 @@
                             <th class="col-md-">Estado</th>
                             <th class="col-md-">Comentario</th>
                             <th class="col-md-"></th>
-                            <th class="col-md-"> Opciones</th>
+                            <th class="col-md-"> Opciones&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody  scope="row">

@@ -150,6 +150,27 @@ class ClientesPreController extends Controller
      * 
      * 
      */
+    public function datosform_seminarios(){
+        $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,wp_wpforms_db.form_post_id,
+        (SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id   ) as total_seguimiento , 
+        estadoregistros.estado
+        FROM wp_wpforms_db
+        LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
+        LEFT JOIN estadoregistros on estadoregistros.id_form = wp_wpforms_db.form_id
+        WHERE wp_wpforms_db.form_post_id IN(1772,1873,1870)
+        GROUP BY wp_wpforms_db.form_id
+        ";
+
+        $datosfomr = DB::select($sql);
+        return response()->json($datosfomr);
+    }
+
+    /**
+     * 
+     * 
+     * 
+     * 
+     */
     public function Envio_campana(Request $request) {
 
         $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,wp_wpforms_db.form_post_id,

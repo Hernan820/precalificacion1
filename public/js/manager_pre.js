@@ -171,109 +171,6 @@ function datosforms(){
          }
        });
 
-    var datos_limpios = frmnuevos.map(function(form) {
-        form = form.slice(6, -1);
-    
-        var elements = form.split(";");
-    
-        var cleanData = {};
-        
-        elements.forEach(function(element,i) {
-            var keyValue = element.split(":");
-            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
-
-            if(key == "Nombre"  ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Teléfono" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "estado" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Comentario" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(keyValue[0] == "fecha" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1].split(" ");
-                    valor.pop();
-                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
-                cleanData[dato] = ordenado;
-            }else if(keyValue[0] == "total" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                if(keyValue[1] == ''){
-                    valor = 0;
-                }
-                cleanData[dato] = valor;
-            }else if(keyValue[0] == "id_forms" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
-            }
-        });
-    
-        return cleanData;
-    });
-
-
-    var datos_seminarios_eliminados = frmseminarios_eliminado.map(function(form) {
-        form = form.slice(6, -1);
-    
-        var elements = form.split(";");
-    
-        var cleanData = {};
-        
-        elements.forEach(function(element,i) {
-            var keyValue = element.split(":");
-            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
-
-            if(key == "Nombre"  ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Teléfono" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "estado" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Comentario" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(keyValue[0] == "fecha" ){
-                var dato = keyValue[0];
-
-                var valor = keyValue[1].split(" ");
-                    valor.pop();
-                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
-                cleanData[dato] = ordenado;
-            }else if(keyValue[0] == "total" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                if(keyValue[1] == ''){
-                    valor = 0;
-                }
-                cleanData[dato] = valor;
-            }else if(keyValue[0] == "id_forms" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
-            }
-        });
-    
-        return cleanData;
-    });
-
-
         var arrFiltrado = datosFiltrados.filter(function(elemento,i) {
             const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
             if( elemento !== undefined   ){    
@@ -293,8 +190,8 @@ function datosforms(){
         });
 
        tblformulario(arrFiltrado);
-       tblformulario_seminarios(datos_limpios);
-       tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
+       //tblformulario_seminarios(datos_limpios);
+      // tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
        tblformulario_eliminados(arrFiltrado_elimin);
     })
     .catch((error) => {
@@ -415,8 +312,8 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
         order: [[0,"desc"]],
         data: datosFiltrados_seminarios,
         columns: [
-            { data: 'id_forms',"className": "hidden-xs"
-            },
+            { data: 'id_forms',
+            width: "100px"},
             { data: 'fecha',
             width: "100px" },
             { data: 'Nombre' ,
@@ -804,3 +701,148 @@ function lista_seguimientos(id){
         }
     });
 }
+
+$('#seletc_estados').on('change', function() {
+
+    let selectval = $('#seletc_estados').val(); 
+
+    axios.post(principalUrl + "seminarios")
+    .then((respuesta) => {
+
+;       let datosformulario = respuesta.data;
+        let frmnuevos = [];
+        let frmseminarios_eliminado = [];
+
+    var datosFiltrados = datosformulario.map(item => {
+    
+        if(item.estado != 0){
+            var total_seguimientoform =item.total_seguimiento;
+            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
+            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+        }else{
+            var total_seguimientoform =item.total_seguimiento;
+            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+        }
+            
+        return;
+    });
+
+    var datos_limpios = frmnuevos.map(function(form) {
+        form = form.slice(6, -1);
+    
+        var elements = form.split(";");
+    
+        let cleanData = {};
+
+        var keyestado = elements[7].split(":");
+        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
+
+        if (estadofiltro == selectval) {
+        
+        elements.forEach(function(element,i) {  
+            var keyValue = element.split(":");
+            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
+
+            if(key == "Nombre"  ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Teléfono" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "estado" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Comentario" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(keyValue[0] == "fecha" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1].split(" ");
+                    valor.pop();
+                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
+                cleanData[dato] = ordenado;
+            }else if(keyValue[0] == "total" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                if(keyValue[1] == ''){
+                    valor = 0;
+                }
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "id_forms" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }
+        });
+        return cleanData;
+
+     }else {
+        return null; 
+     }
+    }).filter(item => item !== null); 
+
+    var datos_seminarios_eliminados = frmseminarios_eliminado.map(function(form) {
+        form = form.slice(6, -1);
+    
+        var elements = form.split(";");
+    
+        var cleanData = {};
+        
+        elements.forEach(function(element,i) {
+            var keyValue = element.split(":");
+            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
+
+            if(key == "Nombre"  ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Teléfono" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "estado" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Comentario" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(keyValue[0] == "fecha" ){
+                var dato = keyValue[0];
+
+                var valor = keyValue[1].split(" ");
+                    valor.pop();
+                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
+                cleanData[dato] = ordenado;
+            }else if(keyValue[0] == "total" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                if(keyValue[1] == ''){
+                    valor = 0;
+                }
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "id_forms" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }
+        });
+    
+        return cleanData;
+    });
+
+    tblformulario_seminarios(datos_limpios);
+    tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
+
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+});
