@@ -137,6 +137,21 @@
     <div class="tab-pane fade" id="nav-seminarios-eliminado" role="tabpanel" aria-labelledby="tab-seminarios">
         <div class="container-fluid pt-2">
 
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
+                        <div class="form-group col-md-2 mb-1 ml-3">
+                            <select class="form-control" id="seletc_estados_eliminados">
+                                <option readonly value="">Seleciona estado</option>
+                                <option value="new_york">New York</option>
+                                <option value="new_jersey">New Jersey</option>
+                                <option value="connecticut">Connecticut</option>
+                              </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_seminarios_eliminados"
                     class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"

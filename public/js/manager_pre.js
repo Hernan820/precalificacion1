@@ -190,14 +190,11 @@ function datosforms(){
         });
 
        tblformulario(arrFiltrado);
-       //tblformulario_seminarios(datos_limpios);
-      // tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
        tblformulario_eliminados(arrFiltrado_elimin);
     })
     .catch((error) => {
         if (error.response) {
             console.log(error.response.data);
-          //  location.href = principalUrl + "agradecimiento";
         }
     });
 }
@@ -347,7 +344,7 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
                 if(rol_usuario === "administrador"){
                 return (
                     `<select id="usuario_opcion" onchange="opcioneseminarios(this,` + data +`
-                    , this.closest('tr'))" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option></select>`
+                    , this.closest('tr'))" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option><option value="3">Bitacora</option>  </select>`
                 );
                 }else if(rol_usuario === "usuario"){
                     return (
@@ -366,35 +363,6 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
         ]
     });
 
-    // jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-    //     'date-ddmmyyyy-pre': function (a) {
-    //         // Formato: vie. 10 nov. 2023 06:54 PM
-    //         var months = {
-    //             'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
-    //             'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
-    //         };
-    //         var dateParts = a.split(' ');
-    //         var day = parseInt(dateParts[1]);
-    //         var month = months[dateParts[2].toLowerCase()];
-    //         var year = parseInt(dateParts[3]);
-    //         var timeParts = dateParts[4].split(':');
-    //         var hour = parseInt(timeParts[0]);
-    //         var minutes = parseInt(timeParts[1]);
-    //         var period = dateParts[5].toUpperCase();
-    
-    //         if (period === 'PM' && hour < 12) {
-    //             hour += 12;
-    //         }
-    //         var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
-    //         return isoDate;
-    //     },
-    //     'date-ddmmyyyy-asc': function (a, b) {
-    //         return a.localeCompare(b);
-    //     },
-    //     'date-ddmmyyyy-desc': function (a, b) {
-    //         return b.localeCompare(a);
-    //     }
-    // });
 }
 
 function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
@@ -459,35 +427,6 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
         ]
     });
 
-    // jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-    //     'date-ddmmyyyy-pre': function (a) {
-    //         // Formato: vie. 10 nov. 2023 06:54 PM
-    //         var months = {
-    //             'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
-    //             'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
-    //         };
-    //         var dateParts = a.split(' ');
-    //         var day = parseInt(dateParts[1]);
-    //         var month = months[dateParts[2].toLowerCase()];
-    //         var year = parseInt(dateParts[3]);
-    //         var timeParts = dateParts[4].split(':');
-    //         var hour = parseInt(timeParts[0]);
-    //         var minutes = parseInt(timeParts[1]);
-    //         var period = dateParts[5].toUpperCase();
-    
-    //         if (period === 'PM' && hour < 12) {
-    //             hour += 12;
-    //         }
-    //         var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
-    //         return isoDate;
-    //     },
-    //     'date-ddmmyyyy-asc': function (a, b) {
-    //         return a.localeCompare(b);
-    //     },
-    //     'date-ddmmyyyy-desc': function (a, b) {
-    //         return b.localeCompare(a);
-    //     }
-    // });
 }
 
 function tblformulario_eliminados(datosFiltrados_eliminados){
@@ -763,6 +702,64 @@ function opcioneseminarios(option, id, row) {
             } else {
             }
         });
+    }else if (opt == 5) {
+        var num = 5;
+        Swal.fire({
+            text: "¿Quieres marcar como no answer el resgitro?",
+            showCancelButton: true,
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+num)
+                    .then((respuesta) => {
+                        $(row).find('td:eq(6)').text('No answer');
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registro no answer",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else {
+            }
+        });
+    }else if (opt == 6) {
+        var num = 6;
+        Swal.fire({
+            text: "¿Quieres marcar como cancelado el resgitro?",
+            showCancelButton: true,
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+num)
+                    .then((respuesta) => {
+                        $(row).find('td:eq(6)').text('Cancelado');
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registro cancelado",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else {
+            }
+        });
     }
 
     $(option).prop("selectedIndex", 0);
@@ -819,22 +816,16 @@ $('#seletc_estados').on('change', function() {
     axios.post(principalUrl + "seminarios")
     .then((respuesta) => {
 
-;       let datosformulario = respuesta.data;
+        let datosformulario = respuesta.data;
         let frmnuevos = [];
-        let frmseminarios_eliminado = [];
 
-    var datosFiltrados = datosformulario.map(item => {
+    datosformulario.map(item => {
 
-        if(item.estado == 0){
-             var total_seguimientoform =item.total_seguimiento;
-            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg: eliminado"+";vacio");
-        }else{
+        if(item.estado != 0){
             var total_seguimientoform =item.total_seguimiento;
             var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
             frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
-           
         }
-            
         return;
     });
 
@@ -911,11 +902,46 @@ $('#seletc_estados').on('change', function() {
         return null; 
      }
     }).filter(item => item !== null); 
+   
+    tblformulario_seminarios(datos_limpios);
+
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+});
+
+$('#seletc_estados_eliminados').on('change', function() {
+
+    let selectval = $('#seletc_estados_eliminados').val(); 
+
+    axios.post(principalUrl + "seminarios")
+    .then((respuesta) => {
+
+    let datosformulario = respuesta.data;
+    let frmseminarios_eliminado = [];
+
+    datosformulario.map(item => {
+
+        if(item.estado == 0){
+             var total_seguimientoform =item.total_seguimiento;
+            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg: eliminado"+";vacio");
+        }
+        return;
+    });
+
 
     var datos_seminarios_eliminados = frmseminarios_eliminado.map(function(form) {
         form = form.slice(6, -1);
     
         var elements = form.split(";");
+
+        var keyestado = elements[7].split(":");
+        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
+
+        if (estadofiltro == selectval) {
     
         var cleanData = {};
         
@@ -960,15 +986,27 @@ $('#seletc_estados').on('change', function() {
             }else if(keyValue[0] == "estado_reg" ){
                 var dato = keyValue[0];
                 var valor = keyValue[1];
-
-                cleanData[dato] = valor;
+                let valorformat;
+                
+                if (valor == "null") {
+                    valorformat = "";
+                } else if(valor == "4") {
+                    valorformat = "Confirmado";
+                }else if (valor == "5") {
+                    valorformat = "No answer";
+                }else if (valor == "6") {
+                    valorformat = "Cancelado";
+                }
+                cleanData[dato] = valorformat;
             }
         });
     
         return cleanData;
-    });
+    }else {
+        return null; 
+     }
+    }).filter(item => item !== null);
 
-    tblformulario_seminarios(datos_limpios);
     tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
 
     })
