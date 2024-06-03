@@ -348,8 +348,8 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
                 );
                 }else if(rol_usuario === "usuario"){
                     return (
-                        '<select id="usuario_opcion" onchange="opcioneseminarios(this,' + data +
-                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
+                        `<select id="usuario_opcion" onchange="opcioneseminarios(this,` + data +`
+                        , this.closest('tr'))" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option><option value="3">Bitacora</option>  </select>`
                     );
                 }
             }
