@@ -122,6 +122,7 @@
                             <th class="col-md-">Numero Telefono</th>
                             <th class="col-md-">Estado</th>
                             <th class="col-md-">Comentario</th>
+                            <th class="col-md-">Estado resgistro</th>
                             <th class="col-md-"></th>
                             <th class="col-md-"> Opciones&nbsp;</th>
                         </tr>

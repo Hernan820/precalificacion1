@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\estadoregistro;
 use Illuminate\Http\Request;
 use App\Models\bitacora;
+use Illuminate\Support\Facades\Log;
 date_default_timezone_set("America/New_York");
 
 
@@ -81,17 +82,35 @@ class EstadoregistroController extends Controller
      * @param  \App\Models\estadoregistro  $estadoregistro
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function estadoRegistroForm($id,$estadoreg)
     {
+        $mensaje ;
+        if ($estadoreg == 0) {
+            $mensaje = "Eliminó registro";
+        }else if($estadoreg == 4) {
+            $mensaje = "Confirmo registro";
+        }else if($estadoreg == 5) {
+            $mensaje = "No answer registro";
+        }else if($estadoreg == 6) {
+            $mensaje = "Cancelo registro";
+        }
+
+        $registro = estadoregistro::where("estadoregistros.id_form","=",$id)->count();
+
+        if ($registro == 0) {
         $estado = new estadoregistro;
-        $estado->estado = 0;
+        $estado->estado = $estadoreg;
         $estado->id_form = $id;
         $estado->save();
+        }else {
+            $estado = estadoregistro::where("estadoregistros.id_form","=",$id)->first();
+            $estado->estado = $estadoreg;
+            $estado->save();
+        }
 
-        
         $bitacora = new bitacora;
         $bitacora->fecha = date('Y-m-d H:i:s');
-        $bitacora->accion = "Eliminó registro";
+        $bitacora->accion = $mensaje;
         $bitacora->nombre_usuario = auth()->user()->name;
         $bitacora->id_usuario  = auth()->user()->id;
         $bitacora->id_registrocliente   = $id;

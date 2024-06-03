@@ -323,7 +323,9 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
             { data: 'estado' ,
             width: "100px" },
             { data: 'Comentario',
-            width: "100px" },
+            width: "50px" },
+            { data: 'estado_reg',
+            width: "50px" },
             { data: "total",
                 width: "25px",
                 className: "text-center",
@@ -344,12 +346,12 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
 
                 if(rol_usuario === "administrador"){
                 return (
-                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option></select>'
+                    `<select id="usuario_opcion" onchange="opcioneseminarios(this,` + data +`
+                    , this.closest('tr'))" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option></select>`
                 );
                 }else if(rol_usuario === "usuario"){
                     return (
-                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
+                        '<select id="usuario_opcion" onchange="opcioneseminarios(this,' + data +
                         ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
                     );
                 }
@@ -589,11 +591,13 @@ function vistaregistro(){
 
 function opcionesformcontigo(option, id) {
     var opt = $(option).val();
+
     if (opt == 1) {
         lista_seguimientos(id);
         $("#registropre_id").val(id);
         $("#modal_seguimiento").modal("show");
     } else if (opt == 2) {
+        var estadoeli = 0;
         Swal.fire({
             title: "Eliminar",
             text: "¿Estas seguro de eliminar el registro?",
@@ -605,7 +609,7 @@ function opcionesformcontigo(option, id) {
             cancelButtonText: "Cancelar",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(principalUrl + "registro/eliminar_registro/" + id)
+                axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+estadoeli)
                     .then((respuesta) => {
                         datosforms();
                         Swal.fire({
@@ -655,6 +659,112 @@ function opcionesformcontigo(option, id) {
         });
 
     }
+
+    $(option).prop("selectedIndex", 0);
+}
+
+function opcioneseminarios(option, id, row) {
+    var opt = $(option).val();
+
+    if (opt == 1) {
+        lista_seguimientos(id);
+        $("#registropre_id").val(id);
+        $("#modal_seguimiento").modal("show");
+    } else if (opt == 2) {
+        var estadoeli = 0;
+        Swal.fire({
+            title: "Eliminar",
+            text: "¿Estas seguro de eliminar el registro?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+estadoeli)
+                    .then((respuesta) => {
+                       // datosforms();
+                        $(row).hide();
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registro eliminado",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else {
+            }
+        });
+    }else if (opt == 3) {
+
+        axios.post(principalUrl + "registro/bitacora/"+id)
+        .then((respuesta) => {
+            $('#lista_bitacora').html('');
+
+            if(respuesta.data.length === 0){
+                Swal.fire({
+                    position: "top-center",
+                    icon: "info",
+                    title: "No tiene bitacoras",
+                    showConfirmButton: false,
+                });
+                return;
+            }
+            respuesta.data.forEach(function (element) {
+                if(element.accion != 'Se creo la cita' || element.accion != 'reagendado'  ){
+                    $("#lista_bitacora").append(
+                        "<tr class='filas'><td>" +element.name+"</td><td>" + moment(element.fecha, "YYYY-MM-DD hh:mm A").format("DD-MMM-YY")  + "</td><td>" + moment(element.fecha, "YYYY-MM-DD hh:mm A").format("hh:mm A")  + "</td><td>" + element.accion +"</td></tr>"
+                    );
+                }
+            });     
+            $("#modal_bitacora_fmr").modal("show");
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+
+    }else if (opt == 4) {
+        var num = 4;
+        Swal.fire({
+            text: "¿Estas seguro de confirmar este registro?",
+            showCancelButton: true,
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+num)
+                    .then((respuesta) => {
+                        $(row).find('td:eq(6)').text('Confirmado');
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registro eliminado",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else {
+            }
+        });
+    }
+
     $(option).prop("selectedIndex", 0);
 }
 
@@ -714,14 +824,15 @@ $('#seletc_estados').on('change', function() {
         let frmseminarios_eliminado = [];
 
     var datosFiltrados = datosformulario.map(item => {
-    
-        if(item.estado != 0){
-            var total_seguimientoform =item.total_seguimiento;
-            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+
+        if(item.estado == 0){
+             var total_seguimientoform =item.total_seguimiento;
+            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg: eliminado"+";vacio");
         }else{
             var total_seguimientoform =item.total_seguimiento;
-            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
+            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
+            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
+           
         }
             
         return;
@@ -777,6 +888,22 @@ $('#seletc_estados').on('change', function() {
                 var valor = keyValue[1];
                 cleanData[dato] = valor;
             }
+            else if(keyValue[0] == "estado_reg" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                let valorformat;
+                
+                if (valor == "null") {
+                    valorformat = "";
+                } else if(valor == "4") {
+                    valorformat = "Confirmado";
+                }else if (valor == "5") {
+                    valorformat = "No answer";
+                }else if (valor == "6") {
+                    valorformat = "Cancelado";
+                }
+                cleanData[dato] = valorformat;
+            }
         });
         return cleanData;
 
@@ -829,6 +956,11 @@ $('#seletc_estados').on('change', function() {
             }else if(keyValue[0] == "id_forms" ){
                 var dato = keyValue[0];
                 var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "estado_reg" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+
                 cleanData[dato] = valor;
             }
         });
