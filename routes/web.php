@@ -72,4 +72,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('campana/mensajes', [App\Http\Controllers\ClientesPreController::class, 'Envio_campana']);
 
+    Route::get('seminario/exportar/{estado}', [App\Http\Controllers\ClientesPreController::class, 'exportseminario']);
+
 });

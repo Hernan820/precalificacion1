@@ -14,6 +14,9 @@ use DB;
 use Twilio\Rest\Client;
 use App\Models\seguimiento;
 
+use App\Exports\semiExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 date_default_timezone_set("America/New_York");
 
 class ClientesPreController extends Controller
@@ -162,6 +165,7 @@ class ClientesPreController extends Controller
         ";
 
         $datosfomr = DB::select($sql);
+
         return response()->json($datosfomr);
     }
 
@@ -252,5 +256,14 @@ class ClientesPreController extends Controller
         }
 
         return 1;
+    }
+    /**
+     * 
+     * 
+     */
+    public function exportseminario($estado) {
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new semiExport($estado), 'seminario - '.$estado.'.xlsx');
     }
 }

@@ -1016,3 +1016,19 @@ $('#seletc_estados_eliminados').on('change', function() {
         }
     });
 });
+
+function exportseminarioexcel() {
+
+    var estado = $("#seletc_estados").val();
+
+    if (estado == "") {
+        Swal.fire({
+            text: "¡Para exportar la informacion de seminarios, debes seleccionar un estado!",
+            showCancelButton: false,
+            confirmButtonText: "Entiendo",
+            cancelButtonText: "Cancelar",
+        });
+    }else{
+        location.href = principalUrl + "seminario/exportar/"+estado;
+    }
+}
