@@ -1,10 +1,10 @@
-
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<script src="{{ asset('js/manager_pre.js?v=abcdefg1821387') }}" defer></script>
+<script src="{{ asset('js/manager_pre.js?v=a127') }}" defer></script>
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -14,11 +14,11 @@
 
 <style>
     table.dataTable tbody td {
-    padding: 3px 5px !important;
-}
+        padding: 3px 5px !important;
+    }
 
 
-.datatable {
+    .datatable {
         Word-wrap: break-Word;
     }
 
@@ -36,14 +36,14 @@
     }
 
     #registro_clientes_eliminados td {
-        white-space: inherit;   
+        white-space: inherit;
     }
 
     @media only screen and (max-width: 600px) {
-    .table td {
-        width: 100px;
+        .table td {
+            width: 100px;
+        }
     }
-}
 
     .morecontent {
         display: none;
@@ -53,25 +53,29 @@
 
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Registros clientes</a>
-      <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab" aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+            aria-controls="nav-home" aria-selected="true">Registros clientes</a>
+        <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab"
+            aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
 
-      @if(@Auth::user()->hasRole('administrador'))
-      <a class="nav-item nav-link" id="tab-seminarios-eliminados" data-toggle="tab" href="#nav-seminarios-eliminado" role="tab" aria-controls="nav-seminarios-eliminado" aria-selected="false">Seminarios eliminados</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Eliminados</a>
-      @endif
+        @if(@Auth::user()->hasRole('administrador'))
+        <a class="nav-item nav-link" id="tab-seminarios-eliminados" data-toggle="tab" href="#nav-seminarios-eliminado"
+            role="tab" aria-controls="nav-seminarios-eliminado" aria-selected="false">Seminarios eliminados</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+            aria-controls="nav-profile" aria-selected="false">Eliminados</a>
+        @endif
     </div>
-  </nav>
+</nav>
 
-  <div class="tab-content" id="nav-tabContent">
+<div class="tab-content" id="nav-tabContent">
 
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
         <div class="container-fluid pt-5">
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes"
-                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
-                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
                     <thead>
                         <tr>
                             <th class="col-md-">Fechas</th>
@@ -82,7 +86,7 @@
                             <th class="col-md-"> Opciones</th>
                         </tr>
                     </thead>
-                    <tbody  scope="row">
+                    <tbody scope="row">
                     </tbody>
                 </table>
             </div>
@@ -91,12 +95,13 @@
 
     <div class="tab-pane fade" id="nav-seminarios" role="tabpanel" aria-labelledby="tab-seminarios">
         <div class="container-fluid pt-2">
-
+            <div class="container" style="max-width: 1440px !important;background: white !important;">
                 <div class="row mb-3">
                     <div class="col-md-12">
                         <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
                             <div class="form-group mb-1 mr-3">
-                                <input class="btn btn-primary text-center" id="modalcampanapersonalizada" type="button" value="Campaña Personalizada">
+                                <input class="btn btn-primary text-center" id="modalcampanapersonalizada" type="button"
+                                    value="Campaña Personalizada">
                             </div>
                             <div class="form-group col-md-2 mb-1 ml-3">
                                 <select class="form-control" id="seletc_estados">
@@ -104,19 +109,49 @@
                                     <option value="new_york">New York</option>
                                     <option value="new_jersey">New Jersey</option>
                                     <option value="connecticut">Connecticut</option>
-                                  </select>
+                                </select>
                             </div>
                             <div class="form-group mb-1 ml-auto mr-3">
-                                <input class="btn btn-primary text-center float-right" onclick="exportseminarioexcel()" id="btnexcel" type="button" value="Reporte Excel">
+                                <input class="btn btn-primary text-center float-right" onclick="exportseminarioexcel()"
+                                    id="btnexcel" type="button" value="Reporte Excel">
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <table class="table table-sm border rounded mb-1" style="background: white !important;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sin estado</th>
+                                    <th scope="col">Confirmado</th>
+                                    <th scope="col">No answer</th>
+                                    <th scope="col">Cancelados</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="conteo_seminario">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_seminarios"
-                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
-                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
                     <thead>
                         <tr>
                             <th class="col-md-">#</th>
@@ -130,7 +165,7 @@
                             <th class="col-md-"> Opciones&nbsp;</th>
                         </tr>
                     </thead>
-                    <tbody  scope="row">
+                    <tbody scope="row">
                     </tbody>
                 </table>
             </div>
@@ -149,7 +184,7 @@
                                 <option value="new_york">New York</option>
                                 <option value="new_jersey">New Jersey</option>
                                 <option value="connecticut">Connecticut</option>
-                              </select>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -157,8 +192,9 @@
 
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_seminarios_eliminados"
-                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
-                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
                     <thead>
                         <tr>
                             <th class="col-md-">#</th>
@@ -171,7 +207,7 @@
                             <th class="col-md-"> Opciones</th>
                         </tr>
                     </thead>
-                    <tbody  scope="row">
+                    <tbody scope="row">
                     </tbody>
                 </table>
             </div>
@@ -182,8 +218,9 @@
         <div class="container-fluid pt-5">
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes_eliminados"
-                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center" class="display"
-                    cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
                     <thead>
                         <tr>
                             <th class="col-md-">Fechas</th>
@@ -194,17 +231,17 @@
                             <th class="col-md-"> Opciones</th>
                         </tr>
                     </thead>
-                    <tbody  scope="row">
+                    <tbody scope="row">
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
-  </div>
+</div>
 
 <!-- Modal Notas-->
-<div class="modal fade" id="modal_seguimiento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="modal_seguimiento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -221,12 +258,13 @@
                     {!! csrf_field() !!}
                     <div class="form-group ">
                         <label for="start">Seguimiento:</label>
-                        <textarea name="txtseguimiento" rows="2" required="" id="txtseguimiento" class="form-control" cols="50"></textarea>
+                        <textarea name="txtseguimiento" rows="2" required="" id="txtseguimiento" class="form-control"
+                            cols="50"></textarea>
                     </div>
                     <input type="hidden" name="registropre_id" id="registropre_id" value="" />
-                    
-                <button type="button" class="btn btn-success" id="btnseguimiento">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    <button type="button" class="btn btn-success" id="btnseguimiento">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -241,7 +279,6 @@
                                 </tr>
                             </thead>
                             <tbody id="tblseguimientos" scope="row">
-                                
                             </tbody>
                         </table>
                     </div>
@@ -294,80 +331,87 @@
     </div>
 </div>
 
-    <!-- Modal CAMPÀNA DE MENSAJE-->
-    <div class="modal fade" id="modal_campana_perso" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        Campaña Personalizada
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" id="frmmensaje">
+<!-- Modal CAMPÀNA DE MENSAJE-->
+<div class="modal fade" id="modal_campana_perso" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Campaña Personalizada
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="frmmensaje">
 
-                        {!! csrf_field() !!}
+                    {!! csrf_field() !!}
 
-                        <div class="form-group ">
-                            <div class="row pl-2 pr-2">
-                                <div class="col-md-12 border border-danger rounded">
-                                    <p class="mb-0"> Ten en cuenta que la campaña será enviada únicamente a los clientes listados en la tabla y
-                                         que se encuentren en los estados que selecciones.
-                                          Los clientes que hayan sido eliminados no recibirán la campaña. </p>
-                                </div>
+                    <div class="form-group ">
+                        <div class="row pl-2 pr-2">
+                            <div class="col-md-12 border border-danger rounded">
+                                <p class="mb-0"> Ten en cuenta que la campaña será enviada únicamente a los clientes
+                                    listados en la tabla y
+                                    que se encuentren en los estados que selecciones.
+                                    Los clientes que hayan sido eliminados no recibirán la campaña. </p>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group ">
-                            <label for="start">Agrega mensaje personalizado:</label>
-                            <textarea name="txtmensaje_per" rows="5" required="" id="txtmensaje_per"
-                                class="form-control" cols="75"></textarea>
+                    <div class="form-group ">
+                        <label for="start">Agrega mensaje personalizado:</label>
+                        <textarea name="txtmensaje_per" rows="5" required="" id="txtmensaje_per" class="form-control"
+                            cols="75"></textarea>
+                    </div>
+                    <div class="text-">
+                        <div class="form-check mr-5">
+                            <input class="form-check-input estados_citas" type="checkbox" value="new_york"
+                                name="seminario_ny" id="seminario_ny">
+                            <label class="form-check-label" for="seminario_ny">
+                                Seminario New york
+                            </label>
                         </div>
-                        <div class="text-">
-                            <div class="form-check mr-5">
-                                <input class="form-check-input estados_citas" type="checkbox" value="new_york"
-                                    name="seminario_ny" id="seminario_ny">
-                                <label class="form-check-label" for="seminario_ny">
-                                   Seminario New york
-                                </label>
-                            </div>
-                            <div class="form-check mr-5">
-                                <input class="form-check-input estados_citas" type="checkbox" value="new_jersey"
-                                    name="seminario_nj" id="seminario_nj">
-                                <label class="form-check-label" for="seminario_nj">
-                                    Seminario New Jersey
-                                </label>
-                            </div>
-                            <div class="form-check mr-5">
-                                <input class="form-check-input estados_citas" type="checkbox" value="connecticut"
-                                    name="seminario_ct" id="seminario_ct">
-                                <label class="form-check-label" for="seminario_ct">
-                                    Seminario Connecticut
-                                </label>
-                            </div>
-                            <div class="form-check mr-5">
-                                <input class="form-check-input estados_citas" type="checkbox" value="pensilvania"
-                                    name="seminario_pa" id="seminario_pa">
-                                <label class="form-check-label" for="seminario_pa">
-                                    Seminario Pensilvania
-                                </label>
-                            </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btncampana_personalizad">Enviar compaña</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+                        <div class="form-check mr-5">
+                            <input class="form-check-input estados_citas" type="checkbox" value="new_jersey"
+                                name="seminario_nj" id="seminario_nj">
+                            <label class="form-check-label" for="seminario_nj">
+                                Seminario New Jersey
+                            </label>
+                        </div>
+                        <div class="form-check mr-5">
+                            <input class="form-check-input estados_citas" type="checkbox" value="connecticut"
+                                name="seminario_ct" id="seminario_ct">
+                            <label class="form-check-label" for="seminario_ct">
+                                Seminario Connecticut
+                            </label>
+                        </div>
+                        <div class="form-check mr-5">
+                            <input class="form-check-input estados_citas" type="checkbox" value="pensilvania"
+                                name="seminario_pa" id="seminario_pa">
+                            <label class="form-check-label" for="seminario_pa">
+                                Seminario Pensilvania
+                            </label>
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btncampana_personalizad">Enviar compaña</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
+</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
 
 @endsection

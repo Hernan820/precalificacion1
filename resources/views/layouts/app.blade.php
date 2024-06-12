@@ -54,7 +54,6 @@
 
 <body class="animsition" style="background-color: #f4f4f4;">
 
-    
     <div class="page-wrapper" style="background-color: #f4f4f4;">
 
         <style>
@@ -67,7 +66,7 @@
             <div class="section__content section__content--p35" style="background: #1d3668;">
                 <div class="header3-wrap">
                     <div class="header__logo">
-                        <a class="image" href="{{ url('/')}}">
+                        <a class="image" href="{{ url('/home')}}">
                             <img class="image" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}" />
                         </a>
                     </div>
@@ -90,38 +89,39 @@
                                     <!-- Authentication Links -->
                                     @guest
                                     @else
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->name }}
-                                            </a>
-            
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                                @guest
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }}
+                                        </a>
 
-                                                @else
-                                                @if (Route::has('login'))
-                                                @if(@Auth::user()->hasRole('administrador'))
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                            @guest
 
-                                                <a class="dropdown-item" onclick="vistaregister()" >Usuarios</a>
-                                                <div class="dropdown-divider"></div>
+                                            @else
+                                            @if (Route::has('login'))
+                                            @if(@Auth::user()->hasRole('administrador'))
 
-                                                @endif
-                                                @endif
-                                                @endguest
-                                                
-                                                <a class="dropdown-item" onclick="vista_home()" >Home</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                      onclick="event.preventDefault();
+                                            <a class="dropdown-item" onclick="vistaregister()">Usuarios</a>
+                                            <div class="dropdown-divider"></div>
+
+                                            @endif
+                                            @endif
+                                            @endguest
+
+                                            <a class="dropdown-item" onclick="vista_home()">Home</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
-                                                    Logout
-                                                </a>
-            
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </div>
-                                        </li>
+                                                Logout
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
                                     @endguest
                                 </ul>
                             </div>
@@ -131,119 +131,119 @@
             </div>
         </header>
 
-    <!-- END HEADER DESKTOP-->
+        <!-- END HEADER DESKTOP-->
 
-    <!-- HEADER MOBILE-->
-    <nav class="navbar navbar-expand-dark navbar-dark  d-lg-none "  style="background:#1d3668">
-        <a class="image d-lg-none" href="{{ url('/')}}">
-            <img class="image d-lg-none" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}" />
-        </a>        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
+        <!-- HEADER MOBILE-->
+        <nav class="navbar navbar-expand-dark navbar-dark  d-lg-none " style="background:#1d3668">
+            <a class="image d-lg-none" href="{{ url('/')}}">
+                <img class="image d-lg-none" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}" />
+            </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
 
-                @guest
-                @else
-                @if (Route::has('login'))
-                @if(@Auth::user()->hasRole('administrador'))
+                    @guest
+                    @else
+                    @if (Route::has('login'))
+                    @if(@Auth::user()->hasRole('administrador'))
 
-                <li class="nav-item d-lg-none ">
-                    <a class="nav-link text-white" onclick="vistaregister()" >Usuarios</a>
-                </li>
-                <li class="nav-item d-lg-none ">
-                    <a class="nav-link text-white" onclick="vista_home()" >Home</a>
-                </li>
+                    <li class="nav-item d-lg-none ">
+                        <a class="nav-link text-white" onclick="vistaregister()">Usuarios</a>
+                    </li>
+                    <li class="nav-item d-lg-none ">
+                        <a class="nav-link text-white" onclick="vista_home()">Home</a>
+                    </li>
 
-                @endif
-                @endif
-                @endguest
+                    @endif
+                    @endif
+                    @endguest
 
+                    <li class="nav-item active">
+                        <!-- Contenido del menú -->
+                        <!-- Authentication Links -->
+                        @guest
+                        @else
 
-                <li class="nav-item active">
-                    <!-- Contenido del menú -->
-                       <!-- Authentication Links -->
-                       @guest
-                       @else
-                    
-
-                           <li class="nav-item dropdown d-lg-none">
-                               <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   {{ Auth::user()->name }}
-                               </a>
-                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                   <a class="dropdown-item" href="{{ route('logout') }}"
-                                      onclick="event.preventDefault();
+                    <li class="nav-item dropdown d-lg-none">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                         Logout
-                                   </a>
-                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                       @csrf
-                                   </form>
-                               </div>
-                           </li>
-                       @endguest
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- PAGE CONTENT-->
-    <div class="page-content--bgf7">
-
-        <!-- END BREADCRUMB-->
-        <div class="">
-            @yield('content')
-
-        </div>
-
-        <!--========================================================== -->
-        <!--FOOTER-->
-        <!--========================================================== -->
-
-        <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap mb-3 mt-3"
-            style="background:#1d3668">
-            <p class="fs-5 px-3  pt-3 text-white">Copyright © 2023 Contigo Mortgage. All rights reserved</p>
-            <div id="iconos">
-                <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i class="bi bi-facebook"></i></a>
-                <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i class="bi bi-instagram"></i></a>
-                <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
-                <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                    @endguest
+                    </li>
+                </ul>
             </div>
-            <br><br><br>
-        </footer>
-    </div>
+        </nav>
 
-    <!-- Jquery JS-->
-    <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>
-    <!-- Bootstrap JS-->
-    <script src="{{ asset('vendor/bootstrap-4.1/popper.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-4.1/bootstrap.min.js') }}"></script>
-    <!-- Vendor JS       -->
-    <script src="{{ asset('vendor/slick/slick.min.js') }}">
-    </script>
-    <script src="{{ asset('vendor/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('vendor/animsition/animsition.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}">
-    </script>
-    <script src="{{ asset('vendor/counter-up/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('vendor/counter-up/jquery.counterup.min.js') }}">
-    </script>
-    <script src="{{ asset('vendor/circle-progress/circle-progress.min.js') }}"></script>
-    <script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('vendor/chartjs/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/select2/select2.min.js') }}">
-    </script>
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
 
-    <script type="module">
-        import {
+            <!-- END BREADCRUMB-->
+            <div class="">
+                @yield('content')
+
+            </div>
+
+            <!--========================================================== -->
+            <!--FOOTER-->
+            <!--========================================================== -->
+
+            <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap mb-3 mt-3"
+                style="background:#1d3668">
+                <p class="fs-5 px-3  pt-3 text-white">Copyright © 2023 Contigo Mortgage. All rights reserved</p>
+                <div id="iconos">
+                    <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i
+                            class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
+                    <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
+                </div>
+                <br><br><br>
+            </footer>
+        </div>
+
+        <!-- Jquery JS-->
+        <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>
+        <!-- Bootstrap JS-->
+        <script src="{{ asset('vendor/bootstrap-4.1/popper.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap-4.1/bootstrap.min.js') }}"></script>
+        <!-- Vendor JS       -->
+        <script src="{{ asset('vendor/slick/slick.min.js') }}">
+        </script>
+        <script src="{{ asset('vendor/wow/wow.min.js') }}"></script>
+        <script src="{{ asset('vendor/animsition/animsition.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}">
+        </script>
+        <script src="{{ asset('vendor/counter-up/jquery.waypoints.min.js') }}"></script>
+        <script src="{{ asset('vendor/counter-up/jquery.counterup.min.js') }}">
+        </script>
+        <script src="{{ asset('vendor/circle-progress/circle-progress.min.js') }}"></script>
+        <script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+        <script src="{{ asset('vendor/chartjs/Chart.bundle.min.js') }}"></script>
+        <script src="{{ asset('vendor/select2/select2.min.js') }}">
+        </script>
+
+        <script type="module">
+            import {
         Fancybox
     } from "https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.esm.js";
     </script>
 
-    <!-- Main JS-->
-    <script src="{{ asset('js/main.js') }}"></script>
+        <!-- Main JS-->
+        <script src="{{ asset('js/main.js') }}"></script>
 
 </body>
 

@@ -818,10 +818,15 @@ $('#seletc_estados').on('change', function() {
 
         let datosformulario = respuesta.data;
         let frmnuevos = [];
+        let sin_estado=0;
+        let confirmado=0;
+        let no_answer=0;
+        let cancelado=0;
 
     datosformulario.map(item => {
 
         if(item.estado != 0){
+
             var total_seguimientoform =item.total_seguimiento;
             var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
             frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
@@ -886,12 +891,16 @@ $('#seletc_estados').on('change', function() {
                 
                 if (valor == "null") {
                     valorformat = "";
+                    sin_estado=sin_estado+1;
                 } else if(valor == "4") {
                     valorformat = "Confirmado";
+                    confirmado=confirmado+1;
                 }else if (valor == "5") {
                     valorformat = "No answer";
+                    no_answer=no_answer+1;
                 }else if (valor == "6") {
                     valorformat = "Cancelado";
+                    cancelado=cancelado+1;
                 }
                 cleanData[dato] = valorformat;
             }
@@ -902,7 +911,16 @@ $('#seletc_estados').on('change', function() {
         return null; 
      }
     }).filter(item => item !== null); 
-   
+
+
+    $("#conteo_seminario").find('td:eq(0)').text(sin_estado);
+    $("#conteo_seminario").find('td:eq(1)').text(confirmado);
+    $("#conteo_seminario").find('td:eq(2)').text(no_answer);
+    $("#conteo_seminario").find('td:eq(3)').text(cancelado);
+    var total = sin_estado+confirmado+cancelado+no_answer;
+
+    $("#conteo_seminario").find('td:eq(4)').text(total);
+
     tblformulario_seminarios(datos_limpios);
 
     })
