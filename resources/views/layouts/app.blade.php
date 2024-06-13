@@ -191,7 +191,7 @@
         <div class="page-content--bgf7">
 
             <!-- END BREADCRUMB-->
-            <div class="">
+            <div class="py-4"  style="background: #f4f5ff">
                 @yield('content')
 
             </div>
