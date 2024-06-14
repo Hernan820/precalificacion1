@@ -55,21 +55,23 @@ $(document).ready(function () {
             let displayText = '';
             if (element.includes('*')) {
                 let parts = element.split('*');
+                var formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
 
                 if (fechaactual > parts[1]) {
+
                     let stateParts = parts[0].split('_');
-                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`; 
+                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`; 
                     selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
   
                 }else{
 
                     let stateParts = parts[0].split('_');
-                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`;
+                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
                     $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
                 }
 
                 let stateParts = parts[0].split('_');
-                displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`;
+                displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
                 $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
 
             } else {
@@ -414,7 +416,22 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
             { data: 'Teléfono' ,
             width: "100px" },
             { data: 'estado' ,
-            width: "100px" },
+            width: "100px",
+            render: function (data, type, row) {
+              
+                if (data.includes('*')){
+                  var dataestadofecha = data.split('*');
+                  var dataestado = dataestadofecha[0].split('_');
+                  var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+                    return displayText;
+                }else{
+
+                  var stateParts = data.split('_');
+                  var displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                    return displayText;
+                }
+            },
+            },
             { data: 'Comentario',
             width: "50px" },
             { data: 'estado_reg',
@@ -486,7 +503,22 @@ function tblformulario_seminarios_fin(semina_finalizado){
             { data: 'Teléfono' ,
             width: "100px" },
             { data: 'estado' ,
-            width: "100px" },
+            width: "100px",
+            render: function (data, type, row) {
+              
+                if (data.includes('*')){
+                  var dataestadofecha = data.split('*');
+                  var dataestado = dataestadofecha[0].split('_');
+                  var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+                    return displayText;
+                }else{
+
+                  var stateParts = data.split('_');
+                  var displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                    return displayText;
+                }
+            },
+            },
             { data: 'Comentario',
             width: "50px" },
             { data: 'estado_reg',
@@ -556,7 +588,22 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
             { data: 'Teléfono' ,
             width: "100px" },
             { data: 'estado' ,
-            width: "100px" },
+            width: "100px",
+            render: function (data, type, row) {
+              
+                if (data.includes('*')){
+                  var dataestadofecha = data.split('*');
+                  var dataestado = dataestadofecha[0].split('_');
+                  var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+                    return displayText;
+                }else{
+
+                  var stateParts = data.split('_');
+                  var displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                    return displayText;
+                }
+            },
+            },
             { data: 'Comentario',
             width: "100px" },
             {
