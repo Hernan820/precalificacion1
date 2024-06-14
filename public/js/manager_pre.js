@@ -1,7 +1,103 @@
 
 $(document).ready(function () {
     datosforms();
+
+    axios.post(principalUrl + "seminarios")
+    .then((respuesta) => {
+
+    let datosformulario = respuesta.data;
+    let frmnuevos = [];
+    let frmeliminados = [];
+
+    let estadosselect=[];
+
+    datosformulario.map(item => {
+
+        if(item.estado != 0){
+
+            var total_seguimientoform =item.total_seguimiento;
+            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
+            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
+        }else{
+            frmeliminados.push(item.form_value);
+        }
+
+        return;
+    });
+
+    frmnuevos.map(function(form) {
+        form = form.slice(6, -1);
+    
+        var elements = form.split(";");
+
+        var keyestado = elements[7].split(":");
+        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
+
+        if (estadosselect.includes(estadofiltro) == false) {
+            estadosselect.push(estadofiltro);  
+        }
+
+        return ;
+    }); 
+
+    $("#seletc_estados,#seletc_estados_eliminados").html("");
+    $("#seletc_estados,#seletc_estados_eliminados").append("<option selected readonly value=''>Seleciona estado</option>");
+
+    let selectEstadosFinalizado = $("#seletc_estados_finalizado");
+    selectEstadosFinalizado.html("<option selected readonly value=''>Seleciona estado</option>");
+
+    var fechaactual = moment().format("YYYY-MM-DD");
+
+    console.log(estadosselect);
+
+    estadosselect.forEach(function (element) {
+
+            let displayText = '';
+            if (element.includes('*')) {
+                let parts = element.split('*');
+
+                if (fechaactual > parts[1]) {
+                    let stateParts = parts[0].split('_');
+                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`; 
+                    selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
+  
+                }else{
+
+                    let stateParts = parts[0].split('_');
+                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`;
+                    $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+                }
+
+                let stateParts = parts[0].split('_');
+                displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${parts[1]}`;
+                $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+
+            } else {
+
+                if (fechaactual <= '2024-06-15' && element == "new_york" ) {
+                    let stateParts = element.split('_');
+                    displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                    $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+                }else{
+
+                let stateParts = element.split('_');
+                displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
+                }
+
+                $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+            }
+    });
+
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+
 });
+
 
 function mostrarAnimacion(mensaje_noti) {
     let timerInterval;
@@ -205,9 +301,9 @@ function tblformulario(datosFiltrados){
    tblfomrcontigo.destroy();
 
     tblfomrcontigo = $("#registro_clientes").DataTable({
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
-        },
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
@@ -300,9 +396,9 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
        tblfomrseminario.destroy();
 
     tblfomrseminario = $("#registro_clientes_seminarios").DataTable({
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
-        },
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
@@ -365,15 +461,86 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
 
 }
 
+
+function tblformulario_seminarios_fin(semina_finalizado){
+    var rol_usuario = $("#rol").val();
+   var tblfomrseminario = $("#tbl_seminarios_finalizados").DataTable();
+       tblfomrseminario.destroy();
+
+    tblfomrseminario = $("#tbl_seminarios_finalizados").DataTable({
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
+        lengthChange: false,
+        pageLength: 20,
+        bInfo: false,
+        order: [[0,"desc"]],
+        data: semina_finalizado,
+        columns: [
+            { data: 'id_forms',
+            width: "100px"},
+            { data: 'fecha',
+            width: "100px" },
+            { data: 'Nombre' ,
+            width: "100px" },
+            { data: 'Teléfono' ,
+            width: "100px" },
+            { data: 'estado' ,
+            width: "100px" },
+            { data: 'Comentario',
+            width: "50px" },
+            { data: 'estado_reg',
+            width: "50px" },
+            { data: "total",
+                width: "25px",
+                className: "text-center",
+                render: function (data, type, row) {
+                  //  var id_notacita = row['id'];
+                    return `<td>
+                    <button type="button" class="btn btn-primary">
+                    <i class="bi bi-bell bi-3x icono_notas"></i> <span class="badge badge-light">`+data+`</span>
+                    <span class="sr-only">unread messages</span>
+                  </button>
+                  </td>
+                  `;
+                },
+            },
+            { data: "id_forms",
+            width: "100px" ,
+            render: function (data, type, row) {
+
+                if(rol_usuario === "administrador"){
+                return (
+                    `<select id="usuario_opcion" onchange="opcioneseminarios(this,` + data +`
+                    , this.closest('tr'))" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option><option value="3">Bitacora</option>  </select>`
+                );
+                }else if(rol_usuario === "usuario"){
+                    return (
+                        `<select id="usuario_opcion" onchange="opcioneseminarios(this,` + data +`
+                        , this.closest('tr'))" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="4">Confirmado</option><option value="5">No answer</option><option value="6">cancelado</option><option value="3">Bitacora</option>  </select>`
+                    );
+                }
+            }
+            },
+        ],
+        columnDefs: [
+            {
+                target: [0],
+                visible: false
+            }
+        ]
+    });
+}
+
 function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
     var rol_usuario = $("#rol").val();
    var tblfomrseminaio_eliminado = $("#registro_clientes_seminarios_eliminados").DataTable();
    tblfomrseminaio_eliminado.destroy();
 
     tblfomrseminaio_eliminado = $("#registro_clientes_seminarios_eliminados").DataTable({
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
-        },
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
@@ -435,9 +602,9 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
    tblfomrcontigo.destroy();
 
     tblfomrcontigo = $("#registro_clientes_eliminados").DataTable({
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
-        },
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
         lengthChange: false,
         pageLength: 20,
         bInfo: false,
@@ -922,6 +1089,128 @@ $('#seletc_estados').on('change', function() {
     $("#conteo_seminario").find('td:eq(4)').text(total);
 
     tblformulario_seminarios(datos_limpios);
+
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+});
+
+$('#seletc_estados_finalizado').on('change', function() {
+
+    let selectval = $('#seletc_estados_finalizado').val(); 
+
+    axios.post(principalUrl + "seminarios")
+    .then((respuesta) => {
+
+        let datosformulario = respuesta.data;
+        let frmnuevos = [];
+        let sin_estado=0;
+        let confirmado=0;
+        let no_answer=0;
+        let cancelado=0;
+
+    datosformulario.map(item => {
+
+        if(item.estado != 0){
+
+            var total_seguimientoform =item.total_seguimiento;
+            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
+            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
+        }
+        return;
+    });
+
+    var datos_limpios = frmnuevos.map(function(form) {
+        form = form.slice(6, -1);
+    
+        var elements = form.split(";");
+    
+        let cleanData = {};
+
+        var keyestado = elements[7].split(":");
+        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
+
+        if (estadofiltro == selectval) {
+        
+        elements.forEach(function(element,i) {  
+            var keyValue = element.split(":");
+            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
+
+            if(key == "Nombre"  ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Teléfono" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "estado" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(key == "Comentario" ){
+                var formsiguiente = elements[i+1].split(":");
+                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
+                cleanData[key] = valor;
+            }else if(keyValue[0] == "fecha" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1].split(" ");
+                    valor.pop();
+                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
+                cleanData[dato] = ordenado;
+            }else if(keyValue[0] == "total" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                if(keyValue[1] == ''){
+                    valor = 0;
+                }
+                cleanData[dato] = valor;
+            }else if(keyValue[0] == "id_forms" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                cleanData[dato] = valor;
+            }
+            else if(keyValue[0] == "estado_reg" ){
+                var dato = keyValue[0];
+                var valor = keyValue[1];
+                let valorformat;
+                
+                if (valor == "null") {
+                    valorformat = "";
+                    sin_estado=sin_estado+1;
+                } else if(valor == "4") {
+                    valorformat = "Confirmado";
+                    confirmado=confirmado+1;
+                }else if (valor == "5") {
+                    valorformat = "No answer";
+                    no_answer=no_answer+1;
+                }else if (valor == "6") {
+                    valorformat = "Cancelado";
+                    cancelado=cancelado+1;
+                }
+                cleanData[dato] = valorformat;
+            }
+        });
+        return cleanData;
+
+     }else {
+        return null; 
+     }
+    }).filter(item => item !== null); 
+
+
+    $("#conteo_seminario_finalizado").find('td:eq(0)').text(sin_estado);
+    $("#conteo_seminario_finalizado").find('td:eq(1)').text(confirmado);
+    $("#conteo_seminario_finalizado").find('td:eq(2)').text(no_answer);
+    $("#conteo_seminario_finalizado").find('td:eq(3)').text(cancelado);
+    var total = sin_estado+confirmado+cancelado+no_answer;
+
+    $("#conteo_seminario_finalizado").find('td:eq(4)').text(total);
+
+    tblformulario_seminarios_fin(datos_limpios);
 
     })
     .catch((error) => {

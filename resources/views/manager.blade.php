@@ -64,6 +64,9 @@
         <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab"
             aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
 
+            <a class="nav-item nav-link" id="tab-seminarios-finalizados" data-toggle="tab" href="#nav-seminarios-finalizados" role="tab"
+            aria-controls="nav-seminarios-finalizados" aria-selected="false">Seminarios Finalizados</a>
+
         @if(@Auth::user()->hasRole('administrador'))
         <a class="nav-item nav-link" id="tab-seminarios-eliminados" data-toggle="tab" href="#nav-seminarios-eliminado"
             role="tab" aria-controls="nav-seminarios-eliminado" aria-selected="false">Seminarios eliminados</a>
@@ -111,9 +114,6 @@
                             <div class="form-group col-md-2 mb-1 ml-3">
                                 <select class="form-control" id="seletc_estados">
                                     <option readonly value="">Seleciona estado</option>
-                                    <option value="new_york">New York</option>
-                                    <option value="new_jersey">New Jersey</option>
-                                    <option value="connecticut">Connecticut</option>
                                 </select>
                             </div>
                             <div class="form-group mb-1 ml-auto mr-3">
@@ -177,6 +177,76 @@
         </div>
     </div>
 
+    <div class="tab-pane fade" id="nav-seminarios-finalizados" role="tabpanel" aria-labelledby="tab-seminarios-finalizados">
+        <div class="container-fluid pt-2">
+            <div class="container" style="max-width: 1440px !important;background: white !important;">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
+
+                            <div class="form-group col-md-2 mb-1 ml-3">
+                                <select class="form-control" id="seletc_estados_finalizado">
+                                    
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <table class="table table-sm border rounded mb-1" style="background: white !important;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sin estado</th>
+                                    <th scope="col">Confirmado</th>
+                                    <th scope="col">No answer</th>
+                                    <th scope="col">Cancelados</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="conteo_seminario_finalizado">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 table-responsive">
+                <table id="tbl_seminarios_finalizados"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">#</th>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Estado</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-">Estado resgistro</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="tab-pane fade" id="nav-seminarios-eliminado" role="tabpanel" aria-labelledby="tab-seminarios">
         <div class="container-fluid pt-2">
 
@@ -185,10 +255,7 @@
                     <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
                         <div class="form-group col-md-2 mb-1 ml-3">
                             <select class="form-control" id="seletc_estados_eliminados">
-                                <option readonly value="">Seleciona estado</option>
-                                <option value="new_york">New York</option>
-                                <option value="new_jersey">New Jersey</option>
-                                <option value="connecticut">Connecticut</option>
+
                             </select>
                         </div>
                     </div>
