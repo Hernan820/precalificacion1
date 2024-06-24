@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('seminarios', [App\Http\Controllers\ClientesPreController::class, 'datosform_seminarios']);
 
+    Route::post('seminarios-preregistro', [App\Http\Controllers\ClientesPreController::class, 'form_semi_preregistro']);
+
     Route::post('registro/listado/{id}', [App\Http\Controllers\SeguimientoController::class, 'show']);
 
     Route::get('lista_cliente', [App\Http\Controllers\ClientesPreController::class, 'show']);

@@ -59,19 +59,25 @@
 
         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
             aria-controls="nav-profile" aria-selected="false">Eliminados</a>
-            @endif
+        @endif
 
         <a class="nav-item nav-link" id="tab-seminarios" data-toggle="tab" href="#nav-seminarios" role="tab"
             aria-controls="nav-seminarios" aria-selected="false">Registros Seminarios</a>
 
-            <a class="nav-item nav-link" id="tab-seminarios-finalizados" data-toggle="tab" href="#nav-seminarios-finalizados" role="tab"
-            aria-controls="nav-seminarios-finalizados" aria-selected="false">Seminarios Finalizados</a>
+        <a class="nav-item nav-link" id="tab-seminarios-finalizados" data-toggle="tab"
+            href="#nav-seminarios-finalizados" role="tab" aria-controls="nav-seminarios-finalizados"
+            aria-selected="false">Seminarios Finalizados</a>
 
         @if(@Auth::user()->hasRole('administrador'))
         <a class="nav-item nav-link" id="tab-seminarios-eliminados" data-toggle="tab" href="#nav-seminarios-eliminado"
             role="tab" aria-controls="nav-seminarios-eliminado" aria-selected="false">Seminarios eliminados</a>
 
         @endif
+        
+        <a class="nav-item nav-link" id="tab-semin-pre-registro" data-toggle="tab"
+            href="#nav-semin-pre-registro" role="tab" aria-controls="nav-semin-pre-registro"
+            aria-selected="false">Seminarios pre-registros</a>
+
     </div>
 </nav>
 
@@ -281,6 +287,61 @@
                     </thead>
                     <tbody scope="row">
                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-pane fade" id="nav-semin-pre-registro" role="tabpanel" aria-labelledby="tab-semin-pre-registro">
+        <div class="container-fluid pt-2">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <table class="table table-sm border rounded mb-1" style="background: white !important;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sin estado</th>
+                                    <th scope="col">Confirmado</th>
+                                    <th scope="col">No answer</th>
+                                    <th scope="col">Cancelados</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="contador-semi-pre">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 table-responsive">
+                <table id="tbl_semi_pre_registro"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center display"
+                     cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">#</th>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Estado</th>
+                            <th class="col-md-">Comentario</th>
+                            <th class="col-md-">Estado resgistro</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    {{-- <tbody scope="row">
+                    </tbody> --}}
                 </table>
             </div>
         </div>
