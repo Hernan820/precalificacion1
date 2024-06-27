@@ -31,8 +31,12 @@
         max-width: 400px;
     }
 
-    #registro_clientes td {
+    #tbl_semi_pre_registro td {
         white-space: inherit;
+    }
+
+    #registro_clientes td{
+        white-space: inherit; 
     }
 
     #registro_clientes_eliminados td {
@@ -92,6 +96,7 @@
                     style="background-color: ;color: black;">
                     <thead>
                         <tr>
+                            <th class="col-md-">#</th>
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>
@@ -356,6 +361,7 @@
                     style="background-color: ;color: black;">
                     <thead>
                         <tr>
+                            <th class="col-md-">#</th>
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>

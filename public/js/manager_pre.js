@@ -425,6 +425,8 @@ function tblformulario(datosFiltrados){
         order: [[0, "desc"]],
         data: datosFiltrados,
         columns: [
+            { data: 'id_forms',
+                width: "100px" },
             { data: 'fechaform',
             width: "100px" },
             { data: 'Nombre' ,
@@ -466,12 +468,12 @@ function tblformulario(datosFiltrados){
             }
         },
         ],
-        columnDefs: [
-            {
-                targets: 0,
-                type: 'date-ddmmyyyy' 
-            }
-        ]
+        // columnDefs: [
+        //     {
+        //         targets: 1,
+        //         type: 'date-ddmmyyyy' 
+        //     }
+        // ]    
     });
 
     jQuery.extend(jQuery.fn.dataTableExt.oSort, {
@@ -758,10 +760,10 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
 
 function tblformulario_eliminados(datosFiltrados_eliminados){
     var rol_usuario = $("#rol").val();
-   var tblfomrcontigo = $("#registro_clientes_eliminados").DataTable();
-   tblfomrcontigo.destroy();
+   var tblfomrcontigoelimin = $("#registro_clientes_eliminados").DataTable();
+   tblfomrcontigoelimin.destroy();
 
-    tblfomrcontigo = $("#registro_clientes_eliminados").DataTable({
+    tblfomrcontigoelimin = $("#registro_clientes_eliminados").DataTable({
         // language: {
         //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         // },
@@ -771,6 +773,8 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
         order: [[0, "desc"]],
         data: datosFiltrados_eliminados,
         columns: [
+            { data: 'id_forms',
+            width: "100px" },
             { data: 'fechaform',
             width: "100px" },
             { data: 'Nombre' ,
@@ -812,42 +816,7 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
             }
         },
         ],
-        columnDefs: [
-            {
-                targets: 0,
-                type: 'date-ddmmyyyy' 
-            }
-        ]
-    });
 
-    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-        'date-ddmmyyyy-pre': function (a) {
-            // Formato: vie. 10 nov. 2023 06:54 PM
-            var months = {
-                'ene.': 1, 'feb.': 2, 'mar.': 3, 'abr.': 4, 'may.': 5, 'jun.': 6,
-                'jul.': 7, 'ago.': 8, 'sep.': 9, 'oct.': 10, 'nov.': 11, 'dic.': 12
-            };
-            var dateParts = a.split(' ');
-            var day = parseInt(dateParts[1]);
-            var month = months[dateParts[2].toLowerCase()];
-            var year = parseInt(dateParts[3]);
-            var timeParts = dateParts[4].split(':');
-            var hour = parseInt(timeParts[0]);
-            var minutes = parseInt(timeParts[1]);
-            var period = dateParts[5].toUpperCase();
-    
-            if (period === 'PM' && hour < 12) {
-                hour += 12;
-            }
-            var isoDate = new Date(year, month - 1, day, hour, minutes).toISOString();
-            return isoDate;
-        },
-        'date-ddmmyyyy-asc': function (a, b) {
-            return a.localeCompare(b);
-        },
-        'date-ddmmyyyy-desc': function (a, b) {
-            return b.localeCompare(a);
-        }
     });
 }
 
