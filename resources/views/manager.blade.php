@@ -84,7 +84,7 @@
 
             <a class="nav-item nav-link" id="tab-registro-pdf" data-toggle="tab"
             href="#nav-registro-pdf" role="tab" aria-controls="nav-registro-pdf"
-            aria-selected="false">GUIA PDF</a>
+            aria-selected="false">Registros GUIA PDF</a>
 
 
     </div>
