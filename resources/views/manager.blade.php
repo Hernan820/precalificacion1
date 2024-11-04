@@ -19,7 +19,7 @@
 
 
     .datatable {
-        Word-wrap: break-Word;
+        Word-wrap: break-Word !important;
     }
 
     table {
@@ -27,20 +27,28 @@
     }
 
     table td {
-        word-wrap: break-word;
-        max-width: 400px;
+        /* word-wrap: break-word !important; */
+        /* max-width: 400px !important; */
     }
 
+    table td {
+        white-space: normal !important;
+    }
+
+    table th {
+        white-space: normal !important;
+        /* font-size: 0.9em !important ; */
+    }
     #tbl_semi_pre_registro td {
-        white-space: inherit;
+        white-space: inherit !important;
     }
 
     #registro_clientes td{
-        white-space: inherit; 
+        white-space: inherit !important; 
     }
 
     #registro_clientes_eliminados td {
-        white-space: inherit;
+        white-space: inherit !important;
     }
 
     @media only screen and (max-width: 600px) {
@@ -50,7 +58,7 @@
     }
 
     .morecontent {
-        display: none;
+        display: none !important;
     }
 </style>
 <br><br>
@@ -148,10 +156,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Sin estado</th>
-                                    <th scope="col">Confirmado</th>
+                                    <th scope="col">Confirmados</th>
                                     <th scope="col">No answer</th>
                                     <th scope="col">Cancelados</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Total Inscritos</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,13 +183,13 @@
                     style="background-color: ;color: black;">
                     <thead>
                         <tr>
-                            <th class="col-md-">#</th>
+                            <th class="col-md-">Total Inscritos</th>
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>
-                            <th class="col-md-">Estado</th>
+                            <th class="col-md-">Ubicación</th>
                             <th class="col-md-">Comentario</th>
-                            <th class="col-md-">Estado resgistro</th>
+                            <th class="col-md-">Resultado</th>
                             <th class="col-md-"></th>
                             <th class="col-md-"> Opciones&nbsp;</th>
                         </tr>
@@ -548,11 +556,19 @@
 
                     <div class="form-group ">
                         <div class="row pl-2 pr-2">
-                            <div class="col-md-12 border border-danger rounded">
+                            <div class="col-md-12 border border-primary rounded">
                                 <p class="mb-0"> Ten en cuenta que la campaña será enviada únicamente a los clientes
                                     listados en la tabla y
                                     que se encuentren en los estados que selecciones.
                                     Los clientes que hayan sido eliminados no recibirán la campaña. </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row pl-2 pr-2">
+                            <div class="col-md-12 border border-danger rounded text-center">
+                                <p class="mb-0"> <span class="text-danger" >ⓘ  </span> Las campañas están inhabilitadas por el momento. </p>
                             </div>
                         </div>
                     </div>
@@ -594,7 +610,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btncampana_personalizad">Enviar compaña</button>
+                <button type="button" class="btn btn-success" disabled id="btncampana_personalizad">Enviar compaña</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>

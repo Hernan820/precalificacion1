@@ -510,6 +510,7 @@ function tblformulario(datosFiltrados){
 
 function tblformulario_seminarios(datosFiltrados_seminarios){
     var rol_usuario = $("#rol").val();
+    var contadorfilas = 1;
    var tblfomrseminario = $("#registro_clientes_seminarios").DataTable();
        tblfomrseminario.destroy();
 
@@ -524,7 +525,17 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
         data: datosFiltrados_seminarios,
         columns: [
             { data: 'id_forms',
-            width: "100px"},
+            width: "45px",
+            render: function (data, type, row) {
+                moment.locale('es');
+                if (type === 'display') {
+                    var total = contadorfilas++;
+                    return total;
+                } else {
+                    return data;
+                }
+            }
+            },
             { data: 'fecha',
             width: "100px" },
             { data: 'Nombre' ,
