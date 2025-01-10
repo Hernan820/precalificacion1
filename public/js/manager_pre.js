@@ -559,10 +559,24 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
                 }
             },
             },
-            { data: 'Comentario',
-            width: "50px" },
-            { data: 'estado_reg',
-            width: "50px" },
+            { data: 'Comentario', width: "50px" },
+           
+            {data: 'estado_id',  width: "40px",
+                render: function (data, type, row) {
+
+                    var icono = '';
+                    if (data == 4 ) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/confirmado.png">';
+                    }else if (data == 5) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/telefono.png">';
+                    }else if (data == 6) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/botonx.png">';
+                    }else if (data == 0) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/reloj.png">';  
+                    }
+                    return icono ;
+                },
+            },
             { data: "total",
                 width: "25px",
                 className: "text-center",
@@ -599,7 +613,37 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
             {
                 target: [0],
                 visible: false
-            }
+            },
+            {
+                aTargets: [6],
+                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    if (sData == 4) {
+                        $(nTd)
+                            .css("background-color", "#00FE1F")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    } else if (sData == 6) {
+                        $(nTd)
+                            .css("background-color", "#FE2300")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    }  else if (sData == 5) {
+                        $(nTd)
+                            .css("background-color", "#F88503")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    }else if (sData == 0) {
+                        $(nTd)
+                            .css("background-color", "#FEE700")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    }
+                },
+            },
         ]
     });
 
@@ -1287,9 +1331,11 @@ $('#seletc_estados').on('change', function() {
                 var dato = keyValue[0];
                 var valor = keyValue[1];
                 let valorformat;
-                
+                var valor_estado_id = valor;
+
                 if (valor == "null") {
-                    valorformat = "";
+                    valorformat = "Pendiente";
+                    valor_estado_id = "0";
                     sin_estado=sin_estado+1;
                 } else if(valor == "4") {
                     valorformat = "Confirmado";
@@ -1301,6 +1347,8 @@ $('#seletc_estados').on('change', function() {
                     valorformat = "Cancelado";
                     cancelado=cancelado+1;
                 }
+                cleanData["estado_id"] = valor_estado_id;
+
                 cleanData[dato] = valorformat;
             }
         });
