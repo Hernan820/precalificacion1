@@ -160,7 +160,7 @@ class ClientesPreController extends Controller
         FROM wp_wpforms_db
         LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
         LEFT JOIN estadoregistros on estadoregistros.id_form = wp_wpforms_db.form_id
-        WHERE wp_wpforms_db.form_post_id IN(1772,1873,1870)
+        WHERE wp_wpforms_db.form_post_id IN(1772,1873,1870,2851)
         GROUP BY wp_wpforms_db.form_id
         ";
 

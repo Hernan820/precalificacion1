@@ -59,17 +59,27 @@ $(document).ready(function () {
                 let parts = element.split('*');
                 var formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
 
-                if (fechaactual > parts[1]) {
+                if (fechaactual >= parts[1]) {
 
                     let stateParts = parts[0].split('_');
                     displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`; 
-                    selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
+
+                    if (parts.length == 3) {
+                        selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText} (${parts[2]})</option>`);
+                    }else{
+                        selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
+                    }
   
                 }else{
 
                     let stateParts = parts[0].split('_');
                     displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
-                    $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+
+                    if (parts.length == 3) {
+                        $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText} (${parts[2]})</option>`);
+                    } else {
+                        $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
+                    }
                 }
 
                 let stateParts = parts[0].split('_');
@@ -549,7 +559,12 @@ function tblformulario_seminarios(datosFiltrados_seminarios){
                 if (data.includes('*')){
                   var dataestadofecha = data.split('*');
                   var dataestado = dataestadofecha[0].split('_');
-                  var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+
+                  if (dataestadofecha.length == 3) {
+                    var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]} (${dataestadofecha[2]})`; 
+                  }else{
+                    var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+                  }
                     return displayText;
                 }else{
 
