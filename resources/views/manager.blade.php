@@ -141,7 +141,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-1 ml-auto mr-3">
-                                <input class="btn btn-primary text-center float-right" onclick="exportseminarioexcel()"
+                                <input class="btn btn-primary text-center float-right" onclick="exportseminarioexcel('vigentes')"
                                     id="btnexcel" type="button" value="Reporte Excel">
                             </div>
                         </div>
@@ -213,7 +213,10 @@
                                     
                                 </select>
                             </div>
-
+                            <div class="form-group mb-1 ml-auto mr-3">
+                                <input class="btn btn-primary text-center float-right" onclick="exportseminarioexcel('finalizados')"
+                                    id="btnexcel" type="button" value="Reporte seminarios finalizados">
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1619,9 +1619,13 @@ $('#seletc_estados_eliminados').on('change', function() {
     });
 });
 
-function exportseminarioexcel() {
-
-    var estado = $("#seletc_estados").val();
+function exportseminarioexcel(seminario_estado) {
+    
+    if (seminario_estado == 'finalizados') {
+        var estado = $("#seletc_estados_finalizado").val();
+    } else if (seminario_estado == 'vigentes') {
+        var estado = $("#seletc_estados").val();
+    }
 
     if (estado == "") {
         Swal.fire({
