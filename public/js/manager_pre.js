@@ -59,7 +59,7 @@ $(document).ready(function () {
                 let parts = element.split('*');
                 var formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
 
-                if (fechaactual >= parts[1]) {
+                if (fechaactual > parts[1]) {
 
                     let stateParts = parts[0].split('_');
                     displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`; 
@@ -220,6 +220,7 @@ function datosforms(){
 
         var ayudaPart='';
         var ayudaValue='';
+        var tipo_formulario='';
 
         if(item.form_post_id == 782){
             ayudaPart = parts[parts.indexOf('s:20:"Comentario o mensaje"') + 1];
@@ -229,6 +230,7 @@ function datosforms(){
             } else {
                 ayudaValue ='';
             }
+            tipo_formulario=item.form_post_id;
             
         }else if(item.form_post_id == 7){
             ayudaPart = parts[parts.indexOf('s:21:"Como podemos ayudarte"') + 1];
@@ -239,8 +241,21 @@ function datosforms(){
             } else {
                 ayudaValue ='';
             }
+            tipo_formulario=item.form_post_id;
 
-        }else{
+        }else if(item.form_post_id == 2893){
+            ayudaPart = parts[parts.indexOf('s:10:"Comentario"') + 1];
+
+            var startIndex = ayudaPart.indexOf(':"');
+            if (startIndex !== -1) {
+                ayudaValue = ayudaPart.substring(startIndex + 2, ayudaPart.length - 1);
+            } else {
+                ayudaValue ='';
+            }
+            tipo_formulario=item.form_post_id;
+        }else
+
+        {
             if(item.form_post_id != 919){
                 if(item.estado != 0){
                 var total_seguimientoform =item.total_seguimiento;
@@ -251,6 +266,8 @@ function datosforms(){
                 var total_seguimientoform =item.total_seguimiento;
                 frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
                }
+            tipo_formulario=item.form_post_id;
+
             }
             return;
         }
@@ -266,7 +283,8 @@ function datosforms(){
                     'Como podemos ayudarte': ayudaValue,
                     fechaform : fechasformat,
                     id_forms: item.form_id ,
-                    total_segui: item.total_seguimiento
+                    total_segui: item.total_seguimiento,
+                    tipo_form: tipo_formulario
                 };
             }else{
                 datos_eliminaos.push({
@@ -275,7 +293,8 @@ function datosforms(){
                     'Como podemos ayudarte': ayudaValue,
                     fechaform: fechasformat,
                     id_forms: item.form_id,
-                    total_segui: item.total_seguimiento
+                    total_segui: item.total_seguimiento,
+                    tipo_form: tipo_formulario
                 });
             }
          }
@@ -446,6 +465,16 @@ function tblformulario(datosFiltrados){
             width: "100px" },
             { data: 'Como podemos ayudarte',
             width: "100px" },
+            { data: 'tipo_form',
+                width: "100px",
+                render: function (data, type, row) {
+                    if (data == '2893') {
+                        return 'Campaña Renta';
+                    } else {
+                        return '';  
+                    }
+                },
+            },
             {
                 data: "total_segui",
                 width: "25px",
@@ -1141,7 +1170,7 @@ function opcioneseminarios(option, id, row,tbl) {
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
-                            title: "Registro eliminado",
+                            title: "Registro Confirmado",
                             showConfirmButton: false,
                             timer: 1200,
                         });
@@ -1807,3 +1836,4 @@ function tbl_guiapdf(datosSemiPre) {
         ],
     });
 }
+

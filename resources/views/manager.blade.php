@@ -114,6 +114,7 @@
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>
                             <th class="col-md-">Comentario</th>
+                            <th class="col-md-">Formulario</th>
                             <th class="col-md-"></th>
                             <th class="col-md-"> Opciones</th>
                         </tr>
