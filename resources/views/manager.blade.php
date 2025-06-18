@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<script src="{{ asset('js/manager_pre.js?v=a127') }}" defer></script>
-<script src="{{ asset('js/permisionUsuario.js?v=a127') }}" defer></script>
+<script src="{{ asset('js/manager_pre.js?v=a1227') }}" defer></script>
+<script src="{{ asset('js/permisionUsuario.js?v=a1227') }}" defer></script>
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -66,7 +66,7 @@
 
 
 
-
+@if(@Auth::user()->id  == 3)
 <div class="container">
     <div class="row">
         <div class="col">
@@ -84,14 +84,18 @@
         </div>
     </div>
 </div>
+@endif
 
 <br>
 
 
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-            aria-controls="nav-home" aria-selected="true">Registros clientes</a>
+        @if( Auth::user()->hasRole('administrador') || Auth::user()->hasPermissionTo('registro_clientes'))
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                aria-controls="nav-home" aria-selected="true">Registros clientes</a>
+        @endif
+
         @if(@Auth::user()->hasRole('administrador'))
 
         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
@@ -115,10 +119,12 @@
             href="#nav-semin-pre-registro" role="tab" aria-controls="nav-semin-pre-registro"
             aria-selected="false">Seminarios pre-registros</a>
 
+        @if( Auth::user()->hasRole('administrador') || Auth::user()->hasPermissionTo('guia_pdf'))
+
             <a class="nav-item nav-link" id="tab-registro-pdf" data-toggle="tab"
             href="#nav-registro-pdf" role="tab" aria-controls="nav-registro-pdf"
             aria-selected="false">Registros GUIA PDF</a>
-
+        @endif
 
     </div>
 </nav>
@@ -572,7 +578,7 @@
         <div class="modal-content ">
             <div class="modal-header ">
                 <h5 class="modal-title">
-                    Campaña Personalizada
+                    Permisos de usuarios
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
