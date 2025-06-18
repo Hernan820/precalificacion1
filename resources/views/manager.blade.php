@@ -5,6 +5,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <script src="{{ asset('js/manager_pre.js?v=a127') }}" defer></script>
+<script src="{{ asset('js/permisionUsuario.js?v=a127') }}" defer></script>
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -61,7 +62,31 @@
         display: none !important;
     }
 </style>
-<br><br>
+<br>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="dropdown">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Opciones
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" onclick="modalPermisoUsuarios()" href="#">Permisos Usuarios</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br>
+
 
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -540,9 +565,138 @@
     </div>
 </div>
 
+
+<!-- Modal Permisos -->
+<div class="modal fade" id="modal-permiso-usuarios" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <h5 class="modal-title">
+                    Campaña Personalizada
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                            
+                <form 
+                    action="{{route('asiganar.permiso.usuario')}}" 
+                    class='border border-info rounded p-3' id="frmPermisoUsuarios">
+
+                    {!! csrf_field() !!}
+                    
+                    
+                    <div class="form-group">
+                      <label for="selectUsuariosAsignado">Asiganacion de usuario</label>
+                      <select class="form-control" id="selectUsuariosAsignado" name="selectUsuariosAsignado">
+                          <option value="" disabled selected>Selecciona un usuario</option>
+                          @foreach ($usuarios_permiso as $usuario)
+                            @if ($usuario->permiso_cliente == 0 && $usuario->permiso_guipdf == 0)
+                              <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                            @endif
+                          @endforeach
+                      </select>
+                      <div class="invalid-feedback">
+                        Seleccione el usuario para asiganar permiso.
+                      </div>
+                    </div>
+
+                    <div class="form-group my-3" id="permisos_usuarios">
+                            <label><strong>Permisos a asignar:</strong></label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="perm_gestion" name="permisos_usuarios[]" value="gestion">
+                                <label class="form-check-label" for="perm_gestion">Registros guia pdf</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="perm_creador" name="permisos_usuarios[]" value="creador">
+                                <label class="form-check-label" for="perm_creador">Registros clientes</label>
+                            </div>
+                        <div class="invalid-feedback " id="checkboxGroupError" style="display: none;">
+                            Debes seleccionar al menos un permiso.
+                        </div>
+                     </div>
+
+
+                    <button type="submit" class="btn btn-primary text-white" >Asignar permiso</button>
+                </form> <br>
+
+                <div class="table-responsive">
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-sm ">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 125px;" >Usuarios</th>
+                                    <th scope="col" style="width: 125px;" class="text-center" >Guia pdf</th>
+                                    <th scope="col" style="width: 125px;" class="text-center" >Registro clientes</th>
+                                    <th scope="col" style="width: 125px;" class="text-center" >OPCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyUserPermiso" scope="row">
+
+                              @foreach ($usuarios_permiso as $usuario)
+                                @if ($usuario->permiso_cliente != 0 || $usuario->permiso_guipdf != 0)
+                                  <tr>
+                                    <td>{{ $usuario->name }}</td>
+
+                                      @if ($usuario->permiso_cliente === 1  && $usuario->permiso_guipdf === 1)
+
+                                          <td class="text-center" ><p>✅</p></td>
+                                          <td class="text-center" ><p>✅</p></td>
+                                          <td class="text-center"> 
+                                            <select class="form-control"
+                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
+                                              id="permisos-{{ $usuario->id }}">
+                                              <option selected disabled>Selecciona</option>
+                                              <option value="1">Aquitar permisos</option>
+                                            </select>
+                                          </td>
+
+                                      @elseif ($usuario->permiso_guipdf == 1 && $usuario->permiso_cliente == 0) 
+
+                                          <td class="text-center" ><p>✅</p></td>
+                                          <td class="text-center" ><p>❌</p></td>
+                                          <td class="text-center"> 
+                                            <select class="form-control"
+                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
+                                              id="permisos-{{ $usuario->id }}">
+                                              <option selected disabled>Selecciona</option>
+                                              <option value="1">Aquitar permisos</option>
+                                              <option value="2">Agregar permiso registro clientes </option>
+                                            </select>
+                                          </td>
+
+                                      @elseif ($usuario->permiso_guipdf == 0 && $usuario->permiso_cliente == 1)
+                                          <td class="text-center" ><p>❌</p></td>
+                                          <td class="text-center" ><p>✅</p></td>
+                                          <td class="text-center"> 
+                                            <select class="form-control"
+                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
+                                              id="permisos-{{ $usuario->id }}">
+                                              <option selected disabled>Selecciona</option>
+                                              <option value="1">Aquitar permisos</option>
+                                              <option value="3">Agregar permiso guia pdf </option>
+                                            </select>
+                                          </td>
+                                      @endif
+                                  </tr>
+                                @endif
+                              @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Modal CAMPÀNA DE MENSAJE-->
-<div class="modal fade" id="modal_campana_perso" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-    aria-hidden="true">
+<div class="modal fade" id="modal_campana_perso" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -620,6 +774,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

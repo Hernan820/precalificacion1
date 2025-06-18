@@ -36,10 +36,12 @@ Route::post('home/precalificacion', [App\Http\Controllers\ClientesPreController:
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', function () {
-        return view('manager');
-    });
+    // Route::get('/home', function () {
+    //     return view('manager');
+    // });
     
+    Route::get('/home', [App\Http\Controllers\Controller::class, 'vistaDataFormularios']);
+
 
     Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
 
@@ -78,5 +80,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('campana/mensajes', [App\Http\Controllers\ClientesPreController::class, 'Envio_campana']);
 
     Route::get('seminario/exportar/{estado}', [App\Http\Controllers\ClientesPreController::class, 'exportseminario']);
+
+
+    Route::prefix('usuarios/permisos')->group(function () {
+        // Route::get('/', [App\Http\Controllers\UserPermissionController::class, 'index'])->name('index');
+        // Route::get('/crear', [App\Http\Controllers\UserPermissionController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\UserPermissionController::class, 'store'])->name('asiganar.permiso.usuario');
+        Route::post('/{id}', [App\Http\Controllers\UserPermissionController::class, 'destroy'])->name('show');
+        Route::post('/{id}/editar', [App\Http\Controllers\UserPermissionController::class, 'edit'])->name('edit');
+        // Route::put('/{id}', [App\Http\Controllers\UserPermissionController::class, 'update'])->name('update');
+        // Route::delete('/{id}', [App\Http\Controllers\UserPermissionController::class, 'destroy'])->name('destroy');
+    });
+
+
 
 });
