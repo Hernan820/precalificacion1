@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('seminario/exportar/{estado}', [App\Http\Controllers\ClientesPreController::class, 'exportseminario']);
 
+    Route::post('datos/form_entrenosotras', [App\Http\Controllers\EventoController::class, 'index']);
+
 
     Route::prefix('usuarios/permisos')->group(function () {
         // Route::get('/', [App\Http\Controllers\UserPermissionController::class, 'index'])->name('index');

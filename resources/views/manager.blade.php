@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<script src="{{ asset('js/manager_pre.js?v=a1227') }}" defer></script>
-<script src="{{ asset('js/permisionUsuario.js?v=a1227') }}" defer></script>
+<script src="{{ asset('js/manager_pre.js?v=a12127') }}" defer></script>
+<script src="{{ asset('js/permisionUsuario.js?v=a12217') }}" defer></script>
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -124,6 +124,12 @@
             <a class="nav-item nav-link" id="tab-registro-pdf" data-toggle="tab"
             href="#nav-registro-pdf" role="tab" aria-controls="nav-registro-pdf"
             aria-selected="false">Registros GUIA PDF</a>
+        @endif
+        @if( Auth::user()->hasRole('administrador') )
+            <a class="nav-item nav-link " id="tab-entre-nosotras" data-toggle="tab" href="#nav-entre-nosotras" role="tab" aria-controls="nav-entre-nosotras"
+                aria-selected="false">
+                Entre Nosotras
+            </a>
         @endif
 
     </div>
@@ -477,6 +483,33 @@
             </div>
         </div>
     </div>
+
+    <div class="tab-pane fade" id="nav-entre-nosotras" role="tabpanel" aria-labelledby="nav-entre-nosotras">
+        <div class="container-fluid pt-5">
+            <div class="col-md-12 table-responsive">
+                <table id="tbl_evento_entre_nosotras"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">#</th>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Cuidad</th>
+                            <th class="col-md-">estado</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Modal Notas-->

@@ -3,6 +3,7 @@ $(document).ready(function () {
     datosforms();
     obtenerDatoPreregistro();
     obtenerDatosGuia();
+    obtener_datos_evento_entre_nosotras();
 
     axios.post(principalUrl + "seminarios")
     .then((respuesta) => {
@@ -320,6 +321,19 @@ function datosforms(){
 
        tblformulario(arrFiltrado);
        tblformulario_eliminados(arrFiltrado_elimin);
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
+
+function obtener_datos_evento_entre_nosotras() {
+
+    axios.post(principalUrl + "datos/form_entrenosotras")
+        .then((respuesta) => {
+        tbl_Evento_Entre_Nosotras(respuesta.data);            
     })
     .catch((error) => {
         if (error.response) {
@@ -1002,6 +1016,161 @@ function tbl_semPreRegistro(datosSemiPre) {
     });
 }
 
+
+function tbl_Evento_Entre_Nosotras(datosEntreNosotroas) {
+
+    var rol_usuario = $("#rol").val();
+   var tblfomrsemiPre = $("#tbl_evento_entre_nosotras").DataTable();
+       tblfomrsemiPre.destroy();
+
+   var tblfomrsemiPre = $("#tbl_evento_entre_nosotras").DataTable({
+        // language: {
+        //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        // },
+            lengthChange: false,
+            pageLength: 20,
+            bInfo: false,
+            order: [[0,"asc"]],
+            data: datosEntreNosotroas,
+            columns: [
+            { data: 'id_forms', width: "100px",
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: 'form_date' ,width: "100px",
+                render: function (data, type, row) {
+                    moment.locale('es');
+                    if (type === 'display') {
+                        return moment(data).format("ddd. DD MMM. YYYY");
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            { data: 'nombre'    ,width: "100px" },
+            { data: 'telefono'  ,width: "100px"
+                ,render: function (data, type, row) {
+                    if (data) {
+                        return data;
+                    } else {
+                        return 'No proporcionado';
+                    }
+                }
+             },
+            { data: 'ciudad'    ,width: "100px",
+                render: function (data, type, row) {
+                    if (data.includes('*')){
+                        var dataestadofecha = data.split('*');
+                        var dataestado = dataestadofecha[0].split('_');
+                        var  displayText = (dataestado.length > 1 ? `${dataestado[0]} ${dataestado[1]}` : dataestado[0]) + ` - ${dataestadofecha[1]}`; 
+                        return displayText;
+                    }else if(data.includes('_')){
+                        var stateParts = data.split('_');
+                        var displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+                        return displayText;
+                    }else{
+                        return data; 
+                    }
+                },
+            },
+            { data: 'estado', defaultContent: '',  width: "50px",
+                render: function (data, type, row) {
+
+                    if (!data && data !== 0) { return '';}
+
+                    var icono = '';
+                    if (data == 4 ) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/confirmado.png">';
+                    }else if (data == 5) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/telefono.png">';
+                    }else if (data == 6) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/botonx.png">';
+                    }else if (data == 0) {
+                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/reloj.png">';  
+                    }
+
+                    return icono;
+                },
+            },
+            { data: "total_seguimiento", width: "25px", className: "text-center",
+                render: function (data, type, row) {
+                    var contador = data || 0; // Asegurarse de que data no sea undefined
+                  //  var id_notacita = row['id'];
+                    return `<td>
+                    <button type="button" class="btn btn-primary">
+                    <i class="bi bi-bell bi-3x icono_notas"></i> <span class="badge badge-light">${contador}</span>
+                    <span class="sr-only">unread messages</span>
+                  </button>
+                  </td>
+                  `;
+                },
+            },
+            { data: "form_id", width: "100px" ,
+                render: function (data, type, row) {
+
+                    var estadoOpcion = 'disabled';
+
+                    if(rol_usuario === "administrador"){
+                        return (
+                            `<select id="usuario_opcion" onchange="opcioneseminarios(this,${data}
+                            , this.closest('tr'),'tbl_entrenosotras')" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;">
+                                <option selected="selected" disabled selected>Acciones</option>
+                                <option ${estadoOpcion} value="1">Seguimiento</option>
+                                <option ${estadoOpcion} value="2">Eliminar</option>
+                                <option ${estadoOpcion} value="4">Confirmado</option>
+                                <option ${estadoOpcion} value="5">No answer</option>
+                                <option ${estadoOpcion} value="6">cancelado</option>
+                                <option ${estadoOpcion} value="3">Bitacora</option>
+                                </select>`
+                        );
+                    }else if(rol_usuario === "usuario"){
+                        return (
+                            `<select id="usuario_opcion" onchange="opcioneseminarios(this,${data}
+                            , this.closest('tr'),'tbl_entrenosotras')" class="form-control form-select-sm opciones pl-0 pr-0"  placeholder="" style="width: 75% !important;display: initial !important;height: calc(2.05rem + 2px) !important;">
+                                <option selected="selected" disabled selected>Acciones</option>
+                                <option ${estadoOpcion} value="1">Seguimiento</option>
+                                <option ${estadoOpcion} value="4">Confirmado</option>
+                                <option ${estadoOpcion} value="5">No answer</option>
+                                <option ${estadoOpcion} value="6">cancelado</option>
+                                <option ${estadoOpcion} value="3">Bitacora</option>
+                                </select>`
+                        );
+                    }
+                }
+            },
+        ],
+        columnDefs: [
+            {
+                aTargets: [5],
+                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    if (sData == 4) {
+                        $(nTd)
+                            .css("background-color", "#00FE1F")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    } else if (sData == 6) {
+                        $(nTd)
+                            .css("background-color", "#FE2300")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    }  else if (sData == 5) {
+                        $(nTd)
+                            .css("background-color", "#F88503")
+                            .css("color", "#4F8A10")
+                            .css("font-weight", "bold")
+                            .css("text-align", "center");
+                    }
+                },
+            },
+        ]
+    });
+}
+
+
+
 function vistaregistro(){
     location.href = principalUrl + "vis_usuarios";
 }
@@ -1164,7 +1333,12 @@ function opcioneseminarios(option, id, row,tbl) {
                     .then((respuesta) => {
                         if (tbl == 'tblpdf') {
                             $(row).find('td:eq(4)').text('Confirmado');
-                        }else{
+                        }else if (tbl == 'tbl_entrenosotras'){                                                       
+                            $(row)
+                            .find('td:eq(5)')
+                            .html(`<img class="center-icon" src="${principalUrl}iconos/confirmado.png">`)
+                            .css("background-color", "#00FE1F");
+                        }else {
                             $(row).find('td:eq(6)').text('Confirmado');
                         }
                         Swal.fire({
@@ -1196,6 +1370,11 @@ function opcioneseminarios(option, id, row,tbl) {
                     .then((respuesta) => {
                         if (tbl == 'tblpdf') {
                             $(row).find('td:eq(4)').text('No answer');
+                        }else if (tbl == 'tbl_entrenosotras'){
+                            $(row)
+                            .find('td:eq(5)')
+                            .html(`<img class="center-icon" src="${principalUrl}iconos/telefono.png">`)
+                            .css("background-color", "#F88503");
                         }else{
                             $(row).find('td:eq(6)').text('No answer');
                         }
@@ -1228,6 +1407,11 @@ function opcioneseminarios(option, id, row,tbl) {
                     .then((respuesta) => {
                         if (tbl == 'tblpdf') {
                             $(row).find('td:eq(4)').text('Cancelado');
+                        }else if (tbl == 'tbl_entrenosotras'){
+                            $(row)
+                            .find('td:eq(5)')
+                            .html(`<img class="center-icon" src="${principalUrl}iconos/botonx.png">`)
+                            .css("background-color", "#FE2300");
                         }else{
                             $(row).find('td:eq(6)').text('Cancelado');
                         }
