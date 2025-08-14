@@ -15,7 +15,9 @@ class EventoController extends Controller
         ->selectRaw("
             w.form_id, w.form_value, w.form_date, w.form_post_id,
             (SELECT COUNT(*) FROM seguimientos s WHERE s.id_fomrscontigo = w.form_id) AS total_seguimiento,
-            (SELECT er.estado FROM estadoregistros er WHERE er.id_form = w.form_id ORDER BY er.id DESC LIMIT 1) AS estado
+            (SELECT er.estado FROM estadoregistros er 
+            WHERE er.id_form = w.form_id 
+            ORDER BY er.id DESC LIMIT 1) AS estado
         ")
         ->whereIn('w.form_post_id', [18])
         ->groupBy('w.form_id')
@@ -65,7 +67,17 @@ class EventoController extends Controller
         })->filter()->values();
 
         // Dejar solo un registro por teléfono (conserva el primero que encuentre)
-        $result = $result->unique('telefono')->values();
+        // $result = $result->unique('telefono')->values();
+
+        $result = $result
+            ->filter(function ($item) {
+                return !in_array($item['estado'], [0, '0'], true); // acepta null
+            })
+            ->unique(function ($item) {
+                return preg_replace('/\D+/', '', $item['telefono'] ?? '');
+            })
+            ->values();
+
 
         return response()->json($result);
     }

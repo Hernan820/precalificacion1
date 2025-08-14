@@ -1109,7 +1109,7 @@ function tbl_Evento_Entre_Nosotras(datosEntreNosotroas) {
             { data: "form_id", width: "100px" ,
                 render: function (data, type, row) {
 
-                    var estadoOpcion = 'disabled';
+                    var estadoOpcion = '';
 
                     if(rol_usuario === "administrador"){
                         return (
