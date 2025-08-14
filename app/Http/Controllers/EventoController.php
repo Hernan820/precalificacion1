@@ -12,11 +12,11 @@ class EventoController extends Controller
  
         $rows = DB::connection('mysql')
         ->table('wp_wpforms_db as w')
-        // ->selectRaw("
-        //     w.form_id, w.form_value, w.form_date, w.form_post_id,
-        //     (SELECT COUNT(*) FROM seguimientos s WHERE s.id_fomrscontigo = w.form_id) AS total_seguimiento,
-        //     (SELECT er.estado FROM estadoregistros er WHERE er.id_form = w.form_id ORDER BY er.id DESC LIMIT 1) AS estado
-        // ")
+        ->selectRaw("
+            w.form_id, w.form_value, w.form_date, w.form_post_id,
+            (SELECT COUNT(*) FROM seguimientos s WHERE s.id_fomrscontigo = w.form_id) AS total_seguimiento,
+            (SELECT er.estado FROM estadoregistros er WHERE er.id_form = w.form_id ORDER BY er.id DESC LIMIT 1) AS estado
+        ")
         ->whereIn('w.form_post_id', [18])
         ->groupBy('w.form_id')
         ->get();
@@ -59,8 +59,8 @@ class EventoController extends Controller
                 'hora_evento'       => $hora,
                 'form_date'         => $row->form_date,
                 'form_post_id'      => $row->form_post_id,
-                // 'total_seguimiento' => $row->total_seguimiento,
-                // 'estado'            => $row->estado,
+                'total_seguimiento' => $row->total_seguimiento,
+                'estado'            => $row->estado,
             ];
         })->filter()->values();
 
