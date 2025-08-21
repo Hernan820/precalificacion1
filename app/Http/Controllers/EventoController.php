@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
-    public function index()
+    public function index($id_forms)
     {
  
         $rows = DB::connection('mysql')
@@ -19,7 +19,7 @@ class EventoController extends Controller
             WHERE er.id_form = w.form_id 
             ORDER BY er.id DESC LIMIT 1) AS estado
         ")
-        ->whereIn('w.form_post_id', [18])
+        ->whereIn('w.form_post_id', [$id_forms])
         ->groupBy('w.form_id')
         ->get();
 
@@ -35,13 +35,13 @@ class EventoController extends Controller
             $data = $this->normalizeUnicodeArray($data);
 
             // Campos que te interesan
-            $nombre   = $data['Nombre'] ?? null;
+            $nombre   = $data['Nombre'] ?? $data['Name'] ?? null;
 
             // Teléfono puede llegar con o sin acento, cubrimos ambos
-            $telefono = $data['Teléfono'] ?? $data['Telefono'] ?? null;
+            $telefono = $data['Teléfono'] ?? $data['Telefono'] ?? $data['Phone'] ?? null;
 
             // El campo de “Texto de una sola línea” trae "ciudad*fecha*hora"
-            $textoUnaLinea = $data['Texto de una sola línea'] ?? $data['Texto de una sola l\u00ednea'] ?? null;
+            $textoUnaLinea = $data['Texto de una sola línea'] ?? $data['Texto de una sola l\u00ednea'] ?? $data['date'] ?? null;
             $ciudad = $fecha = $hora = null;
             if (is_string($textoUnaLinea)) {
                 [$ciudad, $fecha, $hora] = array_pad(explode('*', $textoUnaLinea), 3, null);

@@ -132,6 +132,13 @@
             </a>
         @endif
 
+        @if( Auth::user()->hasRole('administrador') )
+            <a class="nav-item nav-link " id="tab-tax-deeds" data-toggle="tab" href="#nav-tax-deeds" role="tab" aria-controls="nav-tax-deeds"
+                aria-selected="false">
+                TAX DEEDS
+            </a>
+        @endif
+
     </div>
 </nav>
 
@@ -488,6 +495,33 @@
         <div class="container-fluid pt-5">
             <div class="col-md-12 table-responsive">
                 <table id="tbl_evento_entre_nosotras"
+                    class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
+                    class="display" cellspacing="0" cellpadding="3" width="100%"
+                    style="background-color: ;color: black;">
+                    <thead>
+                        <tr>
+                            <th class="col-md-">#</th>
+                            <th class="col-md-">Fechas</th>
+                            <th class="col-md-">Nombre Cliente</th>
+                            <th class="col-md-">Numero Telefono</th>
+                            <th class="col-md-">Cuidad</th>
+                            <th class="col-md-">estado</th>
+                            <th class="col-md-"></th>
+                            <th class="col-md-"> Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody scope="row">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-tax-deeds" role="tabpanel" aria-labelledby="nav-tax-deeds">
+        <div class="container-fluid pt-5">
+
+            <div class="col-md-12 table-responsive">
+                <table id="tbl_evento_tax_deeds"
                     class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
                     class="display" cellspacing="0" cellpadding="3" width="100%"
                     style="background-color: ;color: black;">
