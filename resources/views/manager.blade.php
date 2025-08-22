@@ -493,6 +493,24 @@
 
     <div class="tab-pane fade" id="nav-entre-nosotras" role="tabpanel" aria-labelledby="nav-entre-nosotras">
         <div class="container-fluid pt-5">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <table id="tbl_estados_entrenosotras" class="table table-sm border border-dark rounded mb-1" style="background: white !important;">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12 table-responsive">
                 <table id="tbl_evento_entre_nosotras"
                     class="table table-sm table-striped table-bordered dt-responsive nowrap datatable text-center"
@@ -519,6 +537,24 @@
 
     <div class="tab-pane fade" id="nav-tax-deeds" role="tabpanel" aria-labelledby="nav-tax-deeds">
         <div class="container-fluid pt-5">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <table id="tbl_estados_tax" class="table table-sm border border-dark rounded mb-1" style="background: white !important;">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="col-md-12 table-responsive">
                 <table id="tbl_evento_tax_deeds"

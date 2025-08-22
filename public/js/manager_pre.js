@@ -339,7 +339,31 @@ function obtener_datos_evento_entre_nosotras(id_formulario) {
 
     axios.post(principalUrl + "datos/form_evento/"+id_formulario)
         .then((respuesta) => {
-        tbl_Evento_Entre_Nosotras(respuesta.data);            
+
+        const data = respuesta.data.estado_counts; // { 4: 2, 5: 2, 6: 1, sin_estado: 2 };
+        const labels = { 4:'confirmado', 5:'no answer', 6:'cancelado', sin_estado:'sin estado', total_registros:'total registros' };
+
+        const filas = Object.entries(data).map(([id, cantidad]) => ({
+            id,
+            estado: labels[id] ?? `Estado ${id}`,
+            cantidad
+        }));
+
+        filas.forEach(function(element,i){
+             var color = '';
+            if (element.id == 6) {
+                color = '#f79687';
+            }else if(element.id == 4){
+                color = '#a8ffb3';
+            }else if (element.id == 5) {    
+                color = '#eec08d';
+            }
+
+            $("#tbl_estados_entrenosotras thead tr ").append(`<th class="border border-dark" style="background-color:${color}"  scope="col">${element.estado}</th>`);
+            $("#tbl_estados_entrenosotras tbody tr").append(`<td class="border border-dark" style="background-color:${color}" >${element.cantidad}</td>`);
+        });
+
+        tbl_Evento_Entre_Nosotras(respuesta.data.data);            
     })
     .catch((error) => {
         if (error.response) {
@@ -353,7 +377,31 @@ function obtener_datos_evento_taxes_deeds(id_formulario) {
 
     axios.post(principalUrl + "datos/form_evento/"+id_formulario)
         .then((respuesta) => {
-        tbl_Evento_taxes_deeds(respuesta.data);            
+
+        const data = respuesta.data.estado_counts; // { 4: 2, 5: 2, 6: 1, sin_estado: 2 };
+        const labels = { 4:'confirmado', 5:'no answer', 6:'cancelado', sin_estado:'sin estado', total_registros:'total registros' };
+
+        const filas = Object.entries(data).map(([id, cantidad]) => ({
+            id,
+            estado: labels[id] ?? `Estado ${id}`,
+            cantidad
+        }));
+
+        filas.forEach(function(element,i){
+             var color = '';
+            if (element.id == 6) {
+                color = '#f79687';
+            }else if(element.id == 4){
+                color = '#a8ffb3';
+            }else if (element.id == 5) {
+                color = '#eec08d';
+            }
+
+            $("#tbl_estados_tax thead tr ").append(`<th class="border border-dark" style="background-color:${color}"  scope="col">${element.estado}</th>`);
+            $("#tbl_estados_tax tbody tr").append(`<td class="border border-dark" style="background-color:${color}" >${element.cantidad}</td>`);
+        });
+
+        tbl_Evento_taxes_deeds(respuesta.data.data);            
     })
     .catch((error) => {
         if (error.response) {

@@ -28,7 +28,7 @@ class EventoController extends Controller
             $data = $this->safeUnserialize($row->form_value);
 
             if (!is_array($data)) {
-                return null; // descarta si no se pudo parsear
+            return null; // descarta si no se pudo parsear
             }
 
             // Normaliza claves/valores por si vienen con \u00e9 escapado
@@ -44,25 +44,25 @@ class EventoController extends Controller
             $textoUnaLinea = $data['Texto de una sola línea'] ?? $data['Texto de una sola l\u00ednea'] ?? $data['date'] ?? null;
             $ciudad = $fecha = $hora = null;
             if (is_string($textoUnaLinea)) {
-                [$ciudad, $fecha, $hora] = array_pad(explode('*', $textoUnaLinea), 3, null);
+            [$ciudad, $fecha, $hora] = array_pad(explode('*', $textoUnaLinea), 3, null);
             }
 
             // Limpieza básica de teléfono (opcional)
             if ($telefono) {
-                $telefono = trim(preg_replace('/\s+/', ' ', $telefono));
+            $telefono = trim(preg_replace('/\s+/', ' ', $telefono));
             }
 
             return [
-                'form_id'           => $row->form_id,
-                'nombre'            => $nombre,
-                'telefono'          => $telefono,
-                'ciudad'            => $ciudad,
-                'fecha_evento'      => $fecha,
-                'hora_evento'       => $hora,
-                'form_date'         => $row->form_date,
-                'form_post_id'      => $row->form_post_id,
-                'total_seguimiento' => $row->total_seguimiento,
-                'estado'            => $row->estado,
+            'form_id'           => $row->form_id,
+            'nombre'            => $nombre,
+            'telefono'          => $telefono,
+            'ciudad'            => $ciudad,
+            'fecha_evento'      => $fecha,
+            'hora_evento'       => $hora,
+            'form_date'         => $row->form_date,
+            'form_post_id'      => $row->form_post_id,
+            'total_seguimiento' => $row->total_seguimiento,
+            'estado'            => $row->estado,
             ];
         })->filter()->values();
 
@@ -71,15 +71,28 @@ class EventoController extends Controller
 
         $result = $result
             ->filter(function ($item) {
-                return !in_array($item['estado'], [0, '0'], true); // acepta null
+            return !in_array($item['estado'], [0, '0'], true); // acepta null
             })
             ->unique(function ($item) {
-                return preg_replace('/\D+/', '', $item['telefono'] ?? '');
+            return preg_replace('/\D+/', '', $item['telefono'] ?? '');
             })
             ->values();
 
+        // Contar registros por estado (incluyendo null/sin estado)
+        $estadoCounts = $result->groupBy(function ($item) {
+            return $item['estado'] ?? 'sin_estado';
+        })->map(function ($items) {
+            return count($items);
+        });
 
-        return response()->json($result);
+        // Total de registros
+        $totalRegistros = $result->count();
+        $estadoCounts['total_registros'] = $totalRegistros;
+
+        return response()->json([
+            'data' => $result,
+            'estado_counts' => $estadoCounts,
+        ]);
     }
 
     /**
