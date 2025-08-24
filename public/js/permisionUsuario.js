@@ -1,9 +1,18 @@
 
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.chips .chip-x');
+    if (!btn) return;
+    const chip = btn.closest('.chip');
+    const id = chip?.dataset.id;
+
+    chip?.remove(); // o espera la respuesta del servidor
+  });
+
 
 function modalPermisoUsuarios() {
-    $("#frmPermisoUsuarios")[0].reset();
-    $("#frmPermisoUsuarios .is-invalid").removeClass("is-invalid");
-    $("#checkboxGroupError").hide(); // Ocultar el mensaje de error del grupo de checkboxes
+    // $("#frmPermisoUsuarios")[0].reset();
+    // $("#frmPermisoUsuarios .is-invalid").removeClass("is-invalid");
+    // $("#checkboxGroupError").hide(); 
     $("#modal-permiso-usuarios").modal("show");
 }
 

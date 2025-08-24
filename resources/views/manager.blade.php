@@ -61,6 +61,91 @@
     .morecontent {
         display: none !important;
     }
+
+    /* Namespace */
+    .chips { 
+    --chip-h: 30px;            /* alto consistente */
+    --chip-px: .6rem;          /* padding X */
+    --chip-gap: .5rem;         /* espacio entre etiqueta y botón */
+    --chip-radius: 8px;        /* bordes */
+    --chip-font: .875rem;      /* tamaño texto */
+    --chip-shadow: inset 0 -1px 0 rgba(0,0,0,.08);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .5rem;          /* separación entre chips */
+    align-items: center;
+    font-family: inherit;
+    }
+
+    /* Reset suave */
+    .chips .chip, .chips .chip * { box-sizing: border-box; }
+
+    /* Chip base */
+    .chips .chip{
+    display: inline-flex;
+    align-items: center;
+    gap: var(--chip-gap);
+    height: var(--chip-h);
+    padding: 0 var(--chip-px);
+    border-radius: var(--chip-radius);
+    font-size: var(--chip-font);
+    font-weight: 600;
+    /* line-height: 1; */
+    color: #fff;
+    box-shadow: var(--chip-shadow);
+    max-width: 100%;
+    }
+
+    /* Colores */
+    .chips .chip_azul  { background: #0d6efd; }
+    .chips .chip_verde { background: #2bd500; }  /* un poco más oscuro p/contraste */
+
+    /* Label con elipsis */
+    .chips .chip-label{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 20ch; /* ajusta si quieres chips más cortos/largos */
+    }
+
+    /* Botones de acción (unificados: X y +) */
+    .chips .chip-action{
+    all: unset;
+    display: inline-grid;
+    place-items: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.28);
+    cursor: pointer;
+    transition: background .15s ease, transform .06s ease;
+    }
+    .chips .chip-action:hover        { background: rgba(255,255,255,.4); }
+    .chips .chip-action:active       { transform: scale(.95); }
+
+    /* Accesibilidad focus */
+    .chips .chip-action:focus-visible{
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    }
+
+    /* Íconos SVG */
+    .chips .chip-action svg{
+    width: 12px; height: 12px;
+    stroke: #fff; stroke-width: 2.2;
+    fill: none;
+    }
+
+    /* Estados opcionales */
+    .chips .chip.is-disabled{ opacity: .6; pointer-events: none; }
+
+    /* Modo compacto (opcional) */
+    .chips.chips--compact{
+    --chip-h: 26px;
+    --chip-px: .5rem;
+    --chip-radius: 6px;
+    --chip-font: .8125rem;
+    }
 </style>
 <br>
 
@@ -689,9 +774,9 @@
             </div>
             <div class="modal-body">
                             
-                <form 
+                {{-- <form  
                     action="{{route('asiganar.permiso.usuario')}}" 
-                    class='border border-info rounded p-3' id="frmPermisoUsuarios">
+                    class='border border-info rounded p-3 d-none' id="frmPermisoUsuarios">
 
                     {!! csrf_field() !!}
                     
@@ -728,7 +813,9 @@
 
 
                     <button type="submit" class="btn btn-primary text-white" >Asignar permiso</button>
-                </form> <br>
+                </form>  --}}
+                
+                <br>
 
                 <div class="table-responsive">
                     <div class="col-md-12 table-responsive">
@@ -736,60 +823,73 @@
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 125px;" >Usuarios</th>
-                                    <th scope="col" style="width: 125px;" class="text-center" >Guia pdf</th>
-                                    <th scope="col" style="width: 125px;" class="text-center" >Registro clientes</th>
-                                    <th scope="col" style="width: 125px;" class="text-center" >OPCIONES</th>
+                                    <th scope="col" style="width: 125px;" class="text-center" >Permisos asignados</th>
+                                    <th scope="col" style="width: 125px;" class="text-center" >Permisos disponibles</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyUserPermiso" scope="row">
+                            <tbody id="tbodyUserPermiso" >
 
                               @foreach ($usuarios_permiso as $usuario)
-                                @if ($usuario->permiso_cliente != 0 || $usuario->permiso_guipdf != 0)
-                                  <tr>
-                                    <td>{{ $usuario->name }}</td>
 
-                                      @if ($usuario->permiso_cliente === 1  && $usuario->permiso_guipdf === 1)
+                                <tr class="">
+                                    <td>{{ $usuario->nombre_usuario }}</td>
 
-                                          <td class="text-center" ><p>✅</p></td>
-                                          <td class="text-center" ><p>✅</p></td>
-                                          <td class="text-center"> 
-                                            <select class="form-control"
-                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
-                                              id="permisos-{{ $usuario->id }}">
-                                              <option selected disabled>Selecciona</option>
-                                              <option value="1">Aquitar permisos</option>
-                                            </select>
-                                          </td>
+                                    <td>
+                                        <div class="chips">
+                                            @php
+                                            $asignados = collect(explode(',', (string)($usuario->permisos_asignados ?? '')))
+                                                ->filter() // quita vacíos
+                                                ->map(function ($s) {
+                                                [$id, $name] = array_pad(explode('|', trim($s), 2), 2, null);
+                                                return (object)['id' => $id, 'name' => $name];
+                                                });
+                                            @endphp
+                                            @foreach ($asignados as $p)
+                                                @if ($p->id !== null && $p->name !== null)
+                                                    <span class="chip chip_azul" data-id="{{ $p->id }}">
+                                                        <span class="chip-label">{{ $p->name }}</span>
+                                                        <button type="button"
+                                                                class="chip-action chip-x"
+                                                                aria-label="Eliminar {{ $p->name }}"
+                                                                data-id="{{ $p->id }}">
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M6 6l12 12M18 6L6 18"/>
+                                                        </svg>
+                                                        </button>
+                                                    </span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </td>
 
-                                      @elseif ($usuario->permiso_guipdf == 1 && $usuario->permiso_cliente == 0) 
-
-                                          <td class="text-center" ><p>✅</p></td>
-                                          <td class="text-center" ><p>❌</p></td>
-                                          <td class="text-center"> 
-                                            <select class="form-control"
-                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
-                                              id="permisos-{{ $usuario->id }}">
-                                              <option selected disabled>Selecciona</option>
-                                              <option value="1">Aquitar permisos</option>
-                                              <option value="2">Agregar permiso registro clientes </option>
-                                            </select>
-                                          </td>
-
-                                      @elseif ($usuario->permiso_guipdf == 0 && $usuario->permiso_cliente == 1)
-                                          <td class="text-center" ><p>❌</p></td>
-                                          <td class="text-center" ><p>✅</p></td>
-                                          <td class="text-center"> 
-                                            <select class="form-control"
-                                              onchange="opcionesPermisosUsuarios(this,{{ $usuario->id }});"
-                                              id="permisos-{{ $usuario->id }}">
-                                              <option selected disabled>Selecciona</option>
-                                              <option value="1">Aquitar permisos</option>
-                                              <option value="3">Agregar permiso guia pdf </option>
-                                            </select>
-                                          </td>
-                                      @endif
-                                  </tr>
-                                @endif
+                                    <td>
+                                        <div class="chips">
+                                            @php
+                                            $asignados = collect(explode(',', (string)($usuario->permisos_no_asignados ?? '')))
+                                                ->filter() // quita vacíos
+                                                ->map(function ($s) {
+                                                [$id, $name] = array_pad(explode('|', trim($s), 2), 2, null);
+                                                return (object)['id' => $id, 'name' => $name];
+                                                });
+                                            @endphp
+                                            @foreach ($asignados as $p)
+                                                @if ($p->id !== null && $p->name !== null)
+                                                    <span class="chip chip_verde" data-id="{{ $p->id }}">
+                                                        <span class="chip-label">{{ $p->name }}</span>
+                                                        <button type="button"
+                                                                class="chip-action chip-add"
+                                                                aria-label="Agregar {{ $p->name }}"
+                                                                data-id="{{ $p->id }}">
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M12 5v14M5 12h14"/>
+                                                        </svg>
+                                                        </button>
+                                                    </span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </td>
+                                </tr>
                               @endforeach
                             </tbody>
                         </table>
