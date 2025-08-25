@@ -151,7 +151,7 @@
 
 
 
-@if(@Auth::user()->id  == 3)
+@if(@Auth::user()->id  == 3 || @Auth::user()->id  == 1 )
 <div class="container">
     <div class="row">
         <div class="col">
@@ -177,7 +177,7 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         @if( Auth::user()->hasRole('administrador') || Auth::user()->hasPermissionTo('registro_clientes'))
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+            <a class="nav-item nav-link " id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
                 aria-controls="nav-home" aria-selected="true">Registros clientes</a>
         @endif
 
@@ -229,7 +229,7 @@
 
 <div class="tab-content" id="nav-tabContent">
 
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="tab-pane fade show " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <div class="container-fluid pt-5">
             <div class="col-md-12 table-responsive">
                 <table id="registro_clientes"
