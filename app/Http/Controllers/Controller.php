@@ -40,7 +40,7 @@ class Controller extends BaseController
         $usuarios = DB::table('users as u')
           ->join('model_has_roles as mhr', 'u.id', '=', 'mhr.model_id')
           ->where('u.estado_user', 1)
-          ->whereIn('mhr.role_id', [1, 2])
+          ->whereIn('mhr.role_id', [2])
           ->groupBy('u.id', 'u.name')
           ->orderBy('u.name')
           ->selectRaw("

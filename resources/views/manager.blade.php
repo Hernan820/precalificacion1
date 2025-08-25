@@ -151,7 +151,7 @@
 
 
 
-@if(@Auth::user()->id  == 3 || @Auth::user()->id  == 1 )
+@if(@Auth::user()->id  == 3 || @Auth::user()->id  == 2 )
 <div class="container">
     <div class="row">
         <div class="col">
@@ -666,6 +666,8 @@
     </div>
 
 </div>
+
+<br><br><br><br>
 
 <!-- Modal Notas-->
 <div class="modal fade" id="modal_seguimiento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
