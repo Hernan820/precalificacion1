@@ -210,14 +210,14 @@
             href="#nav-registro-pdf" role="tab" aria-controls="nav-registro-pdf"
             aria-selected="false">Registros GUIA PDF</a>
         @endif
-        @if( Auth::user()->hasRole('administrador') )
+        @if( Auth::user()->hasRole('administrador') || Auth::user()->hasPermissionTo('entre_nosotras') )
             <a class="nav-item nav-link " id="tab-entre-nosotras" data-toggle="tab" href="#nav-entre-nosotras" role="tab" aria-controls="nav-entre-nosotras"
                 aria-selected="false">
                 Entre Nosotras
             </a>
         @endif
 
-        @if( Auth::user()->hasRole('administrador') )
+        @if( Auth::user()->hasRole('administrador') || Auth::user()->hasPermissionTo('pagina_tax_deeds') )
             <a class="nav-item nav-link " id="tab-tax-deeds" data-toggle="tab" href="#nav-tax-deeds" role="tab" aria-controls="nav-tax-deeds"
                 aria-selected="false">
                 TAX DEEDS
@@ -766,60 +766,17 @@
         <div class="modal-content ">
             <div class="modal-header ">
                 <h5 class="modal-title">
-                    Permisos de usuarios
+                    Gestión de permisos de usuarios
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                            
-                {{-- <form  
-                    action="{{route('asiganar.permiso.usuario')}}" 
-                    class='border border-info rounded p-3 d-none' id="frmPermisoUsuarios">
-
-                    {!! csrf_field() !!}
-                    
-                    
-                    <div class="form-group">
-                      <label for="selectUsuariosAsignado">Asiganacion de usuario</label>
-                      <select class="form-control" id="selectUsuariosAsignado" name="selectUsuariosAsignado">
-                          <option value="" disabled selected>Selecciona un usuario</option>
-                          @foreach ($usuarios_permiso as $usuario)
-                            @if ($usuario->permiso_cliente == 0 && $usuario->permiso_guipdf == 0)
-                              <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                            @endif
-                          @endforeach
-                      </select>
-                      <div class="invalid-feedback">
-                        Seleccione el usuario para asiganar permiso.
-                      </div>
-                    </div>
-
-                    <div class="form-group my-3" id="permisos_usuarios">
-                            <label><strong>Permisos a asignar:</strong></label>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="perm_gestion" name="permisos_usuarios[]" value="gestion">
-                                <label class="form-check-label" for="perm_gestion">Registros guia pdf</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="perm_creador" name="permisos_usuarios[]" value="creador">
-                                <label class="form-check-label" for="perm_creador">Registros clientes</label>
-                            </div>
-                        <div class="invalid-feedback " id="checkboxGroupError" style="display: none;">
-                            Debes seleccionar al menos un permiso.
-                        </div>
-                     </div>
-
-
-                    <button type="submit" class="btn btn-primary text-white" >Asignar permiso</button>
-                </form>  --}}
-                
-                <br>
-
+                 
                 <div class="table-responsive">
                     <div class="col-md-12 table-responsive">
-                        <table class="table table-striped table-sm ">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 125px;" >Usuarios</th>
@@ -831,10 +788,10 @@
 
                               @foreach ($usuarios_permiso as $usuario)
 
-                                <tr class="">
-                                    <td>{{ $usuario->nombre_usuario }}</td>
+                                <tr data-user-id="{{ $usuario->id }}" >
+                                    <td class="td-usuario" >{{ $usuario->nombre_usuario }}</td>
 
-                                    <td>
+                                    <td class="td-asignados" >
                                         <div class="chips">
                                             @php
                                             $asignados = collect(explode(',', (string)($usuario->permisos_asignados ?? '')))
@@ -846,7 +803,8 @@
                                             @endphp
                                             @foreach ($asignados as $p)
                                                 @if ($p->id !== null && $p->name !== null)
-                                                    <span class="chip chip_azul" data-id="{{ $p->id }}">
+                                                    <span class="chip chip_azul" data-idusuario="{{$usuario->id}}" 
+                                                        data-id="{{ $p->id }}">
                                                         <span class="chip-label">{{ $p->name }}</span>
                                                         <button type="button"
                                                                 class="chip-action chip-x"
@@ -862,7 +820,7 @@
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <td class="td-disponibles" >
                                         <div class="chips">
                                             @php
                                             $asignados = collect(explode(',', (string)($usuario->permisos_no_asignados ?? '')))
@@ -874,11 +832,13 @@
                                             @endphp
                                             @foreach ($asignados as $p)
                                                 @if ($p->id !== null && $p->name !== null)
-                                                    <span class="chip chip_verde" data-id="{{ $p->id }}">
+                                                    <span class="chip chip_verde" data-idusuario="{{$usuario->id}}" 
+                                                        data-id="{{ $p->id }}">
                                                         <span class="chip-label">{{ $p->name }}</span>
                                                         <button type="button"
                                                                 class="chip-action chip-add"
                                                                 aria-label="Agregar {{ $p->name }}"
+                                                                
                                                                 data-id="{{ $p->id }}">
                                                         <svg viewBox="0 0 24 24" aria-hidden="true">
                                                             <path d="M12 5v14M5 12h14"/>

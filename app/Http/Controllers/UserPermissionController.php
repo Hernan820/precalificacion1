@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Log;
-
+use Spatie\Permission\PermissionRegistrar;
 
 class UserPermissionController extends Controller
 {
@@ -38,22 +38,7 @@ class UserPermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'selectUsuariosAsignado' => 'required|exists:users,id',
-            'permisos_usuarios' => 'required|array',
-        ]);
-
-        foreach ($request->permisos_usuarios as $permiso) {
-            if ($permiso == "gestion") {
-                $usuario = User::findOrFail($request->selectUsuariosAsignado);
-                $usuario->givePermissionTo("guia_pdf"); 
-            }else if ($permiso == "creador") {
-                $usuario = User::findOrFail($request->selectUsuariosAsignado);
-                $usuario->givePermissionTo("registro_clientes"); 
-            }
-        }
-
-        return response()->json(['message' => 'Permiso asignado correctamente']);
+        // code...
     }
 
     /**
@@ -73,28 +58,17 @@ class UserPermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request )
+    public function agrega_permiso($id_permiso, $id_usuario)
     {
-        $usuario = User::findOrFail($id);
-
-        if ($request->permiso == 3) {
-            if (Permission::where('name', 'guia_pdf')->exists()) {
-                $usuario->givePermissionTo("guia_pdf");
-            } else {
-                Log::warning("El permiso 'guia_pdf' no existe.");
-            }
-        } 
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        $usuario = User::findOrFail($id_usuario);
+        $permiso = Permission::findOrFail($id_permiso);
         
-        if ($request->permiso == 2) {
-            if (Permission::where('name', 'registro_clientes')->exists()) {
-                $usuario->givePermissionTo("registro_clientes");
-            } else {
-                Log::warning("El permiso 'registro_clientes' no existe.");
-            }
-        }
+        $usuario->givePermissionTo($permiso);
 
         return response()->json(['message' => 'Permiso asignado correctamente']);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -114,11 +88,15 @@ class UserPermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function elimina_permiso($id_permiso, $id_usuario)
     {
-        $usuario = User::findOrFail($id);
-        $usuario->syncPermissions([]);
+        $usuario = User::findOrFail($id_usuario);
+        $permiso = Permission::findOrFail($id_permiso);
 
-        return response()->json($usuario, 200);
+        // El método revokePermissionTo espera el nombre del permiso
+        $usuario->revokePermissionTo($permiso->name);
+
+        return response()->json(['message' => 'Permiso eliminado correctamente'], 200);
     }
+
 }

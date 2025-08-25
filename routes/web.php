@@ -87,9 +87,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('usuarios/permisos')->group(function () {
         // Route::get('/', [App\Http\Controllers\UserPermissionController::class, 'index'])->name('index');
         // Route::get('/crear', [App\Http\Controllers\UserPermissionController::class, 'create'])->name('create');
-        Route::post('/', [App\Http\Controllers\UserPermissionController::class, 'store'])->name('asiganar.permiso.usuario');
-        Route::post('/{id}', [App\Http\Controllers\UserPermissionController::class, 'destroy'])->name('show');
-        Route::post('/{id}/editar', [App\Http\Controllers\UserPermissionController::class, 'edit'])->name('edit');
+        // Route::post('/', [App\Http\Controllers\UserPermissionController::class, 'store'])->name('asiganar.permiso.usuario');
+        Route::post('/quitar/{id}/{idusuario}', [App\Http\Controllers\UserPermissionController::class, 'elimina_permiso'])->name('show');
+        Route::post('/agregar/{id}/{idusuario}', [App\Http\Controllers\UserPermissionController::class, 'agrega_permiso'])->name('edit');
         // Route::put('/{id}', [App\Http\Controllers\UserPermissionController::class, 'update'])->name('update');
         // Route::delete('/{id}', [App\Http\Controllers\UserPermissionController::class, 'destroy'])->name('destroy');
     });

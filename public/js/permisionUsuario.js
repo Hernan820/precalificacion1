@@ -1,18 +1,66 @@
 
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.chips .chip-x');
-    if (!btn) return;
-    const chip = btn.closest('.chip');
-    const id = chip?.dataset.id;
+function toX(chip){
+  const btn = chip.querySelector('.chip-action, .chip-x, .chip-add');
+  btn.classList.remove('chip-add'); btn.classList.add('chip-action','chip-x');
+  btn.setAttribute('aria-label', 'Eliminar ' + chip.querySelector('.chip-label').textContent);
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  chip.classList.remove('chip_verde'); chip.classList.add('chip_azul');
+}
 
-    chip?.remove(); // o espera la respuesta del servidor
-  });
+function toPlus(chip){
+  const btn = chip.querySelector('.chip-action, .chip-x, .chip-add');
+  btn.classList.remove('chip-x'); btn.classList.add('chip-action','chip-add');
+  btn.setAttribute('aria-label', 'Agregar ' + chip.querySelector('.chip-label').textContent);
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  chip.classList.remove('chip_azul'); chip.classList.add('chip_verde');
+}
 
+
+document.addEventListener('click', (e) => {
+  const addBtn = e.target.closest('.chip-add');
+  const delBtn = e.target.closest('.chip-x');
+  if (!addBtn && !delBtn) return;
+
+  let td  = e.target.closest('td'); // <- CELDA ACTUAL
+  let tr  = e.target.closest('tr'); // fila del usuario
+  let chip = (addBtn || delBtn).closest('.chip');
+  let id = chip?.dataset.id;
+  let id_usuario = chip?.dataset.idusuario;
+
+    if (delBtn) {
+        const targetTd = td.nextElementSibling || tr.querySelector('.td-disponibles');
+        const targetList = targetTd?.querySelector('.chips');
+
+        axios.post(`${principalUrl}usuarios/permisos/quitar/${id}/${id_usuario}` )
+        .then((respuesta) => {
+            toPlus(chip);
+            targetList?.appendChild(chip);
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+    }
+
+    if (addBtn) {
+        const targetTd = td.previousElementSibling || tr.querySelector('.td-asignados');
+        const targetList = targetTd?.querySelector('.chips');
+
+        axios.post(`${principalUrl}usuarios/permisos/agregar/${id}/${id_usuario}`)
+        .then((respuesta) => {
+            toX(chip);
+            targetList?.appendChild(chip);
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+    }
+});
 
 function modalPermisoUsuarios() {
-    // $("#frmPermisoUsuarios")[0].reset();
-    // $("#frmPermisoUsuarios .is-invalid").removeClass("is-invalid");
-    // $("#checkboxGroupError").hide(); 
     $("#modal-permiso-usuarios").modal("show");
 }
 
@@ -60,9 +108,9 @@ function quitaPermisosUsuarios(selectThis ,id) {
                 });
             })
             .catch((error) => {
-            if (error.response) {
-                console.log(error.response.data);
-            }
+                if (error.response) {
+                    console.log(error.response.data);
+                }
             });
             
         } else if (result.isDenied) {
@@ -100,44 +148,4 @@ function agregarPermisoUsuario(selectThis, id, permiso) {
     });
 }
 
-
-
-// agrega permisos
-const formPermisos = document.getElementById('frmPermisoUsuarios'); 
-formPermisos.addEventListener('submit', function (e) {
-    e.preventDefault(); 
-
-    const ruta = formPermisos.action; 
-    const formData = new FormData(formPermisos); 
-    
-    axios.post(ruta, formData)
-        .then((response) => {
-
-            location.reload();
-        })
-    .catch(error => {
-        console.error(error);
-        if (error.response && error.response.status === 422) { 
-
-            const jsonResponse = error.response.data;
-            $("#frmPermisoUsuarios .is-invalid").removeClass("is-invalid");
-            if (jsonResponse.errors) {
-                for (const campo in jsonResponse.errors) {
-                    $("#" + campo).addClass("is-invalid");
-
-                    if (campo === 'permisos_usuarios') {
-                        // $("#checkboxGroupError").remover estilo css("display", "none");
-                        $("#checkboxGroupError").show();
-                    }
-                }
-            }
-
-        } else {
-            console.error('Unexpected error:', error);
-        }
-    }). finally(() => {
-        // Aquí puedes realizar cualquier acción adicional después de la solicitud
-        // AQUI dejare una funcion que actualice el arbol de carpetas
-    } );
-});
 
