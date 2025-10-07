@@ -1096,7 +1096,7 @@ function tbl_Evento_Entre_Nosotras(datosEntreNosotroas) {
         // language: {
         //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         // },
-            lengthChange: false,
+            lengthMenu: [[10, 20, 50, 100, -1], [10, 20, 50, 100, "Todos"]],
             pageLength: 20,
             bInfo: false,
             order: [[0,"asc"]],
@@ -1148,18 +1148,23 @@ function tbl_Evento_Entre_Nosotras(datosEntreNosotroas) {
 
                     if (!data && data !== 0) { return '';}
 
-                    var icono = '';
-                    if (data == 4 ) {
-                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/confirmado.png">';
-                    }else if (data == 5) {
-                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/telefono.png">';
-                    }else if (data == 6) {
-                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/botonx.png">';
-                    }else if (data == 0) {
-                        icono = '<img class="center-icon" src="' +principalUrl +'iconos/reloj.png">';  
-                    }
+                    if (type === 'display') {
 
-                    return icono;
+                        var icono = '';
+                        if (data == 4 ) {
+                            icono = '<img class="center-icon" src="' +principalUrl +'iconos/confirmado.png">';
+                        }else if (data == 5) {
+                            icono = '<img class="center-icon" src="' +principalUrl +'iconos/telefono.png">';
+                        }else if (data == 6) {
+                            icono = '<img class="center-icon" src="' +principalUrl +'iconos/botonx.png">';
+                        }else if (data == 0) {
+                            icono = '<img class="center-icon" src="' +principalUrl +'iconos/reloj.png">';  
+                        }
+
+                        return icono;
+                    } else {
+                        return data;
+                    }
                 },
             },
             { data: "total_seguimiento", width: "25px", className: "text-center",
@@ -1249,7 +1254,7 @@ function tbl_Evento_taxes_deeds(datosTaxesDeeds) {
         // language: {
         //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         // },
-            lengthChange: false,
+            lengthMenu: [[10, 20, 50, 100, -1], [10, 20, 50, 100, "Todos"]],
             pageLength: 20,
             bInfo: false,
             order: [[0,"asc"]],

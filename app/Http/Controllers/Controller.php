@@ -19,23 +19,8 @@ class Controller extends BaseController
 
     public function vistaDataFormularios(){
 
-        // muestra usuarios sin permiso
-        // $usuarios_permiso = DB::table('users')
-        //     ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-        //     ->leftJoin('model_has_permissions', function ($join) {
-        //         $join->on('users.id', '=', 'model_has_permissions.model_id')
-        //             ->where('model_has_permissions.model_type', '=', 'App\\Models\\User');
-        //     })
-        //     ->whereIn('model_has_roles.role_id', [1,2])
-        //     ->where('users.estado_user', '=', 1)
-        //     ->select(
-        //         'users.id',
-        //         'users.name',
-        //         DB::raw('MAX(CASE WHEN model_has_permissions.permission_id = 1 THEN 1 ELSE 0 END) as permiso_guipdf'),
-        //         DB::raw('MAX(CASE WHEN model_has_permissions.permission_id = 2 THEN 1 ELSE 0 END) as permiso_cliente')
-        //     )
-        //     ->groupBy('users.id', 'users.name')
-        //     ->get();
+      app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
 
         $usuarios = DB::table('users as u')
           ->join('model_has_roles as mhr', 'u.id', '=', 'mhr.model_id')
