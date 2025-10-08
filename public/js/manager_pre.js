@@ -1,15 +1,18 @@
+let ID_formularios_contigo_mortgage = '7,3750,2893';
 
 $(document).ready(function () {
 
     var ID_formulario_entrenosotras = 18;
     var ID_formulario_taxdeeds      = 323;
 
-
-    datosforms();
     obtenerDatoPreregistro();
     obtenerDatosGuia();
     obtener_datos_evento_entre_nosotras(ID_formulario_entrenosotras);
     obtener_datos_evento_taxes_deeds(ID_formulario_taxdeeds);
+
+    obtener_datos_form_contigo_mortgage(ID_formularios_contigo_mortgage);
+
+
 
     axios.post(principalUrl + "seminarios")
     .then((respuesta) => {
@@ -201,139 +204,6 @@ document.getElementById("btncampana_personalizad").addEventListener("click", fun
     });
 });
 
-function datosforms(){
-    axios.post(principalUrl + "formulariodatos")
-    .then((respuesta) => {
-
-        let datosformulario = respuesta.data;
-        let datos_eliminaos =[] ;
-        let frmnuevos = [];
-        let frmseminarios_eliminado = [];
-
-        var datosFiltrados = datosformulario.map(item => {
-        
-        const parts = item.form_value.split(';');
-        const nombrePart = parts[parts.indexOf('s:6:"Nombre"') + 1];
-        const nombreValue = nombrePart.slice(4, -1); 
-
-        let telefonoPart ;
-        if(parts[4] === 's:0:\"\"'){   
-            telefonoPart = parts[parts.indexOf('s:0:\"\"') + 1];
-        }else{
-            telefonoPart = parts[parts.indexOf('s:9:"Teléfono"') + 1];  
-        }
-
-        const telefonoValue = telefonoPart.substring(4, telefonoPart.length - 1);
-
-        var ayudaPart='';
-        var ayudaValue='';
-        var tipo_formulario='';
-
-        if(item.form_post_id == 782){
-            ayudaPart = parts[parts.indexOf('s:20:"Comentario o mensaje"') + 1];
-            var startIndex = ayudaPart.indexOf(':"');
-            if (startIndex !== -1) {
-                    ayudaValue = ayudaPart.substring(startIndex + 2, ayudaPart.length - 1);
-            } else {
-                ayudaValue ='';
-            }
-            tipo_formulario=item.form_post_id;
-            
-        }else if(item.form_post_id == 7){
-            ayudaPart = parts[parts.indexOf('s:21:"Como podemos ayudarte"') + 1];
-
-            var startIndex = ayudaPart.indexOf(':"');
-            if (startIndex !== -1) {
-                ayudaValue = ayudaPart.substring(startIndex + 2, ayudaPart.length - 1);
-            } else {
-                ayudaValue ='';
-            }
-            tipo_formulario=item.form_post_id;
-
-        }else if(item.form_post_id == 2893){
-            ayudaPart = parts[parts.indexOf('s:10:"Comentario"') + 1];
-
-            var startIndex = ayudaPart.indexOf(':"');
-            if (startIndex !== -1) {
-                ayudaValue = ayudaPart.substring(startIndex + 2, ayudaPart.length - 1);
-            } else {
-                ayudaValue ='';
-            }
-            tipo_formulario=item.form_post_id;
-        }else
-
-        {
-            if(item.form_post_id != 919){
-                if(item.estado != 0){
-                var total_seguimientoform =item.total_seguimiento;
-                var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-
-                frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
-               }else{
-                var total_seguimientoform =item.total_seguimiento;
-                frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";vacio");
-               }
-            tipo_formulario=item.form_post_id;
-
-            }
-            return;
-        }
-
-        var fechasformat = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-
-        if(telefonoValue.length < 20){
-
-            if(item.estado != 0){
-                return {
-                    Nombre: nombreValue.slice(1), 
-                    Teléfono: telefonoValue.replace(/[:"]/g, ''), 
-                    'Como podemos ayudarte': ayudaValue,
-                    fechaform : fechasformat,
-                    id_forms: item.form_id ,
-                    total_segui: item.total_seguimiento,
-                    tipo_form: tipo_formulario
-                };
-            }else{
-                datos_eliminaos.push({
-                    Nombre: nombreValue.slice(1),
-                    Teléfono: telefonoValue.replace(/[:"]/g, ''),
-                    'Como podemos ayudarte': ayudaValue,
-                    fechaform: fechasformat,
-                    id_forms: item.form_id,
-                    total_segui: item.total_seguimiento,
-                    tipo_form: tipo_formulario
-                });
-            }
-         }
-       });
-
-        var arrFiltrado = datosFiltrados.filter(function(elemento,i) {
-            const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
-            if( elemento !== undefined   ){    
-                if (telefonoRegex.test(elemento.Teléfono)) {
-                    return elemento;
-                }      
-            }
-        });
-
-        var arrFiltrado_elimin = datos_eliminaos.filter(function(elemento,i) {
-            const telefonoRegex = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
-            if( elemento !== undefined   ){    
-                if (telefonoRegex.test(elemento.Teléfono)) {
-                    return elemento;
-                }      
-            }
-        });
-
-       tblformulario(arrFiltrado);
-       tblformulario_eliminados(arrFiltrado_elimin);
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-}
 
 function obtener_datos_evento_entre_nosotras(id_formulario) {
 
@@ -402,6 +272,24 @@ function obtener_datos_evento_taxes_deeds(id_formulario) {
         });
 
         tbl_Evento_taxes_deeds(respuesta.data.data);            
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
+
+function obtener_datos_form_contigo_mortgage(id_formularios) {
+
+    axios.post(principalUrl + "datos/form_principal",
+        {id_formularios: id_formularios,}
+    )
+    .then((respuesta) => {
+
+        tblformulario_eliminados(respuesta.data.eliminados);
+        tblformulario(respuesta.data.no_eliminados);            
+
     })
     .catch((error) => {
         if (error.response) {
@@ -538,28 +426,53 @@ function tblformulario(datosFiltrados){
         order: [[0, "desc"]],
         data: datosFiltrados,
         columns: [
-            { data: 'id_forms',
-                width: "100px" },
-            { data: 'fechaform',
+            { data: 'form_id',
+                width: "100px",
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: 'form_date',
+            width: "100px",
+                render: function (data, type, row, meta) {
+                   var fechaformt = moment(data, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
+
+                    return fechaformt;
+                }
+            },
+            { data: 'nombre' ,
             width: "100px" },
-            { data: 'Nombre' ,
+            { data: 'telefono' ,
             width: "100px" },
-            { data: 'Teléfono' ,
-            width: "100px" },
-            { data: 'Como podemos ayudarte',
-            width: "100px" },
-            { data: 'tipo_form',
+            { data: 'descripcion',
+            width: "100px",
+                render: function (data, type, row, meta) {
+                    var id_form_downpayment = row['form_post_id'];
+                    if (id_form_downpayment == '3750') {
+                        return 'Down Payment: '+data;
+                    }
+
+                    return data;
+                }
+             },
+            { data: 'form_post_id',
                 width: "100px",
                 render: function (data, type, row) {
+                    
                     if (data == '2893') {
                         return 'Campaña Renta';
-                    } else {
+                    }else if (data == '7') {
+                        return 'Formulario Principal';
+                    }else if (data == '3750') {
+                        return 'Formulario Down Payment';
+                    } 
+                    else {
                         return '';  
                     }
                 },
             },
             {
-                data: "total_segui",
+                data: "total_seguimiento",
                 width: "25px",
                 className: "text-center",
                 render: function (data, type, row) {
@@ -573,20 +486,38 @@ function tblformulario(datosFiltrados){
                   `;
                 },
             },
-            { data: "id_forms",
+            { data: "form_id",
             width: "100px" ,
             render: function (data, type, row) {
 
                 if(rol_usuario === "administrador"){
-                return (
-                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="2">Eliminar</option><option value="3">Bitacora</option></select>'
-                );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                        <option value="2">Eliminar</option>
+                        <option value="3">Bitacora</option>
+                    </select>
+                    `;
                 }else if(rol_usuario === "usuario"){
-                    return (
-                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
-                    );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                    </select>
+                    `;
                 }
             }
         },
@@ -924,15 +855,32 @@ function tblformulario_seminarios_eliminado(datosFiltrados_seminarios){
             render: function (data, type, row) {
 
                 if(rol_usuario === "administrador"){
-                return (
-                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="3">Bitacora</option></select>'
-                );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                        <option value="3">Bitacora</option>
+                    </select>
+                    `;
                 }else if(rol_usuario === "usuario"){
-                    return (
-                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
-                    );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                    </select>
+                    `;
                 }
             }
         },
@@ -956,18 +904,51 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
         order: [[0, "desc"]],
         data: datosFiltrados_eliminados,
         columns: [
-            { data: 'id_forms',
+            { data: 'form_id',
+            width: "100px",
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                } 
+            },
+            { data: 'form_date',
+            width: "100px" ,
+                render: function (data, type, row, meta) {
+                   var fechaformt = moment(data, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
+                    return fechaformt;
+                }
+            },
+            { data: 'nombre' ,
             width: "100px" },
-            { data: 'fechaform',
+            { data: 'telefono' ,
             width: "100px" },
-            { data: 'Nombre' ,
-            width: "100px" },
-            { data: 'Teléfono' ,
-            width: "100px" },
-            { data: 'Como podemos ayudarte',
-            width: "100px" },
+            { data: 'descripcion',
+            width: "100px",
+                render: function (data, type, row, meta) {
+                    var id_form_downpayment = row['form_post_id'];
+                    if (id_form_downpayment == '3750') {
+                        return 'Down Payment: '+data;
+                    }
+                    return data;
+                }
+            },
+            { data: 'form_post_id',
+                width: "100px",
+                render: function (data, type, row) {
+                    
+                    if (data == '2893') {
+                        return 'Campaña Renta';
+                    }else if (data == '7') {
+                        return 'Formulario Principal';
+                    }else if (data == '3750') {
+                        return 'Formulario Down Payment';
+                    } 
+                    else {
+                        return '';  
+                    }
+                },
+            },
             {
-                data: "total_segui",
+                data: "total_seguimiento",
                 width: "25px",
                 className: "text-center",
                 render: function (data, type, row) {
@@ -981,20 +962,38 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
                   `;
                 },
             },
-            { data: "id_forms",
+            { data: "form_id",
             width: "100px" ,
             render: function (data, type, row) {
 
                 if(rol_usuario === "administrador"){
-                return (
-                    '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                    ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option><option value="3">Bitacora</option></select>'
-                );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                        <option value="3">Bitacora</option>
+                    </select>
+                    `;
+
                 }else if(rol_usuario === "usuario"){
-                    return (
-                        '<select id="usuario_opcion" onchange="opcionesformcontigo(this,' + data +
-                        ')" class="form-control form-select-sm opciones"  placeholder="" style="width: 50% !important;display: initial !important;height: calc(2.05rem + 2px) !important;"><option selected="selected" disabled selected>Acciones</option><option value="1">Seguimiento</option></select>'
-                    );
+                    return `
+                    <select 
+                        id="usuario_opcion" 
+                        onchange="opcionesformcontigo(this, ${data},this.closest('tr'))" 
+                        class="form-control form-select-sm opciones"  
+                        placeholder="" 
+                        style="width: 50% !important; display: initial !important; height: calc(2.05rem + 2px) !important;"
+                    >
+                        <option selected disabled>Acciones</option>
+                        <option value="1">Seguimiento</option>
+                    </select>
+                    `;
                 }
             }
         },
@@ -1401,7 +1400,7 @@ function vistaregistro(){
     location.href = principalUrl + "vis_usuarios";
 }
 
-function opcionesformcontigo(option, id) {
+function opcionesformcontigo(option, id, row) {
     var opt = $(option).val();
 
     if (opt == 1) {
@@ -1423,7 +1422,7 @@ function opcionesformcontigo(option, id) {
             if (result.isConfirmed) {
                 axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+estadoeli)
                     .then((respuesta) => {
-                        datosforms();
+                        $(row).hide();
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
@@ -1497,7 +1496,6 @@ function opcioneseminarios(option, id, row,tbl) {
             if (result.isConfirmed) {
                 axios.post(principalUrl + "registro/estado_resgitro/"+id+"/"+estadoeli)
                     .then((respuesta) => {
-                       // datosforms();
                         $(row).hide();
 
                         Swal.fire({

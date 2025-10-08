@@ -83,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('datos/form_evento/{id}', [App\Http\Controllers\EventoController::class, 'index']);
 
+    Route::post('datos/form_principal', [App\Http\Controllers\clientesContigoController::class, 'index']);
 
     Route::prefix('usuarios/permisos')->group(function () {
         // Route::get('/', [App\Http\Controllers\UserPermissionController::class, 'index'])->name('index');
