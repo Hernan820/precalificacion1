@@ -75,8 +75,7 @@ class clientesContigoController extends Controller
             [$ciudad, $fecha, $hora] = array_pad(explode('*', $textoUnaLinea), 3, null);
             }
 
-            $descripcionFormulario = $data['Como podemos ayudarte'] ?? $data['¿Con cuánto de enganche cuentas actualmente? (aproximado)'] ?? $data['Comentario'] ?? null;
-
+            $descripcionFormulario = $data['Como podemos ayudarte'] ?? $data['¿Con cuánto de enganche cuentas actualmente? (aproximado)'] ?? $data['Comentario'] ?? $data['Valor estimado de tu propiedad. (aproximado)']  ?? null;
 
 
             // Filtro antispam: si la descripción contiene caracteres cirílicos, descarta

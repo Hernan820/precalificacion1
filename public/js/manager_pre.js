@@ -1,4 +1,4 @@
-let ID_formularios_contigo_mortgage = '7,3750,2893';
+let ID_formularios_contigo_mortgage = '7,3750,2893,3830';
 
 $(document).ready(function () {
 
@@ -465,6 +465,8 @@ function tblformulario(datosFiltrados){
                         return 'Formulario Principal';
                     }else if (data == '3750') {
                         return 'Formulario Down Payment';
+                    }else if (data == '3830') {
+                        return 'Refinanciamiento formulario';
                     } 
                     else {
                         return '';  
@@ -941,6 +943,8 @@ function tblformulario_eliminados(datosFiltrados_eliminados){
                         return 'Formulario Principal';
                     }else if (data == '3750') {
                         return 'Formulario Down Payment';
+                    } else if (data == '3830') {
+                        return 'Refinanciamiento formulario';
                     } 
                     else {
                         return '';  
