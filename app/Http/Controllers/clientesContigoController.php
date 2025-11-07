@@ -84,7 +84,10 @@ class clientesContigoController extends Controller
             }
 
             // Filtro antispam: si la descripción contiene enlaces o palabras típicas de spam, descarta
-            if ($descripcionFormulario && preg_match('/https?:\/\/|www\.|backlink|seo|toxic links|clean up|hilkom|digital|expert/i', $descripcionFormulario)) {
+            // if ($descripcionFormulario && preg_match('/https?:\/\/|www\.|backlink|seo|toxic links|clean up|hilkom|digital|expert/i', $descripcionFormulario)) {
+
+            if ($descripcionFormulario && preg_match('/https?:\/\/|www\.|\b(?:backlink|seo|toxic\s+links|clean\s+up|hilkom|digital|expert)\b/i',$descripcionFormulario)){
+
                 return null;
             }
 
