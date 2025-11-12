@@ -1,4 +1,4 @@
-let ID_formularios_contigo_mortgage = '7,3750,2893,3830';
+let ID_formularios_contigo_mortgage = '7,3750,2893,3830,1128';
 
 $(document).ready(function () {
 
@@ -427,13 +427,13 @@ function tblformulario(datosFiltrados){
         data: datosFiltrados,
         columns: [
             { data: 'form_id',
-                width: "100px",
+                width: "50px",
                 render: function (data, type, row, meta) {
                     return meta.row + 1;
                 }
             },
             { data: 'form_date',
-            width: "100px",
+            width: "150px",
                 render: function (data, type, row, meta) {
                    var fechaformt = moment(data, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
 
@@ -472,6 +472,11 @@ function tblformulario(datosFiltrados){
                         return '';  
                     }
                 },
+            },
+            {
+                data: "nombre_usuario_asignado",
+                width: "100px",
+                className: "text-center",
             },
             {
                 data: "total_seguimiento",

@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class clientesContigoController extends Controller
 {
   public function index(Request $request)
     {
- 
-        // Convierte el string de IDs separados por coma a un array de enteros
+        $user = Auth::user();
+        $rol = $user->getRoleNames()->first(); 
+        $rolId = $user->roles->first()->id ?? null;
+        $userId = $user->id;
+        
         $ids = [];
         if (!empty($request->id_formularios)) {
-            // Acepta tanto array como string separado por comas
             if (is_array($request->id_formularios)) {
                 $ids = array_map('intval', $request->id_formularios);
             } else {
@@ -24,21 +27,45 @@ class clientesContigoController extends Controller
 
         // Si no hay IDs, puedes asignar un array vacío o un valor por defecto
         if (empty($ids)) {
-            $ids = [0]; // O cualquier valor que nunca coincida
+            $ids = [0];
         }
 
-        $rows = DB::connection('mysql')
-        ->table('wp_wpforms_db as w')
-        ->selectRaw("
-            w.form_id, w.form_value, w.form_date, w.form_post_id,
-            (SELECT COUNT(*) FROM seguimientos s WHERE s.id_fomrscontigo = w.form_id) AS total_seguimiento,
-            (SELECT er.estado FROM estadoregistros er 
-            WHERE er.id_form = w.form_id 
-            ORDER BY er.id DESC LIMIT 1) AS estado
-        ")
-        ->whereIn('w.form_post_id',$ids)
-        ->groupBy('w.form_id')
-        ->get();
+        $baseQuery = DB::connection('mysql')
+            ->table('wp_wpforms_db as w')
+            ->selectRaw("
+                w.form_id,
+                w.form_value,
+                w.form_date,
+                w.form_post_id,
+                (SELECT COUNT(*) FROM seguimientos s WHERE s.id_fomrscontigo = w.form_id) AS total_seguimiento,
+                (SELECT er.estado FROM estadoregistros er 
+                    WHERE er.id_form = w.form_id 
+                    ORDER BY er.id DESC LIMIT 1) AS estado,
+                uwa.user_id AS id_usuario_asignado,
+                u.name AS nombre_usuario_asignado
+            ")
+            // Left join para que incluya los no asignados
+            ->leftJoin('user_wpform_asignations as uwa', function ($join) {
+                $join->on('uwa.wpform_entry_id', '=', 'w.form_id')
+                    ->whereRaw('uwa.id = (SELECT MAX(id) FROM user_wpform_asignations WHERE wpform_entry_id = w.form_id)');
+            })
+            ->leftJoin('users as u', 'u.id', '=', 'uwa.user_id')
+            ->whereIn('w.form_post_id', $ids)
+            ->groupBy('w.form_id', 'uwa.user_id', 'u.name');
+
+            if ($rolId === 2 ) {
+                $rows = DB::query()
+                    ->fromSub($baseQuery, 'sub')
+                    ->where(function($q) use ($userId) {
+                        $q->whereNull('id_usuario_asignado')
+                        ->orWhere('id_usuario_asignado', $userId);
+                    })
+                    ->get();
+            } else {
+                $rows = DB::query()
+                    ->fromSub($baseQuery, 'sub')
+                    ->get();
+            }
 
 
         $result = $rows->map(function ($row)  {
@@ -115,6 +142,8 @@ class clientesContigoController extends Controller
                 'form_post_id'      => $row->form_post_id,
                 'total_seguimiento' => $row->total_seguimiento,
                 'estado'            => $row->estado,
+                'id_usuario_asignado' => $row->id_usuario_asignado,
+                'nombre_usuario_asignado' => $row->nombre_usuario_asignado,
             ];
         })->filter()->values();
 
