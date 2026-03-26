@@ -1,4 +1,4 @@
-let ID_formularios_contigo_mortgage = '7,3750,2893,3830,1128';
+let ID_formularios_contigo_mortgage = '7,3750,2893,3830';
 
 $(document).ready(function () {
 
@@ -435,7 +435,7 @@ function tblformulario(datosFiltrados){
             { data: 'form_date',
             width: "150px",
                 render: function (data, type, row, meta) {
-                   var fechaformt = moment(data, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")
+                   var fechaformt = moment(data, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY <br> hh:mm A") +" - NY"
 
                     return fechaformt;
                 }
