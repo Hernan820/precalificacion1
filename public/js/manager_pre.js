@@ -420,7 +420,8 @@ function tblformulario(datosFiltrados){
         // language: {
         //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         // },
-        lengthChange: false,
+           lengthChange: true,
+            lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"] ],
         pageLength: 20,
         bInfo: false,
         order: [[0, "desc"]],
@@ -2202,7 +2203,8 @@ function tbl_guiapdf(datosSemiPre) {
         // language: {
         //     url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
         // },
-        lengthChange: false,
+           lengthChange: true,
+            lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"] ],        
         pageLength: 20,
         bInfo: false,
         order: [[0,"desc"]],
