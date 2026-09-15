@@ -40,7 +40,11 @@ Route::middleware(['auth'])->group(function () {
     //     return view('manager');
     // });
     
-    Route::get('/home', [App\Http\Controllers\Controller::class, 'vistaDataFormularios']);
+    Route::get('/home', [App\Http\Controllers\Controller::class, 'vistaDataFormularios'])->name('home');
+
+    Route::get('/seminarios/mantenimiento', [App\Http\Controllers\Controller::class, 'vistaMantenimientoSeminarios'])
+        // ->middleware('role:administrador')
+        ->name('seminarios.mantenimiento');
 
 
     Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);

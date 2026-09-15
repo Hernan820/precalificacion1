@@ -57,6 +57,137 @@
     <div class="page-wrapper" style="background-color: #f4f4f4;">
 
         <style>
+            html,
+            body {
+                min-height: 100%;
+            }
+
+            .page-wrapper {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .app-sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1030;
+                width: 250px;
+                padding: 24px 14px;
+                color: #fff;
+                background: #162a50;
+                box-shadow: 2px 0 8px rgba(0, 0, 0, .12);
+            }
+
+            .app-sidebar__brand {
+                padding: 12px 14px 22px;
+                font-size: 1.05rem;
+                font-weight: 700;
+            }
+
+            .app-sidebar__link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 6px;
+                padding: 12px 14px;
+                color: rgba(255, 255, 255, .78);
+                border-radius: 4px;
+                text-decoration: none;
+            }
+
+            .app-sidebar__link:hover,
+            .app-sidebar__link.is-active {
+                color: #fff;
+                background: #24518f;
+            }
+
+            .app-sidebar__link i {
+                width: 18px;
+                text-align: center;
+            }
+
+            .app-main-content {
+                margin-left: 250px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .app-content-body {
+                flex: 1;
+            }
+
+            .app-footer {
+                flex: 0 0 auto !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 12px !important;
+                width: 100% !important;
+                min-height: 72px !important;
+                margin-top: auto !important;
+                padding: 12px 16px !important;
+                background: #1d3668 !important;
+            }
+
+            .app-footer__copyright {
+                margin: 0 !important;
+                padding: 0 !important;
+                color: #fff !important;
+                line-height: 1.4 !important;
+                text-align: center;
+            }
+
+            .app-footer #iconos {
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+                line-height: 1 !important;
+            }
+
+            .app-footer #iconos a {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1 !important;
+            }
+
+            .app-footer #iconos i {
+                display: block !important;
+                line-height: 1 !important;
+            }
+
+            @media (max-width: 600px) {
+                .app-footer {
+                    flex-direction: column !important;
+                    gap: 8px !important;
+                }
+            }
+
+            @media (max-width: 991.98px) {
+                .app-sidebar {
+                    position: static;
+                    width: 100%;
+                    padding: 10px 14px;
+                }
+
+                .app-sidebar__brand {
+                    padding: 4px 14px 10px;
+                }
+
+                .app-sidebar__link {
+                    display: inline-flex;
+                    margin-right: 6px;
+                }
+
+                .app-main-content {
+                    margin-left: 0;
+                }
+            }
+
             ventana. {
                 background: #1d3668 !important;
             }
@@ -187,33 +318,54 @@
             </div>
         </nav>
 
+        <aside class="app-sidebar" aria-label="Menú principal">
+            <div class="app-sidebar__brand">Menú principal</div>
+            <nav>
+                <a class="app-sidebar__link {{ request()->routeIs('home') ? 'is-active' : '' }}"
+                    href="{{ route('home') }}">
+                    <i class="fas fa-th-large" aria-hidden="true"></i>
+                    <span>Seminarios</span>
+                </a>
+                @auth
+                    @if (Auth::user()->hasRole('administrador'))
+                        <a class="app-sidebar__link {{ request()->routeIs('seminarios.mantenimiento') ? 'is-active' : '' }}"
+                            href="{{ route('seminarios.mantenimiento') }}">
+                            <i class="fas fa-tools" aria-hidden="true"></i>
+                            <span>Mantenimiento de seminarios</span>
+                        </a>
+                    @endif
+                @endauth
+            </nav>
+        </aside>
+
         <!-- PAGE CONTENT-->
-        <div class="page-content--bgf7">
+        <div class="page-content--bgf7 app-main-content">
 
             <!-- END BREADCRUMB-->
-            <div class="py-4"  style="background: #f4f5ff">
+            <div class="py-4 app-content-body"  style="background: #f4f5ff">
                 @yield('content')
 
             </div>
 
             <!--========================================================== -->
             <!--FOOTER-->
-            <!--========================================================== -->
 
-            <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap mb-3 mt-3"
-                style="background:#1d3668">
-                <p class="fs-5 px-3  pt-3 text-white">Copyright © 2023 Contigo Mortgage. All rights reserved</p>
-                <div id="iconos">
-                    <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i
-                            class="bi bi-facebook"></i></a>
-                    <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i
-                            class="bi bi-instagram"></i></a>
-                    <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
-                    <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
-                </div>
-                <br><br><br>
-            </footer>
         </div>
+
+        <!--========================================================== -->
+
+        <footer class="app-footer">
+            <p class="app-footer__copyright fs-5">Copyright © {{ date('Y') }} Contigo Mortgage. All rights reserved</p>
+            <div id="iconos">
+                <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i
+                        class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i
+                        class="bi bi-instagram"></i></a>
+                <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
+                <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
+            </div>
+            {{-- <br><br><br> --}}
+        </footer>
 
         <!-- Jquery JS-->
         <script src="{{ asset('vendor/jquery-3.2.1.min.js') }}"></script>

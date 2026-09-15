@@ -70,4 +70,8 @@ class Controller extends BaseController
     public function vista_user(){ 
         return view('auth.registro_usuarios');
     }
+
+    public function vistaMantenimientoSeminarios(){
+      return view('seminarios.mantenimiento');
+    }
 }
