@@ -116,6 +116,10 @@
                 flex-direction: column;
             }
 
+            .app-main-content--guest {
+                margin-left: 0;
+            }
+
             .app-content-body {
                 flex: 1;
             }
@@ -318,15 +322,15 @@
             </div>
         </nav>
 
-        <aside class="app-sidebar" aria-label="Menú principal">
-            <div class="app-sidebar__brand">Menú principal</div>
-            <nav>
-                <a class="app-sidebar__link {{ request()->routeIs('home') ? 'is-active' : '' }}"
-                    href="{{ route('home') }}">
-                    <i class="fas fa-th-large" aria-hidden="true"></i>
-                    <span>Seminarios</span>
-                </a>
-                @auth
+        @auth
+            <aside class="app-sidebar" aria-label="Menú principal">
+                <div class="app-sidebar__brand">Menú principal</div>
+                <nav>
+                    <a class="app-sidebar__link {{ request()->routeIs('home') ? 'is-active' : '' }}"
+                        href="{{ route('home') }}">
+                        <i class="fas fa-th-large" aria-hidden="true"></i>
+                        <span>Seminarios</span>
+                    </a>
                     @if (Auth::user()->hasRole('administrador'))
                         <a class="app-sidebar__link {{ request()->routeIs('seminarios.mantenimiento') ? 'is-active' : '' }}"
                             href="{{ route('seminarios.mantenimiento') }}">
@@ -334,12 +338,12 @@
                             <span>Mantenimiento de seminarios</span>
                         </a>
                     @endif
-                @endauth
-            </nav>
-        </aside>
+                </nav>
+            </aside>
+        @endauth
 
         <!-- PAGE CONTENT-->
-        <div class="page-content--bgf7 app-main-content">
+        <div class="page-content--bgf7 app-main-content @guest app-main-content--guest @endguest">
 
             <!-- END BREADCRUMB-->
             <div class="py-4 app-content-body"  style="background: #f4f5ff">
@@ -357,12 +361,12 @@
         <footer class="app-footer">
             <p class="app-footer__copyright fs-5">Copyright © {{ date('Y') }} Contigo Mortgage. All rights reserved</p>
             <div id="iconos">
-                <a href="https://www.facebook.com/contigomortgage?mibextid=ZbWKwL"><i
+                <a target="_blank" href="https://www.facebook.com/contigomomtg"><i
                         class="bi bi-facebook"></i></a>
-                <a href="https://instagram.com/contigomortgage1?igshid=MzNlNGNkZWQ4Mg=="><i
+                <a target="_blank" href="https://www.instagram.com/contigomortgage1/"><i
                         class="bi bi-instagram"></i></a>
-                <a href="https://m.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
-                <a href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
+                <a target="_blank" href="https://www.youtube.com/@contigomortgage/videos"><i class="bi bi-youtube"></i></a>
+                <a target="_blank" href="https://wa.me/message/4EMGID7CSSBZE1"><i class="bi bi-whatsapp"></i></a>
             </div>
             {{-- <br><br><br> --}}
         </footer>
