@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
         // ->middleware('role:administrador')
         ->name('seminarios.mantenimiento');
 
+    Route::post('/seminarios/crear', [App\Http\Controllers\SeminarioController::class, 'store'])
+        ->name('seminarios.store');
+
 
     Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
 

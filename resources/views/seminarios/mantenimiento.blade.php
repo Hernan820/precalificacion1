@@ -7,7 +7,7 @@
             <h1 class="h3 mb-1">Mantenimiento de seminarios</h1>
             <p class="text-muted mb-0">Administra la información base de los seminarios.</p>
         </div>
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-crear-seminario">
             <i class="fas fa-plus mr-1" aria-hidden="true"></i> Nuevo seminario
         </button>
     </div>
@@ -31,4 +31,12 @@
         </table>
     </div>
 </div>
+
+
+@include('modales.crear-seminario')
+
+
+
+
+
 @endsection
