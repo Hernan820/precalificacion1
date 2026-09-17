@@ -17,12 +17,17 @@
                 <div class="modal-body p-3">
                     <p class="text-muted mb-3">Completa la información que se mostrará a los participantes.</p>
 
-                    <h6 class="text-primary border-bottom pb-1 mb-2">Información general</h6>
+                    <h6 class="text-primary border-bottom border-primary pb-1 mb-2">Información general</h6>
                     <div class="form-row">
                         <div class="form-group col-md-8 mb-2">
                             <label for="seminario-titulo">Título <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm" id="seminario-titulo" name="titulo"
+                            <input type="text" class="form-control form-control-sm  @error('titulo') is-invalid @enderror" id="seminario-titulo" name="titulo" value="{{ old('titulo') }}"
                                 maxlength="255" required>
+                                @error('titulo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <label for="seminario-estatus">Estatus <span class="text-danger">*</span></label>
@@ -37,12 +42,17 @@
 
                     <div class="form-group mb-2">
                         <label for="seminario-slug">Slug <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" id="seminario-slug" name="slug"
+                        <input type="text" class="form-control form-control-sm @error('slug') is-invalid @enderror" id="seminario-slug" name="slug" value="{{ old('slug') }}"
                             maxlength="255" placeholder="ejemplo-seminario" required>
+                        @error('slug')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         <small class="form-text text-muted">Identificador usado en la URL. Usa minúsculas y guiones.</small>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2 d-none">
                         <label for="seminario-resumen">Resumen</label>
                         <textarea class="form-control form-control-sm" id="seminario-resumen" name="resumen" rows="2"
                             maxlength="500"></textarea>
@@ -53,7 +63,7 @@
                         <textarea class="form-control form-control-sm" id="seminario-descripcion" name="descripcion" rows="3"></textarea>
                     </div>
 
-                    <h6 class="text-primary border-bottom pb-1 mb-2 mt-3">Fecha y horario</h6>
+                    <h6 class="text-primary border-bottom border-primary pb-1 mb-2 mt-3">Fecha y horario</h6>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-2">
                             <label for="seminario-fecha">Fecha <span class="text-danger">*</span></label>
@@ -64,18 +74,18 @@
                             <input type="time" class="form-control form-control-sm" id="seminario-hora-inicio" name="hora_inicio" required>
                         </div>
                         <div class="form-group col-md-4 mb-2">
-                            <label for="seminario-hora-fin">Hora de finalización</label>
+                            <label for="seminario-hora-fin">Hora de finalización <span class="text-danger">*</span></label>
                             <input type="time" class="form-control form-control-sm" id="seminario-hora-fin" name="hora_fin">
                         </div>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="seminario-registro-hasta">Registro disponible hasta</label>
+                        <label for="seminario-registro-hasta">Registro disponible hasta <span class="text-danger">*</span></label>
                         <input type="datetime-local" class="form-control form-control-sm" id="seminario-registro-hasta"
                             name="registro_hasta">
                     </div>
 
-                    <h6 class="text-primary border-bottom pb-1 mb-2 mt-3">Ubicación y modalidad</h6>
+                    <h6 class="text-primary border-bottom border-primary pb-1 mb-2 mt-3">Ubicación y modalidad</h6>
                     <div class="form-row">
                         <div class="form-group col-md-8 mb-2">
                             <label for="seminario-lugar">Lugar <span class="text-danger">*</span></label>
@@ -93,30 +103,30 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="seminario-direccion">Dirección</label>
+                        <label for="seminario-direccion">Dirección <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-sm" id="seminario-direccion" name="direccion" maxlength="500">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6 mb-2">
-                            <label for="seminario-ciudad">Ciudad</label>
+                            <label for="seminario-ciudad">Ciudad <span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-sm" id="seminario-ciudad" name="ciudad" maxlength="150">
                         </div>
                         <div class="form-group col-md-6 mb-2">
-                            <label for="seminario-estado">Estado</label>
+                            <label for="seminario-estado">Estado <span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-sm" id="seminario-estado" name="estado" maxlength="150">
                         </div>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="seminario-mapa-url">URL de Google Maps</label>
+                        <label for="seminario-mapa-url">URL de Google Maps <span class="text-danger">*</span></label>
                         <input type="url" class="form-control form-control-sm" id="seminario-mapa-url" name="mapa_url" maxlength="500">
                     </div>
 
-                    <h6 class="text-primary border-bottom pb-1 mb-2 mt-3">Registro y recursos</h6>
+                    <h6 class="text-primary border-bottom border-primary pb-1 mb-2 mt-3">Registro y recursos</h6>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-2">
-                            <label for="seminario-cupos">Cupos</label>
+                            <label for="seminario-cupos">Cupos <span class="text-danger">*</span></label>
                             <input type="number" class="form-control form-control-sm" id="seminario-cupos" name="cupos"
                                 min="1" step="1">
                         </div>
@@ -129,12 +139,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4 mb-2">
-                            <label for="seminario-telefono">Teléfono call center</label>
+                            <label for="seminario-telefono">Teléfono call center <span class="text-danger">*</span></label>
                             <input type="tel" class="form-control form-control-sm" id="seminario-telefono" name="telefono" maxlength="30">
                         </div>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2 d-none">
                         <label for="seminario-imagen">Imagen del seminario</label>
                         <input type="file" class="form-control-file" id="seminario-imagen" name="imagen"
                             accept="image/*">
