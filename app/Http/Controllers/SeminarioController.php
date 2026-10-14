@@ -43,7 +43,7 @@ class SeminarioController extends Controller
 
         $datos = $request->validate([
             'titulo' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
+            // 'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
             'resumen' => ['nullable', 'string', 'max:500'],
             'descripcion' => ['nullable', 'string'],
             'fecha' => ['required', 'date'],

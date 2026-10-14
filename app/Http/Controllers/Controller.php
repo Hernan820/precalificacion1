@@ -72,6 +72,9 @@ class Controller extends BaseController
     }
 
     public function vistaMantenimientoSeminarios(){
-      return view('seminarios.mantenimiento');
+      
+      return view('seminarios.mantenimiento',[
+        'seminarios' => DB::table('seminarios')->get(),
+      ]);
     }
 }

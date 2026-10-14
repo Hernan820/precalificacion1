@@ -34,13 +34,13 @@
                             <select class="form-control form-control-sm" id="seminario-estatus" name="estatus" required>
                                 <option value="borrador" selected>Borrador</option>
                                 <option value="publicado">Publicado</option>
-                                <option value="finalizado">Finalizado</option>
-                                <option value="cancelado">Cancelado</option>
+                                {{-- <option value="finalizado">Finalizado</option>
+                                <option value="cancelado">Cancelado</option> --}}
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-group mb-2">
+                    {{-- <div class="form-group mb-2">
                         <label for="seminario-slug">Slug <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-sm @error('slug') is-invalid @enderror" id="seminario-slug" name="slug" value="{{ old('slug') }}"
                             maxlength="255" placeholder="ejemplo-seminario" required>
@@ -50,7 +50,7 @@
                             </span>
                         @enderror
                         <small class="form-text text-muted">Identificador usado en la URL. Usa minúsculas y guiones.</small>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-2 d-none">
                         <label for="seminario-resumen">Resumen</label>

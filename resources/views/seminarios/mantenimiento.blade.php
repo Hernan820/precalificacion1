@@ -24,19 +24,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td colspan="5" class="text-center text-muted">No hay seminarios para mostrar.</td>
-                </tr>
+                @forelse ($seminarios as $seminario)
+                    <tr>
+                        <td>{{ $seminario->titulo }}</td>
+                        <td>{{ $seminario->lugar }}</td>
+                        <td>{{ \Carbon\Carbon::parse($seminario->fecha)->format('d/m/Y') }}</td>
+                        <td>{{ ucfirst($seminario->estatus) }}</td>
+                        <td class="text-center">—</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No hay seminarios para mostrar.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 </div>
 
-
 @include('modales.crear-seminario')
-
-
-
-
 
 @endsection
