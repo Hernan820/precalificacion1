@@ -37,13 +37,22 @@ class SeminarioController extends Controller
      */
     public function store(Request $request)
     {
+        $slugBase = Str::slug((string) $request->input('titulo'));
+        $slug = $slugBase;
+        $suffix = 2;
+
+        while (Seminario::where('slug', $slug)->exists()) {
+            $suffixText = '-' . $suffix++;
+            $slug = Str::limit($slugBase, 255 - strlen($suffixText), '') . $suffixText;
+        }
+
         $request->merge([
-            'slug' => Str::slug((string) $request->input('titulo')),
+            'slug' => $slug,
         ]);
 
         $datos = $request->validate([
             'titulo' => ['required', 'string', 'max:255'],
-            // 'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
+            'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
             'resumen' => ['nullable', 'string', 'max:500'],
             'descripcion' => ['nullable', 'string'],
             'fecha' => ['required', 'date'],
@@ -62,6 +71,8 @@ class SeminarioController extends Controller
             'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'estatus' => ['required', 'in:borrador,publicado,finalizado,cancelado'],
             'activo' => ['nullable', 'boolean'],
+        ], [
+            'slug.unique' => 'No se pudo generar un identificador único para el seminario. Intenta nuevamente.',
         ]);
 
         if (!empty($datos['registro_hasta'])) {

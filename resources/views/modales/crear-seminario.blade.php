@@ -21,9 +21,14 @@
                     <div class="form-row">
                         <div class="form-group col-md-8 mb-2">
                             <label for="seminario-titulo">Título <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm  @error('titulo') is-invalid @enderror" id="seminario-titulo" name="titulo" value="{{ old('titulo') }}"
+                            <input type="text" class="form-control form-control-sm @error('titulo') is-invalid @enderror @error('slug') is-invalid @enderror" id="seminario-titulo" name="titulo" value="{{ old('titulo') }}"
                                 maxlength="255" >
                                 @error('titulo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                @error('slug')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
