@@ -38,7 +38,7 @@ class SeminarioController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            'slug' => Str::slug((string) $request->input('slug')),
+            'slug' => Str::slug((string) $request->input('titulo')),
         ]);
 
         $datos = $request->validate([
@@ -54,10 +54,10 @@ class SeminarioController extends Controller
             'direccion' => ['required', 'string', 'max:500'],
             'ciudad' => ['required', 'string', 'max:150'],
             'estado' => ['required', 'string', 'max:150'],
-            'mapa_url' => ['required', 'url', 'max:500'],
+            // 'mapa_url' => ['required', 'url', 'max:500'],
             'modalidad' => ['required', 'in:presencial,virtual,hibrida'],
             'cupos' => ['required', 'integer', 'min:1'],
-            'tipo_registro' => ['required', 'in:ambos,cliente,codeudor'],
+            // 'tipo_registro' => ['required', 'in:ambos,cliente,codeudor'],
             'telefono' => ['required', 'string', 'max:30'],
             'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'estatus' => ['required', 'in:borrador,publicado,finalizado,cancelado'],
