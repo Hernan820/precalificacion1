@@ -1,0 +1,191 @@
+
+
+    .seminarios-list {
+        --seminarios-border: #e7e9ed;
+        --seminarios-muted: #727985;
+    }
+
+    .seminarios-list__toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+
+    .seminarios-list__search {
+        position: relative;
+        width: min(100%, 420px);
+    }
+
+    .seminarios-list__search .bi-search {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        color: #7b818b;
+        transform: translateY(-50%);
+    }
+
+    .seminarios-list__search input {
+        min-height: 40px;
+        padding-left: 36px;
+        border-color: var(--seminarios-border);
+        border-radius: 6px;
+    }
+
+    .seminarios-list__search input:focus {
+        border-color: #8ab4e8;
+        box-shadow: 0 0 0 .15rem rgba(0, 123, 255, .12);
+    }
+
+    .seminarios-list__count {
+        flex: 0 0 auto;
+        color: var(--seminarios-muted);
+        font-size: .875rem;
+    }
+
+    .seminarios-list__table-wrap {
+        overflow: hidden;
+        border: 1px solid var(--seminarios-border);
+        border-radius: 7px;
+        background: #fff;
+    }
+
+    .seminarios-list__scroll {
+        overflow-x: auto;
+    }
+
+    .seminarios-table {
+        min-width: 820px;
+        margin-bottom: 0;
+        color: #343a40;
+    }
+
+    .seminarios-table thead th {
+        padding: 12px 14px;
+        border-top: 0;
+        border-bottom: 1px solid var(--seminarios-border);
+        color: #626a75;
+        background: #f8f9fa;
+        font-size: .82rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .seminarios-table tbody td {
+        padding: 12px 14px;
+        border-color: #edf0f2;
+        vertical-align: middle;
+    }
+
+    .seminarios-table__id,
+    .seminarios-table__secondary {
+        color: var(--seminarios-muted);
+    }
+
+    .seminarios-table__name {
+        display: block;
+        color: #343a40;
+        font-weight: 600;
+    }
+
+    .seminarios-table__secondary {
+        display: block;
+        margin-top: 2px;
+        font-size: .8rem;
+    }
+
+    .seminarios-badge {
+        display: inline-block;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: .78rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .seminarios-badge--form,
+    .seminarios-badge--active {
+        color: #18794e;
+        background: #e8f5ed;
+    }
+
+    .seminarios-badge--pending {
+        color: #9a5a14;
+        background: #fff3e2;
+    }
+
+    .seminarios-badge--draft,
+    .seminarios-badge--inactive {
+        color: #5f6670;
+        background: #eef0f2;
+    }
+
+    .seminarios-badge--finished {
+        color: #315e91;
+        background: #eaf2fb;
+    }
+
+    .seminarios-badge--cancelled {
+        color: #a43e3e;
+        background: #fbeaea;
+    }
+
+    .seminarios-detail-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        color: #626a75;
+        background: transparent;
+    }
+
+    .seminarios-detail-button:hover,
+    .seminarios-detail-button[aria-expanded="true"] {
+        border-color: #e1e5ea;
+        color: #343a40;
+        background: #f5f6f8;
+    }
+
+    .seminarios-table .seminarios-detail-row[hidden],
+    .seminarios-table #seminarios-sin-coincidencias[hidden] {
+        display: none !important;
+    }
+
+    .seminarios-detail {
+        padding: 4px 2px;
+        color: #495057;
+    }
+
+    .seminarios-detail__item {
+        height: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        background: #fafbfc;
+    }
+
+    .seminarios-detail__label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--seminarios-muted);
+        font-size: .72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .seminarios-empty {
+        padding: 24px 12px !important;
+        color: var(--seminarios-muted);
+        text-align: center;
+    }
+
+    @media (max-width: 575.98px) {
+        .seminarios-list__toolbar {
+            align-items: stretch;
+            flex-direction: column;
+        }
+    }
