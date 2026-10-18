@@ -78,6 +78,10 @@
         vertical-align: middle;
     }
 
+    .seminarios-table tbody tr.is-related-hover > td {
+        background-color: #f1f6fc;
+    }
+
     .seminarios-table__id,
     .seminarios-table__secondary {
         color: var(--seminarios-muted);
@@ -175,6 +179,26 @@
         font-size: .72rem;
         font-weight: 600;
         text-transform: uppercase;
+    }
+
+    .seminarios-detail__description {
+        display: block;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .seminarios-detail__description[hidden] {
+        display: none;
+    }
+
+    .seminarios-description-toggle {
+        margin-top: 4px;
+        padding: 0;
+        border: 0;
+        color: #24518f;
+        background: transparent;
+        font-size: .875rem;
+        text-decoration: underline;
     }
 
     .seminarios-empty {

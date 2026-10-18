@@ -54,7 +54,7 @@ class SeminarioController extends Controller
             'titulo' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
             'resumen' => ['nullable', 'string', 'max:500'],
-            'descripcion' => ['nullable', 'string'],
+            'descripcion' => ['nullable', 'string', 'max:2000'],
             'fecha' => ['required', 'date'],
             'hora_inicio' => ['required', 'date_format:H:i'],
             'hora_fin' => ['required', 'date_format:H:i', 'after:hora_inicio'],
@@ -67,12 +67,13 @@ class SeminarioController extends Controller
             'modalidad' => ['required', 'in:presencial,virtual,hibrida'],
             'cupos' => ['required', 'integer', 'min:1'],
             // 'tipo_registro' => ['required', 'in:ambos,cliente,codeudor'],
-            'telefono' => ['required', 'string', 'max:30'],
+            'telefono' => ['required', 'string', 'regex:/^\+1 \(\d{3}\) \d{3}-\d{4}$/'],
             'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'estatus' => ['required', 'in:borrador,publicado,finalizado,cancelado'],
             'activo' => ['nullable', 'boolean'],
         ], [
             'slug.unique' => 'No se pudo generar un identificador único para el seminario. Intenta nuevamente.',
+            'telefono.regex' => 'Ingresa un teléfono completo con el formato +1 (123) 456-7890.',
         ]);
 
         if (!empty($datos['registro_hasta'])) {

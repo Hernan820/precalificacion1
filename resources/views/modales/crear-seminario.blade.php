@@ -71,7 +71,8 @@
 
                     <div class="form-group mb-2">
                         <label for="seminario-descripcion">Descripción</label>
-                        <textarea class="form-control form-control-sm @error('descripcion') is-invalid @enderror" id="seminario-descripcion" name="descripcion" rows="3">{{ old('descripcion') }}</textarea>
+                        <textarea class="form-control form-control-sm @error('descripcion') is-invalid @enderror" id="seminario-descripcion" name="descripcion" rows="3" maxlength="2000">{{ old('descripcion') }}</textarea>
+                        <small class="form-text text-muted">Máximo 2,000 caracteres.</small>
                         @error('descripcion')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
@@ -205,7 +206,7 @@
                         </div> --}}
                         <div class="form-group col-md-6 mb-2">
                             <label for="seminario-telefono">Teléfono call center <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control form-control-sm @error('telefono') is-invalid @enderror" id="seminario-telefono" name="telefono" maxlength="30" value="{{ old('telefono') }}" >
+                            <input type="tel" class="form-control form-control-sm @error('telefono') is-invalid @enderror" id="seminario-telefono" name="telefono" maxlength="18" inputmode="numeric" autocomplete="tel" placeholder="+1 (___) ___-____" pattern="\+1 \([0-9]{3}\) [0-9]{3}-[0-9]{4}" title="Ingresa un teléfono completo con el formato +1 (123) 456-7890." required value="{{ old('telefono') }}">
                                 @error('telefono')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -243,6 +244,68 @@
         document.addEventListener('DOMContentLoaded', function () {
             var $modal = window.jQuery('#modal-crear-seminario');
             var preserveInput = $modal.data('preserve-input') === true;
+            var phoneInput = document.getElementById('seminario-telefono');
+            var completePhonePattern = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
+
+            function maskPhoneNumber() {
+                var value = phoneInput.value;
+                var cursor = phoneInput.selectionStart || value.length;
+                var digits = value.replace(/\D/g, '');
+                var startsWithCountryCode = /^\s*\+1/.test(value)
+                    || (digits.length === 11 && digits.charAt(0) === '1');
+                var digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, '').length;
+
+                if (startsWithCountryCode) {
+                    digits = digits.slice(1);
+                    digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+                } else if (digits.length === 11 && digits.charAt(0) === '1') {
+                    digits = digits.slice(1);
+                }
+
+                digits = digits.slice(0, 10);
+                var formatted = value.length ? '+1 (' + digits.slice(0, 3) : '';
+
+                if (digits.length >= 3) {
+                    formatted += ')';
+                }
+                if (digits.length > 3) {
+                    formatted += ' ' + digits.slice(3, 6);
+                }
+                if (digits.length >= 6) {
+                    formatted += '-';
+                }
+                if (digits.length > 6) {
+                    formatted += digits.slice(6);
+                }
+
+                phoneInput.value = formatted;
+                if (document.activeElement === phoneInput) {
+                    var nationalDigitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
+                    var caret = formatted.indexOf('(') + 1;
+                    var seenDigits = 0;
+
+                    for (var index = caret; index < formatted.length; index++) {
+                        if (/\d/.test(formatted.charAt(index))) {
+                            seenDigits++;
+                            if (seenDigits === nationalDigitsBeforeCursor) {
+                                caret = index + 1;
+                                break;
+                            }
+                        }
+                    }
+
+                    phoneInput.setSelectionRange(caret, caret);
+                }
+
+                phoneInput.setCustomValidity(
+                    phoneInput.value && !completePhonePattern.test(phoneInput.value)
+                        ? 'Ingresa los 10 dígitos del teléfono con el formato +1 (123) 456-7890.'
+                        : ''
+                );
+            }
+
+            phoneInput.addEventListener('input', maskPhoneNumber);
+            maskPhoneNumber();
 
             $modal.on('show.bs.modal', function () {
                 if (preserveInput) {
@@ -259,6 +322,7 @@
                     select.selectedIndex = 0;
                 });
                 form.querySelector('#seminario-activo').checked = true;
+                phoneInput.setCustomValidity('');
                 form.querySelectorAll('.is-invalid').forEach(function (field) {
                     field.classList.remove('is-invalid');
                 });

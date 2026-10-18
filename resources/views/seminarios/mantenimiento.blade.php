@@ -66,6 +66,8 @@
                                 $ciudadEstado = collect([$seminario->ciudad ?? null, $seminario->estado ?? null])
                                     ->filter()
                                     ->implode(', ');
+                                $descripcionSeminario = $seminario->descripcion ?: 'Sin descripción';
+                                $descripcionEsLarga = \Illuminate\Support\Str::length($descripcionSeminario) > 180;
                             @endphp
                             <tr class="seminarios-data-row">
                                 <td class="seminarios-table__id">{{ $loop->iteration }}</td>
@@ -128,7 +130,14 @@
                                             <div class="col-md-4 mb-2">
                                                 <div class="seminarios-detail__item">
                                                     <span class="seminarios-detail__label">Descripción</span>
-                                                    {{ $seminario->descripcion ?: 'Sin descripción' }}
+                                                    <span class="seminarios-detail__description" id="seminario-descripcion-preview-{{ $seminario->id }}">{{ $descripcionEsLarga ? \Illuminate\Support\Str::limit($descripcionSeminario, 180) : $descripcionSeminario }}</span>
+                                                    @if ($descripcionEsLarga)
+                                                        <span class="seminarios-detail__description" id="seminario-descripcion-full-{{ $seminario->id }}" hidden>{{ $descripcionSeminario }}</span>
+                                                        <button type="button" class="seminarios-description-toggle"
+                                                            data-preview="seminario-descripcion-preview-{{ $seminario->id }}"
+                                                            data-full="seminario-descripcion-full-{{ $seminario->id }}"
+                                                            aria-expanded="false">Leer más...</button>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -156,6 +165,40 @@
         var rows = Array.prototype.slice.call(document.querySelectorAll('.seminarios-data-row'));
         var countLabel = document.getElementById('seminarios-count');
         var noMatches = document.getElementById('seminarios-sin-coincidencias');
+
+        rows.forEach(function (row) {
+            var detailRow = row.nextElementSibling;
+            if (!detailRow || !detailRow.classList.contains('seminarios-detail-row')) {
+                return;
+            }
+
+            var clearHoverTimeout;
+            [row, detailRow].forEach(function (pairedRow) {
+                pairedRow.addEventListener('mouseenter', function () {
+                    window.clearTimeout(clearHoverTimeout);
+                    row.classList.add('is-related-hover');
+                    detailRow.classList.add('is-related-hover');
+                });
+                pairedRow.addEventListener('mouseleave', function () {
+                    clearHoverTimeout = window.setTimeout(function () {
+                        if (!row.matches(':hover') && !detailRow.matches(':hover')) {
+                            row.classList.remove('is-related-hover');
+                            detailRow.classList.remove('is-related-hover');
+                        }
+                    }, 0);
+                });
+            });
+        });
+
+        document.querySelectorAll('.seminarios-description-toggle').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var shouldExpand = button.getAttribute('aria-expanded') !== 'true';
+                document.getElementById(button.dataset.preview).hidden = shouldExpand;
+                document.getElementById(button.dataset.full).hidden = !shouldExpand;
+                button.setAttribute('aria-expanded', String(shouldExpand));
+                button.textContent = shouldExpand ? 'Leer menos...' : 'Leer más...';
+            });
+        });
 
         searchInput.addEventListener('input', function () {
             var query = searchInput.value.trim().toLocaleLowerCase();
