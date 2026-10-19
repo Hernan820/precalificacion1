@@ -28,6 +28,7 @@ class Seminario extends Model
         'tipo_registro',
         'telefono',
         'imagen',
+        'formulario_id',
         'estatus',
         'activo',
     ];

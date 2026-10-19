@@ -3,6 +3,7 @@
 @section('content')
 
 <link href="{{ asset('css/tabla_seminarios.css') }}" rel="stylesheet" >
+<script src="{{ asset('js/seminarios.js?456454') }}" defer></script>
 
 <div class="container-fluid pt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -68,6 +69,27 @@
                                     ->implode(', ');
                                 $descripcionSeminario = $seminario->descripcion ?: 'Sin descripción';
                                 $descripcionEsLarga = \Illuminate\Support\Str::length($descripcionSeminario) > 180;
+                                $datosEdicion = [
+                                    'id' => $seminario->id,
+                                    'titulo' => $seminario->titulo,
+                                    'estatus' => $seminario->estatus,
+                                    'resumen' => $seminario->resumen,
+                                    'descripcion' => $seminario->descripcion,
+                                    'fecha' => \Carbon\Carbon::parse($seminario->fecha)->format('Y-m-d'),
+                                    'hora_inicio' => \Carbon\Carbon::parse($seminario->hora_inicio)->format('H:i'),
+                                    'hora_fin' => $seminario->hora_fin ? \Carbon\Carbon::parse($seminario->hora_fin)->format('H:i') : '',
+                                    'registro_hasta' => $seminario->registro_hasta ? \Carbon\Carbon::parse($seminario->registro_hasta)->format('Y-m-d\TH:i') : '',
+                                    'lugar' => $seminario->lugar,
+                                    'modalidad' => $seminario->modalidad,
+                                    'direccion' => $seminario->direccion,
+                                    'ciudad' => $seminario->ciudad,
+                                    'estado' => $seminario->estado,
+                                    'mapa_url' => $seminario->mapa_url,
+                                    'cupos' => $seminario->cupos,
+                                    'telefono' => $seminario->telefono,
+                                    'formulario_id' => $seminario->formulario_id,
+                                    'activo' => $estaActivo,
+                                ];
                             @endphp
                             <tr class="seminarios-data-row">
                                 <td class="seminarios-table__id">{{ $loop->iteration }}</td>
@@ -104,6 +126,12 @@
                                     <span class="seminarios-badge seminarios-badge--{{ $estadoClase }}">{{ $estadoLabel }}</span>
                                 </td>
                                 <td>
+                                    <button type="button" class="seminarios-detail-button seminarios-edit-button"
+                                        data-seminario="{{ json_encode($datosEdicion) }}"
+                                        data-update-url="{{ route('seminarios.update', $seminario->id) }}"
+                                        aria-label="Editar {{ $seminario->titulo }}" title="Editar seminario">
+                                        <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                    </button>
                                     <button type="button" class="seminarios-detail-button seminarios-toggle-details"
                                         data-target="seminario-detalle-{{ $seminario->id }}" aria-expanded="false"
                                         aria-label="Ver detalles de {{ $seminario->titulo }}" title="Ver detalles">
@@ -159,85 +187,10 @@
     </section>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var searchInput = document.getElementById('buscar-seminarios');
-        var rows = Array.prototype.slice.call(document.querySelectorAll('.seminarios-data-row'));
-        var countLabel = document.getElementById('seminarios-count');
-        var noMatches = document.getElementById('seminarios-sin-coincidencias');
 
-        rows.forEach(function (row) {
-            var detailRow = row.nextElementSibling;
-            if (!detailRow || !detailRow.classList.contains('seminarios-detail-row')) {
-                return;
-            }
-
-            var clearHoverTimeout;
-            [row, detailRow].forEach(function (pairedRow) {
-                pairedRow.addEventListener('mouseenter', function () {
-                    window.clearTimeout(clearHoverTimeout);
-                    row.classList.add('is-related-hover');
-                    detailRow.classList.add('is-related-hover');
-                });
-                pairedRow.addEventListener('mouseleave', function () {
-                    clearHoverTimeout = window.setTimeout(function () {
-                        if (!row.matches(':hover') && !detailRow.matches(':hover')) {
-                            row.classList.remove('is-related-hover');
-                            detailRow.classList.remove('is-related-hover');
-                        }
-                    }, 0);
-                });
-            });
-        });
-
-        document.querySelectorAll('.seminarios-description-toggle').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var shouldExpand = button.getAttribute('aria-expanded') !== 'true';
-                document.getElementById(button.dataset.preview).hidden = shouldExpand;
-                document.getElementById(button.dataset.full).hidden = !shouldExpand;
-                button.setAttribute('aria-expanded', String(shouldExpand));
-                button.textContent = shouldExpand ? 'Leer menos...' : 'Leer más...';
-            });
-        });
-
-        searchInput.addEventListener('input', function () {
-            var query = searchInput.value.trim().toLocaleLowerCase();
-            var visibleCount = 0;
-
-            rows.forEach(function (row) {
-                var detailButton = row.querySelector('.seminarios-toggle-details');
-                var details = document.getElementById(detailButton.dataset.target);
-                var matches = row.textContent.toLocaleLowerCase().indexOf(query) !== -1;
-                row.hidden = !matches;
-                details.hidden = true;
-                detailButton.setAttribute('aria-expanded', 'false');
-                if (matches) {
-                    visibleCount++;
-                }
-            });
-
-            countLabel.textContent = visibleCount + (visibleCount === 1 ? ' seminario' : ' seminarios');
-            noMatches.hidden = rows.length === 0 || visibleCount !== 0;
-        });
-
-        document.querySelectorAll('.seminarios-toggle-details').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var details = document.getElementById(button.dataset.target);
-                var shouldOpen = details.hidden;
-
-                document.querySelectorAll('.seminarios-detail-row').forEach(function (row) {
-                    row.hidden = true;
-                });
-                document.querySelectorAll('.seminarios-toggle-details').forEach(function (toggle) {
-                    toggle.setAttribute('aria-expanded', 'false');
-                });
-
-                details.hidden = !shouldOpen;
-                button.setAttribute('aria-expanded', String(shouldOpen));
-            });
-        });
-    });
-</script>
 
 @include('modales.crear-seminario')
+
+
+
 @endsection

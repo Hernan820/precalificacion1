@@ -1,19 +1,29 @@
-<div class="modal fade" id="modal-crear-seminario" data-preserve-input="{{ $errors->any() ? 'true' : 'false' }}" tabindex="-1" role="dialog"
+@php
+    $editingSeminarioId = old('seminario_id');
+@endphp
+<div class="modal fade" id="modal-crear-seminario" data-preserve-input="{{ $errors->any() ? 'true' : 'false' }}"
+    data-edit-id="{{ $editingSeminarioId }}" tabindex="-1" role="dialog"
     aria-labelledby="modalCrearSeminarioLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content small">
             <div class="modal-header py-2">
                 <h5 class="modal-title" id="modalCrearSeminarioLabel">
-                    <i class="fas fa-calendar-plus mr-2" aria-hidden="true"></i>Crear seminario
+                    <i class="fas fa-calendar-plus mr-2" aria-hidden="true"></i>{{ $editingSeminarioId ? 'Editar seminario' : 'Crear seminario' }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <form id="form-crear-seminario" method="POST" action="{{ route('seminarios.store') }}"
+            <form id="form-crear-seminario" method="POST"
+                action="{{ $editingSeminarioId ? route('seminarios.update', $editingSeminarioId) : route('seminarios.store') }}"
+                data-store-url="{{ route('seminarios.store') }}"
                 enctype="multipart/form-data">
                 @csrf
+                @if ($editingSeminarioId)
+                    @method('PUT')
+                @endif
+                <input type="hidden" name="seminario_id" value="{{ $editingSeminarioId }}">
                 <div class="modal-body p-3">
                     <p class="text-muted mb-3">Completa la información que se mostrará a los participantes.</p>
 
@@ -39,8 +49,8 @@
                             <select class="form-control form-control-sm @error('estatus') is-invalid @enderror" id="seminario-estatus" name="estatus">
                                 <option value="borrador" {{ old('estatus', 'borrador') === 'borrador' ? 'selected' : '' }}>Borrador</option>
                                 <option value="publicado" {{ old('estatus') === 'publicado' ? 'selected' : '' }}>Publicado</option>
-                                {{-- <option value="finalizado">Finalizado</option>
-                                <option value="cancelado">Cancelado</option> --}}
+                                <option value="finalizado" {{ old('estatus') === 'finalizado' ? 'selected' : '' }}>Finalizado</option>
+                                <option value="cancelado" {{ old('estatus') === 'cancelado' ? 'selected' : '' }}>Cancelado</option>
                             </select>
                             @error('estatus')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -156,7 +166,7 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6 mb-2">
+                        <div class="form-group col-md-4 mb-2">
                             <label for="seminario-ciudad">Ciudad <span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-sm @error('ciudad') is-invalid @enderror" id="seminario-ciudad" name="ciudad" maxlength="150" value="{{ old('ciudad') }}" >
                             @error('ciudad')
@@ -186,7 +196,7 @@
 
                     <h6 class="text-primary border-bottom border-primary pb-1 mb-2 mt-3">Registro y recursos</h6>
                     <div class="form-row">
-                        <div class="form-group col-md-6 mb-2">
+                        <div class="form-group col-md-4 mb-2">
                             <label for="seminario-cupos">Cupos <span class="text-danger">*</span></label>
                             <input type="number" class="form-control form-control-sm @error('cupos') is-invalid @enderror" id="seminario-cupos" name="cupos"
                                 min="1" step="1" value="{{ old('cupos') }}" >
@@ -196,6 +206,15 @@
                                     </span>
                                 @enderror
                         </div>
+                        <div class="form-group col-md-4 mb-2">
+                            <label for="seminario-formulario-id">ID de WPForms <span class="text-muted">(opcional)</span></label>
+                            <input type="number" class="form-control form-control-sm @error('formulario_id') is-invalid @enderror"
+                                id="seminario-formulario-id" name="formulario_id" min="1" step="1"
+                                value="{{ old('formulario_id') }}">
+                            @error('formulario_id')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
                         {{-- <div class="form-group col-md-4 mb-2">
                             <label for="seminario-tipo-registro">Tipo de registro <span class="text-danger">*</span></label>
                             <select class="form-control form-control-sm" id="seminario-tipo-registro" name="tipo_registro" >
@@ -204,7 +223,7 @@
                                 <option value="codeudor">Codeudor</option>
                             </select>
                         </div> --}}
-                        <div class="form-group col-md-6 mb-2">
+                        <div class="form-group col-md-4 mb-2">
                             <label for="seminario-telefono">Teléfono call center <span class="text-danger">*</span></label>
                             <input type="tel" class="form-control form-control-sm @error('telefono') is-invalid @enderror" id="seminario-telefono" name="telefono" maxlength="18" inputmode="numeric" autocomplete="tel" placeholder="+1 (___) ___-____" pattern="\+1 \([0-9]{3}\) [0-9]{3}-[0-9]{4}" title="Ingresa un teléfono completo con el formato +1 (123) 456-7890." required value="{{ old('telefono') }}">
                                 @error('telefono')
@@ -231,7 +250,7 @@
                 </div>
 
                 <div class="modal-footer py-2">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-sm btn-primary">
                         <i class="fas fa-save mr-1" aria-hidden="true"></i>Guardar seminario
                     </button>
@@ -240,100 +259,5 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var $modal = window.jQuery('#modal-crear-seminario');
-            var preserveInput = $modal.data('preserve-input') === true;
-            var phoneInput = document.getElementById('seminario-telefono');
-            var completePhonePattern = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
 
-            function maskPhoneNumber() {
-                var value = phoneInput.value;
-                var cursor = phoneInput.selectionStart || value.length;
-                var digits = value.replace(/\D/g, '');
-                var startsWithCountryCode = /^\s*\+1/.test(value)
-                    || (digits.length === 11 && digits.charAt(0) === '1');
-                var digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, '').length;
-
-                if (startsWithCountryCode) {
-                    digits = digits.slice(1);
-                    digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
-                } else if (digits.length === 11 && digits.charAt(0) === '1') {
-                    digits = digits.slice(1);
-                }
-
-                digits = digits.slice(0, 10);
-                var formatted = value.length ? '+1 (' + digits.slice(0, 3) : '';
-
-                if (digits.length >= 3) {
-                    formatted += ')';
-                }
-                if (digits.length > 3) {
-                    formatted += ' ' + digits.slice(3, 6);
-                }
-                if (digits.length >= 6) {
-                    formatted += '-';
-                }
-                if (digits.length > 6) {
-                    formatted += digits.slice(6);
-                }
-
-                phoneInput.value = formatted;
-                if (document.activeElement === phoneInput) {
-                    var nationalDigitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
-                    var caret = formatted.indexOf('(') + 1;
-                    var seenDigits = 0;
-
-                    for (var index = caret; index < formatted.length; index++) {
-                        if (/\d/.test(formatted.charAt(index))) {
-                            seenDigits++;
-                            if (seenDigits === nationalDigitsBeforeCursor) {
-                                caret = index + 1;
-                                break;
-                            }
-                        }
-                    }
-
-                    phoneInput.setSelectionRange(caret, caret);
-                }
-
-                phoneInput.setCustomValidity(
-                    phoneInput.value && !completePhonePattern.test(phoneInput.value)
-                        ? 'Ingresa los 10 dígitos del teléfono con el formato +1 (123) 456-7890.'
-                        : ''
-                );
-            }
-
-            phoneInput.addEventListener('input', maskPhoneNumber);
-            maskPhoneNumber();
-
-            $modal.on('show.bs.modal', function () {
-                if (preserveInput) {
-                    preserveInput = false;
-                    return;
-                }
-
-                var form = this.querySelector('form');
-                form.reset();
-                form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]), textarea').forEach(function (field) {
-                    field.value = '';
-                });
-                form.querySelectorAll('select').forEach(function (select) {
-                    select.selectedIndex = 0;
-                });
-                form.querySelector('#seminario-activo').checked = true;
-                phoneInput.setCustomValidity('');
-                form.querySelectorAll('.is-invalid').forEach(function (field) {
-                    field.classList.remove('is-invalid');
-                });
-                form.querySelectorAll('.invalid-feedback').forEach(function (feedback) {
-                    feedback.remove();
-                });
-            });
-
-            if (preserveInput) {
-                $modal.modal('show');
-            }
-        });
-    </script>
 </div>

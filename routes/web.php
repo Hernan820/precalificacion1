@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/seminarios/crear', [App\Http\Controllers\SeminarioController::class, 'store'])
         ->name('seminarios.store');
 
+    Route::put('/seminarios/{seminario}', [App\Http\Controllers\SeminarioController::class, 'update'])
+        ->name('seminarios.update');
+
 
     Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
 
