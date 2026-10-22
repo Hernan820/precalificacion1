@@ -3,7 +3,7 @@
 @section('content')
 
 <link href="{{ asset('css/tabla_seminarios.css') }}" rel="stylesheet" >
-<script src="{{ asset('js/seminarios.js?456454') }}" defer></script>
+<script src="{{ asset('js/seminarios.js?456455') }}" defer></script>
 
 <div class="container-fluid pt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -137,6 +137,13 @@
                                         aria-label="Ver detalles de {{ $seminario->titulo }}" title="Ver detalles">
                                         <i class="bi bi-eye" aria-hidden="true"></i>
                                     </button>
+                                    <button type="button" class="seminarios-detail-button seminarios-delete-button"
+                                        data-seminario-id="{{ $seminario->id }}"
+                                        data-delete-url="{{ route('seminarios.destroy', $seminario->id) }}"
+                                        data-seminario-titulo="{{ $seminario->titulo }}"
+                                        aria-label="Eliminar {{ $seminario->titulo }}" title="Eliminar seminario">
+                                        <i class="bi bi-trash" aria-hidden="true"></i>
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="seminarios-detail-row" id="seminario-detalle-{{ $seminario->id }}" hidden>
@@ -187,7 +194,43 @@
     </section>
 </div>
 
-
+<div class="modal fade" id="modal-eliminar-seminario"
+    data-restore="{{ old('eliminacion_seminario_id') ? 'true' : 'false' }}" tabindex="-1" role="dialog"
+    aria-labelledby="modalEliminarSeminarioLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form-eliminar-seminario" method="POST"
+                action="{{ old('eliminacion_seminario_id') ? route('seminarios.destroy', old('eliminacion_seminario_id')) : '' }}">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="eliminacion_seminario_id" value="{{ old('eliminacion_seminario_id') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEliminarSeminarioLabel">Eliminar seminario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Indica por qué se elimina este seminario. El registro se conservará y podrá auditarse.</p>
+                    <div class="form-group mb-0">
+                        <label for="justificacion-eliminacion">Justificación <span class="text-danger">*</span></label>
+                        <textarea id="justificacion-eliminacion" name="justificacion_eliminacion"
+                            class="form-control @error('justificacion_eliminacion') is-invalid @enderror"
+                            rows="4" maxlength="2000" placeholder="Ej.: Se creó por error o por equivocación."
+                            required>{{ old('justificacion_eliminacion') }}</textarea>
+                        @error('justificacion_eliminacion')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar seminario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @include('modales.crear-seminario')
 

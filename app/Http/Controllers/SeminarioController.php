@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Seminario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SeminarioController extends Controller
@@ -41,7 +42,7 @@ class SeminarioController extends Controller
         $slug = $slugBase;
         $suffix = 2;
 
-        while (Seminario::where('slug', $slug)->exists()) {
+        while (Seminario::withTrashed()->where('slug', $slug)->exists()) {
             $suffixText = '-' . $suffix++;
             $slug = Str::limit($slugBase, 255 - strlen($suffixText), '') . $suffixText;
         }
@@ -132,7 +133,7 @@ class SeminarioController extends Controller
         $slug = $slugBase;
         $suffix = 2;
 
-        while (Seminario::where('slug', $slug)->where('id', '!=', $seminario->id)->exists()) {
+        while (Seminario::withTrashed()->where('slug', $slug)->where('id', '!=', $seminario->id)->exists()) {
             $suffixText = '-' . $suffix++;
             $slug = Str::limit($slugBase, 255 - strlen($suffixText), '') . $suffixText;
         }
@@ -185,8 +186,20 @@ class SeminarioController extends Controller
      * @param  \App\Models\Seminario  $seminario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seminario $seminario)
+    public function destroy(Request $request, Seminario $seminario)
     {
-        //
+        $datos = $request->validate([
+            'justificacion_eliminacion' => ['required', 'string', 'max:2000'],
+        ]);
+
+        DB::transaction(function () use ($seminario, $datos) {
+            $seminario->justificacion_eliminacion = $datos['justificacion_eliminacion'];
+            $seminario->save();
+            $seminario->delete();
+        });
+
+        return redirect()
+            ->route('seminarios.mantenimiento')
+            ->with('success', 'El seminario se eliminó correctamente.');
     }
 }

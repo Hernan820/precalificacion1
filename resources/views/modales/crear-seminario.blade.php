@@ -1,7 +1,8 @@
 @php
     $editingSeminarioId = old('seminario_id');
 @endphp
-<div class="modal fade" id="modal-crear-seminario" data-preserve-input="{{ $errors->any() ? 'true' : 'false' }}"
+<div class="modal fade" id="modal-crear-seminario"
+    data-preserve-input="{{ $errors->any() && !old('eliminacion_seminario_id') ? 'true' : 'false' }}"
     data-edit-id="{{ $editingSeminarioId }}" tabindex="-1" role="dialog"
     aria-labelledby="modalCrearSeminarioLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

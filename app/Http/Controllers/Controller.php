@@ -75,6 +75,7 @@ class Controller extends BaseController
       
       return view('seminarios.mantenimiento',[
         'seminarios' => DB::table('seminarios')
+          ->whereNull('deleted_at')
           ->orderByDesc('created_at')
           ->orderByDesc('id')
           ->get(),

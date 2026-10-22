@@ -52,6 +52,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/seminarios/{seminario}', [App\Http\Controllers\SeminarioController::class, 'update'])
         ->name('seminarios.update');
 
+    Route::delete('/seminarios/{seminario}', [App\Http\Controllers\SeminarioController::class, 'destroy'])
+        ->name('seminarios.destroy');
+
 
     Route::post('formulariodatos', [App\Http\Controllers\ClientesPreController::class, 'datosform']);
 

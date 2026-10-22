@@ -207,6 +207,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    var $deleteModal = window.jQuery('#modal-eliminar-seminario');
+    var deleteForm = document.getElementById('form-eliminar-seminario');
+    var reasonInput = document.getElementById('justificacion-eliminacion');
+    var deleteTitle = document.getElementById('modalEliminarSeminarioLabel');
+
+    document.querySelectorAll('.seminarios-delete-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            deleteForm.action = button.dataset.deleteUrl;
+            deleteForm.elements.eliminacion_seminario_id.value = button.dataset.seminarioId;
+            reasonInput.value = '';
+            deleteTitle.textContent = 'Eliminar seminario: ' + button.dataset.seminarioTitulo;
+            $deleteModal.modal('show');
+        });
+    });
+
+    if ($deleteModal.data('restore') === true) {
+        $deleteModal.modal('show');
+    }
+
     searchInput.addEventListener('input', function () {
         var query = searchInput.value.trim().toLocaleLowerCase();
         var visibleCount = 0;
