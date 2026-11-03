@@ -53,6 +53,7 @@ class SeminarioController extends Controller
 
         $datos = $request->validate([
             'titulo' => ['required', 'string', 'max:255'],
+            'tipo_seminario' => ['required', 'in:primeros-compradores,inversion'],
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:seminarios,slug'],
             'resumen' => ['nullable', 'string', 'max:500'],
             'descripcion' => ['nullable', 'string', 'max:2000'],
@@ -140,6 +141,7 @@ class SeminarioController extends Controller
 
         $datos = $request->validate([
             'titulo' => ['required', 'string', 'max:255'],
+            'tipo_seminario' => ['required', 'in:primeros-compradores,inversion'],
             'resumen' => ['nullable', 'string', 'max:500'],
             'descripcion' => ['nullable', 'string', 'max:2000'],
             'formulario_id' => ['nullable', 'integer', 'min:1'],

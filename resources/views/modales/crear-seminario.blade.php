@@ -59,6 +59,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group mb-2">
+                        <label for="seminario-tipo-seminario">Tipo de seminario <span class="text-danger">*</span></label>
+                        <select class="form-control form-control-sm @error('tipo_seminario') is-invalid @enderror"
+                            id="seminario-tipo-seminario" name="tipo_seminario" required>
+                            <option value="" {{ old('tipo_seminario') === null || old('tipo_seminario') === '' ? 'selected' : '' }}>Selecciona un tipo</option>
+                            <option value="primeros-compradores" {{ old('tipo_seminario') === 'primeros-compradores' ? 'selected' : '' }}>Primeros compradores</option>
+                            <option value="inversion" {{ old('tipo_seminario') === 'inversion' ? 'selected' : '' }}>Inversión</option>
+                        </select>
+                        @error('tipo_seminario')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
                     {{-- <div class="form-group mb-2">
                         <label for="seminario-slug">Slug <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-sm @error('slug') is-invalid @enderror" id="seminario-slug" name="slug" value="{{ old('slug') }}"

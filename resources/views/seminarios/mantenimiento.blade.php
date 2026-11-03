@@ -72,6 +72,7 @@
                                 $datosEdicion = [
                                     'id' => $seminario->id,
                                     'titulo' => $seminario->titulo,
+                                    'tipo_seminario' => $seminario->tipo_seminario,
                                     'estatus' => $seminario->estatus,
                                     'resumen' => $seminario->resumen,
                                     'descripcion' => $seminario->descripcion,
@@ -97,6 +98,9 @@
                                     <span class="seminarios-table__name">{{ $seminario->titulo }}</span>
                                     @if (!empty($seminario->modalidad))
                                         <span class="seminarios-table__secondary">{{ ucfirst($seminario->modalidad) }}</span>
+                                    @endif
+                                    @if (!empty($seminario->tipo_seminario))
+                                        <span class="seminarios-table__secondary">{{ $seminario->tipo_seminario === 'inversion' ? 'Inversión' : 'Primeros compradores' }}</span>
                                     @endif
                                 </td>
                                 <td>

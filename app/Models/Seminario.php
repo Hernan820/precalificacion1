@@ -12,6 +12,7 @@ class Seminario extends Model
 
     protected $fillable = [
         'titulo',
+        'tipo_seminario',
         'slug',
         'resumen',
         'descripcion',
