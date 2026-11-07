@@ -34,10 +34,20 @@ class SeminarioController extends Controller
             ->get(['id', 'titulo', 'fecha', 'formulario_id']);
     }
 
+    public function finalizados()
+    {
+        return Seminario::query()
+            ->where('activo', true)
+            ->whereIn('estatus', ['publicado', 'finalizado'])
+            ->whereDate('fecha', '<', Carbon::today(self::TIMEZONE_SEMINARIOS))
+            ->orderByDesc('fecha')
+            ->get(['id', 'titulo', 'fecha', 'formulario_id']);
+    }
+
     public function registros($seminarioId)
     {
         $seminario = Seminario::findOrFail($seminarioId);
-        $this->asegurarSeminarioDisponible($seminario);
+        $this->asegurarSeminarioConsultable($seminario);
 
         $slugSerializado = sprintf(
             '%%s:6:"estado";s:%d:"%s";%%',
@@ -78,7 +88,7 @@ class SeminarioController extends Controller
     public function exportarRegistros($seminarioId)
     {
         $seminario = Seminario::findOrFail($seminarioId);
-        $this->asegurarSeminarioDisponible($seminario);
+        $this->asegurarSeminarioConsultable($seminario);
 
         return Excel::download(
             new semiExport(
@@ -91,12 +101,11 @@ class SeminarioController extends Controller
         );
     }
 
-    private function asegurarSeminarioDisponible(Seminario $seminario)
+    private function asegurarSeminarioConsultable(Seminario $seminario)
     {
         abort_unless(
             $seminario->activo
-                && $seminario->estatus === 'publicado'
-                && $seminario->fecha->toDateString() >= Carbon::today(self::TIMEZONE_SEMINARIOS)->toDateString(),
+                && in_array($seminario->estatus, ['publicado', 'finalizado'], true),
             404
         );
     }

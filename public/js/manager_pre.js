@@ -34,6 +34,34 @@ $(document).ready(function () {
             .text("No se pudieron cargar los seminarios disponibles.");
     });
 
+    axios.get(principalUrl + "seminarios/finalizados")
+    .then((respuesta) => {
+        let selectorSeminarios = $("#seminario_finalizado");
+
+        respuesta.data.forEach(function (seminario) {
+            let fecha = moment.utc(seminario.fecha).format("DD/MM/YYYY");
+            selectorSeminarios.append(
+                $("<option>", {
+                    value: seminario.id,
+                    text: seminario.titulo + " - " + fecha
+                })
+            );
+        });
+
+        if (respuesta.data.length === 0) {
+            $("#seminario-finalizado-mensaje")
+                .removeClass("d-none")
+                .text("No hay seminarios con fecha anterior a hoy.");
+        }
+    })
+    .catch((error) => {
+        console.error("No se pudieron cargar los seminarios finalizados.", error);
+        $("#seminario-finalizado-mensaje")
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text("No se pudieron cargar los seminarios finalizados.");
+    });
+
     obtenerDatoPreregistro();
     obtenerDatosGuia();
     obtener_datos_evento_entre_nosotras(ID_formulario_entrenosotras);
@@ -84,48 +112,22 @@ $(document).ready(function () {
     $("#seletc_estados_eliminados").html("");
     $("#seletc_estados_eliminados").append("<option selected readonly value=''>Seleciona estado</option>");
 
-    let selectEstadosFinalizado = $("#seletc_estados_finalizado");
-    selectEstadosFinalizado.html("<option selected readonly value=''>Seleciona estado</option>");
-
-    var fechaactual = moment().format("YYYY-MM-DD");
-
-    console.log(estadosselect);
-
     estadosselect.forEach(function (element) {
+        let displayText;
+        if (element.includes('*')) {
+            let parts = element.split('*');
+            let formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
+            let stateParts = parts[0].split('_');
+            let state = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+            displayText = state + ` - ${formatfecha}`;
+        } else {
+            let stateParts = element.split('_');
+            displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
+        }
 
-            let displayText = '';
-            if (element.includes('*')) {
-                let parts = element.split('*');
-                var formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
-
-                if (fechaactual > parts[1]) {
-
-                    let stateParts = parts[0].split('_');
-                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`; 
-
-                    if (parts.length == 3) {
-                        selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText} (${parts[2]})</option>`);
-                    }else{
-                        selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
-                    }
-  
-                }else{
-
-                    let stateParts = parts[0].split('_');
-                    displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
-                }
-
-                let stateParts = parts[0].split('_');
-                displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
-                $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
-
-            } else {
-                let stateParts = element.split('_');
-                displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
-                selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
-
-                $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
-            }
+        $("#seletc_estados_eliminados").append(
+            $("<option>", { value: element, text: displayText })
+        );
     });
 
     })
@@ -1752,7 +1754,7 @@ $('#seminario_disponible').on('change', function() {
 
         registrosSeminarioSeleccionado = respuesta.data;
         mensaje.addClass("d-none").text("");
-        mostrarRegistrosSeminario(registrosSeminarioSeleccionado);
+        mostrarRegistrosSeminario(registrosSeminarioSeleccionado, false);
     })
     .catch((error) => {
         if ($("#seminario_disponible").val() !== String(seminarioId)) {
@@ -1770,7 +1772,46 @@ $('#seminario_disponible').on('change', function() {
     });
 });
 
-function mostrarRegistrosSeminario(datosformulario) {
+$('#seminario_finalizado').on('change', function() {
+    let seminarioId = $(this).val();
+    let mensaje = $("#seminario-finalizado-mensaje");
+
+    $("#conteo_seminario_finalizado td").text("");
+    tblformulario_seminarios_fin([]);
+    mensaje.addClass("d-none").removeClass("alert-danger").addClass("alert-info").text("");
+
+    if (!seminarioId) {
+        return;
+    }
+
+    mensaje.removeClass("d-none").text("Cargando registros del seminario...");
+
+    axios.post(principalUrl + "seminarios/" + seminarioId + "/registros")
+    .then((respuesta) => {
+        if ($("#seminario_finalizado").val() !== String(seminarioId)) {
+            return;
+        }
+
+        mensaje.addClass("d-none").text("");
+        mostrarRegistrosSeminario(respuesta.data, true);
+    })
+    .catch((error) => {
+        if ($("#seminario_finalizado").val() !== String(seminarioId)) {
+            return;
+        }
+
+        console.error("No se pudieron cargar los registros del seminario finalizado.", error);
+        let errorMessage = error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "No se pudieron cargar los registros del seminario finalizado.";
+        mensaje
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text(errorMessage);
+    });
+});
+
+function mostrarRegistrosSeminario(datosformulario, finalizado) {
     let frmnuevos = [];
     let sin_estado=0;
     let confirmado=0;
@@ -1808,7 +1849,8 @@ function mostrarRegistrosSeminario(datosformulario) {
                 var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
                 cleanData[key] = valor;
             }else if(key == "estado" ){
-                cleanData[key] = $("#seminario_disponible option:selected").text();
+                let selector = finalizado ? "#seminario_finalizado" : "#seminario_disponible";
+                cleanData[key] = $(selector + " option:selected").text();
             }else if(key == "Comentario" ){
                 var formsiguiente = elements[i+1].split(":");
                 var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
@@ -1860,138 +1902,21 @@ function mostrarRegistrosSeminario(datosformulario) {
     });
 
 
-    $("#conteo_seminario").find('td:eq(0)').text(sin_estado);
-    $("#conteo_seminario").find('td:eq(1)').text(confirmado);
-    $("#conteo_seminario").find('td:eq(2)').text(no_answer);
-    $("#conteo_seminario").find('td:eq(3)').text(cancelado);
+    let conteo = finalizado ? $("#conteo_seminario_finalizado") : $("#conteo_seminario");
+    conteo.find('td:eq(0)').text(sin_estado);
+    conteo.find('td:eq(1)').text(confirmado);
+    conteo.find('td:eq(2)').text(no_answer);
+    conteo.find('td:eq(3)').text(cancelado);
     var total = sin_estado+confirmado+cancelado+no_answer;
 
-    $("#conteo_seminario").find('td:eq(4)').text(total);
+    conteo.find('td:eq(4)').text(total);
 
-    tblformulario_seminarios(datos_limpios);
+    if (finalizado) {
+        tblformulario_seminarios_fin(datos_limpios);
+    } else {
+        tblformulario_seminarios(datos_limpios);
+    }
 }
-
-$('#seletc_estados_finalizado').on('change', function() {
-
-    let selectval = $('#seletc_estados_finalizado').val(); 
-
-    axios.post(principalUrl + "seminarios")
-    .then((respuesta) => {
-
-        let datosformulario = respuesta.data;
-        let frmnuevos = [];
-        let sin_estado=0;
-        let confirmado=0;
-        let no_answer=0;
-        let cancelado=0;
-
-    datosformulario.map(item => {
-
-        if(item.estado != 0){
-
-            var total_seguimientoform =item.total_seguimiento;
-            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
-        }
-        return;
-    });
-
-    var datos_limpios = frmnuevos.map(function(form) {
-        form = form.slice(6, -1);
-    
-        var elements = form.split(";");
-    
-        let cleanData = {};
-
-        var keyestado = elements[7].split(":");
-        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
-
-        if (estadofiltro == selectval) {
-        
-        elements.forEach(function(element,i) {  
-            var keyValue = element.split(":");
-            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
-
-            if(key == "Nombre"  ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Teléfono" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "estado" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Comentario" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(keyValue[0] == "fecha" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1].split(" ");
-                    valor.pop();
-                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
-                cleanData[dato] = ordenado;
-            }else if(keyValue[0] == "total" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                if(keyValue[1] == ''){
-                    valor = 0;
-                }
-                cleanData[dato] = valor;
-            }else if(keyValue[0] == "id_forms" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
-            }
-            else if(keyValue[0] == "estado_reg" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                let valorformat;
-                
-                if (valor == "null") {
-                    valorformat = "";
-                    sin_estado=sin_estado+1;
-                } else if(valor == "4") {
-                    valorformat = "Confirmado";
-                    confirmado=confirmado+1;
-                }else if (valor == "5") {
-                    valorformat = "No answer";
-                    no_answer=no_answer+1;
-                }else if (valor == "6") {
-                    valorformat = "Cancelado";
-                    cancelado=cancelado+1;
-                }
-                cleanData[dato] = valorformat;
-            }
-        });
-        return cleanData;
-
-     }else {
-        return null; 
-     }
-    }).filter(item => item !== null); 
-
-
-    $("#conteo_seminario_finalizado").find('td:eq(0)').text(sin_estado);
-    $("#conteo_seminario_finalizado").find('td:eq(1)').text(confirmado);
-    $("#conteo_seminario_finalizado").find('td:eq(2)').text(no_answer);
-    $("#conteo_seminario_finalizado").find('td:eq(3)').text(cancelado);
-    var total = sin_estado+confirmado+cancelado+no_answer;
-
-    $("#conteo_seminario_finalizado").find('td:eq(4)').text(total);
-
-    tblformulario_seminarios_fin(datos_limpios);
-
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-});
 
 $('#seletc_estados_eliminados').on('change', function() {
 
@@ -2099,33 +2024,20 @@ $('#seletc_estados_eliminados').on('change', function() {
 
 function exportseminarioexcel(seminario_estado) {
     
-    if (seminario_estado == 'finalizados') {
-        var estado = $("#seletc_estados_finalizado").val();
-    } else if (seminario_estado == 'vigentes') {
-        var seminarioId = $("#seminario_disponible").val();
-        if (!seminarioId) {
-            Swal.fire({
-                text: "Selecciona un seminario para exportar sus registros.",
-                showCancelButton: false,
-                confirmButtonText: "Entiendo",
-            });
-            return;
-        }
-
-        location.href = principalUrl + "seminarios/" + seminarioId + "/exportar-registros";
+    var selector = seminario_estado == 'finalizados'
+        ? "#seminario_finalizado"
+        : "#seminario_disponible";
+    var seminarioId = $(selector).val();
+    if (!seminarioId) {
+        Swal.fire({
+            text: "Selecciona un seminario para exportar sus registros.",
+            showCancelButton: false,
+            confirmButtonText: "Entiendo",
+        });
         return;
     }
 
-    if (estado == "") {
-        Swal.fire({
-            text: "¡Para exportar la informacion de seminarios, debes seleccionar un estado!",
-            showCancelButton: false,
-            confirmButtonText: "Entiendo",
-            cancelButtonText: "Cancelar",
-        });
-    }else{
-        location.href = principalUrl + "seminario/exportar/"+estado;
-    }
+    location.href = principalUrl + "seminarios/" + seminarioId + "/exportar-registros";
 }
 
 

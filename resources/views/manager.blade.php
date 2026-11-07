@@ -340,9 +340,9 @@
                     <div class="col-md-12">
                         <div class="row pt-2 pb-2 pl-2 mt-2 border rounded color-controles">
 
-                            <div class="form-group col-md-2 mb-1 ml-3">
-                                <select class="form-control" id="seletc_estados_finalizado">
-                                    
+                            <div class="form-group col-md-4 mb-1 ml-3">
+                                <select class="form-control" id="seminario_finalizado">
+                                    <option value="">Selecciona un seminario finalizado</option>
                                 </select>
                             </div>
                             <div class="form-group mb-1 ml-auto mr-3">
@@ -350,6 +350,7 @@
                                     id="btnexcel" type="button" value="Reporte seminarios finalizados">
                             </div>
                         </div>
+                        <div id="seminario-finalizado-mensaje" class="alert alert-info d-none" role="status"></div>
                     </div>
                 </div>
             </div>

@@ -52,6 +52,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seminarios/disponibles', [App\Http\Controllers\SeminarioController::class, 'disponibles'])
         ->name('seminarios.disponibles');
 
+    Route::get('/seminarios/finalizados', [App\Http\Controllers\SeminarioController::class, 'finalizados'])
+        ->name('seminarios.finalizados');
+
     Route::post('/seminarios/{seminarioId}/registros', [App\Http\Controllers\SeminarioController::class, 'registros'])
         ->name('seminarios.registros');
 
