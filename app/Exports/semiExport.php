@@ -16,17 +16,46 @@ use Illuminate\Support\Facades\Log;
 class semiExport implements FromView
 {
     protected $estado;
+    protected $formularioId;
+    protected $seminarioSlug;
+    protected $seminarioFecha;
 
-    function __construct($estado) {
-
-       $this->estado = $estado;
+    function __construct($estado, $formularioId = null, $seminarioSlug = null, $seminarioFecha = null)
+    {
+        $this->estado = $estado;
+        $this->formularioId = $formularioId;
+        $this->seminarioSlug = $seminarioSlug;
+        $this->seminarioFecha = $seminarioFecha;
     }
 
     public function view(): View
     {
         $selectval= $this->estado;
 
-        $sql = "SELECT 
+        $condicion = "wp_wpforms_db.form_post_id IN(1772,1873,1870,2851,3561,3565)";
+        $bindings = [];
+
+        if ($this->seminarioSlug !== null && $this->seminarioFecha !== null) {
+            $slugSerializado = sprintf(
+                '%%s:6:"estado";s:%d:"%s";%%',
+                strlen($this->seminarioSlug),
+                $this->seminarioSlug
+            );
+            $fechaSerializada = sprintf(
+                '%%s:6:"estado";s:%%:"%%%s%%";%%',
+                $this->seminarioFecha
+            );
+            $condicion = "wp_wpforms_db.form_value LIKE ?";
+            $bindings = [$fechaSerializada];
+            if ($this->formularioId !== null) {
+                $condicion = "(wp_wpforms_db.form_value LIKE ?
+                    OR (wp_wpforms_db.form_post_id = ?
+                        AND wp_wpforms_db.form_value LIKE ?))";
+                $bindings = [$fechaSerializada, $this->formularioId, $slugSerializado];
+            }
+        }
+
+        $sql = "SELECT
         wp_wpforms_db.form_id, 
         wp_wpforms_db.form_value, 
         wp_wpforms_db.form_date, 
@@ -36,11 +65,11 @@ class semiExport implements FromView
         FROM wp_wpforms_db
         LEFT JOIN seguimientos ON seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
         LEFT JOIN estadoregistros ON estadoregistros.id_form = wp_wpforms_db.form_id
-        WHERE wp_wpforms_db.form_post_id IN(1772,1873,1870,2851,3561,3565)
+        WHERE {$condicion}
         GROUP BY wp_wpforms_db.form_id
         ";
 
-        $seminario = DB::select($sql);
+        $seminario = DB::select($sql, $bindings);
 
         $frmnuevos = [];
             
@@ -54,7 +83,8 @@ class semiExport implements FromView
             }
         }
 
-        $datos_limpios = array_filter(array_map(function ($form) use ($selectval) {
+        $seminarioSlug = $this->seminarioSlug;
+        $datos_limpios = array_filter(array_map(function ($form) use ($selectval, $seminarioSlug) {
 
             $form = substr($form, 6, -1);
             $elements = explode(';', $form);
@@ -62,7 +92,7 @@ class semiExport implements FromView
 
             $estadofiltro = trim(str_replace('"', '', explode(':', $elements[7])[2]));
 
-            if ($estadofiltro == $selectval) {
+            if ($seminarioSlug !== null || $estadofiltro == $selectval) {
                 foreach ($elements as $element) {
                     $keyValue = explode(':', $element);
                     $key = trim(str_replace('"', '', end($keyValue)));

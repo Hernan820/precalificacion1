@@ -7,9 +7,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\semiExport;
 
 class SeminarioController extends Controller
 {
+    private const TIMEZONE_SEMINARIOS = 'America/New_York';
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,105 @@ class SeminarioController extends Controller
     public function index()
     {
         //
+    }
+
+    public function disponibles()
+    {
+        return Seminario::query()
+            ->withTrashed()
+            ->where('activo', true)
+            ->where('estatus', 'publicado')
+            ->whereDate('fecha', '>=', Carbon::today(self::TIMEZONE_SEMINARIOS))
+            ->where(function ($query) {
+                $query->whereNull('seminarios.deleted_at')
+                    ->orWhereExists(function ($registros) {
+                        $registros->selectRaw('1')
+                            ->from('wp_wpforms_db as wpforms')
+                            ->where(function ($coincidencias) {
+                                $coincidencias
+                                    ->where(function ($slug) {
+                                        $slug->whereColumn(
+                                            'wpforms.form_post_id',
+                                            'seminarios.formulario_id'
+                                        )->whereRaw(
+                                                "wpforms.form_value LIKE (CONCAT('%s:6:\"estado\";s:%:\"', seminarios.slug COLLATE utf8mb4_unicode_520_ci, '\";%') COLLATE utf8mb4_unicode_520_ci)"
+                                        );
+                                    })
+                                    ->orWhereRaw(
+                                            "wpforms.form_value LIKE (CONCAT('%s:6:\"estado\";s:%:\"%', DATE_FORMAT(seminarios.fecha, '%Y-%m-%d') COLLATE utf8mb4_unicode_520_ci, '%\";%') COLLATE utf8mb4_unicode_520_ci)"
+                                    );
+                            });
+                    });
+            })
+            ->orderBy('fecha')
+            ->get(['id', 'titulo', 'fecha', 'formulario_id', 'deleted_at']);
+    }
+
+    public function registros($seminarioId)
+    {
+        $seminario = Seminario::withTrashed()->findOrFail($seminarioId);
+        $this->asegurarSeminarioDisponible($seminario);
+
+        $slugSerializado = sprintf(
+            '%%s:6:"estado";s:%d:"%s";%%',
+            strlen($seminario->slug),
+            $seminario->slug
+        );
+        $fechaSerializada = sprintf(
+            '%%s:6:"estado";s:%%:"%%%s%%";%%',
+            $seminario->fecha->format('Y-m-d')
+        );
+
+        $sql = "SELECT wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,
+            wp_wpforms_db.form_post_id,
+            (SELECT COUNT(*) FROM seguimientos
+                WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id) as total_seguimiento,
+            estadoregistros.estado
+            FROM wp_wpforms_db
+            LEFT JOIN seguimientos
+                ON seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
+            LEFT JOIN estadoregistros
+                ON estadoregistros.id_form = wp_wpforms_db.form_id
+            WHERE wp_wpforms_db.form_value LIKE ?";
+
+        $bindings = [$fechaSerializada];
+        if ($seminario->formulario_id) {
+            $sql .= " OR (wp_wpforms_db.form_post_id = ?
+                AND wp_wpforms_db.form_value LIKE ?)";
+            $bindings[] = $seminario->formulario_id;
+            $bindings[] = $slugSerializado;
+        }
+
+        $sql .= "
+            GROUP BY wp_wpforms_db.form_id";
+
+        return response()->json(DB::select($sql, $bindings));
+    }
+
+    public function exportarRegistros($seminarioId)
+    {
+        $seminario = Seminario::withTrashed()->findOrFail($seminarioId);
+        $this->asegurarSeminarioDisponible($seminario);
+
+        return Excel::download(
+            new semiExport(
+                null,
+                $seminario->formulario_id,
+                $seminario->slug,
+                $seminario->fecha->format('Y-m-d')
+            ),
+            'registros-' . $seminario->slug . '.xlsx'
+        );
+    }
+
+    private function asegurarSeminarioDisponible(Seminario $seminario)
+    {
+        abort_unless(
+            $seminario->activo
+                && $seminario->estatus === 'publicado'
+                && $seminario->fecha->toDateString() >= Carbon::today(self::TIMEZONE_SEMINARIOS)->toDateString(),
+            404
+        );
     }
 
     /**

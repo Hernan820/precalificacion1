@@ -1,9 +1,39 @@
 let ID_formularios_contigo_mortgage = '7,3750,2893,3830';
+let registrosSeminarioSeleccionado = null;
 
 $(document).ready(function () {
 
     var ID_formulario_entrenosotras = 18;
     var ID_formulario_taxdeeds      = 323;
+
+    axios.get(principalUrl + "seminarios/disponibles")
+    .then((respuesta) => {
+        let selectorSeminarios = $("#seminario_disponible");
+
+        respuesta.data.forEach(function (seminario) {
+            let fecha = moment.utc(seminario.fecha).format("DD/MM/YYYY");
+            let eliminado = seminario.deleted_at ? " (Eliminado)" : "";
+            selectorSeminarios.append(
+                $("<option>", {
+                    value: seminario.id,
+                    text: seminario.titulo + " - " + fecha + eliminado
+                })
+            );
+        });
+
+        if (respuesta.data.length === 0) {
+            $("#seminario-registros-mensaje")
+                .removeClass("d-none")
+                .text("No hay seminarios disponibles con fecha de hoy o posterior.");
+        }
+    })
+    .catch((error) => {
+        console.error("No se pudieron cargar los seminarios disponibles.", error);
+        $("#seminario-registros-mensaje")
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text("No se pudieron cargar los seminarios disponibles.");
+    });
 
     obtenerDatoPreregistro();
     obtenerDatosGuia();
@@ -52,8 +82,8 @@ $(document).ready(function () {
         return ;
     }); 
 
-    $("#seletc_estados,#seletc_estados_eliminados").html("");
-    $("#seletc_estados,#seletc_estados_eliminados").append("<option selected readonly value=''>Seleciona estado</option>");
+    $("#seletc_estados_eliminados").html("");
+    $("#seletc_estados_eliminados").append("<option selected readonly value=''>Seleciona estado</option>");
 
     let selectEstadosFinalizado = $("#seletc_estados_finalizado");
     selectEstadosFinalizado.html("<option selected readonly value=''>Seleciona estado</option>");
@@ -84,12 +114,6 @@ $(document).ready(function () {
 
                     let stateParts = parts[0].split('_');
                     displayText = (stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0]) + ` - ${formatfecha}`;
-
-                    if (parts.length == 3) {
-                        $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText} (${parts[2]})</option>`);
-                    } else {
-                        $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
-                    }
                 }
 
                 let stateParts = parts[0].split('_');
@@ -97,17 +121,9 @@ $(document).ready(function () {
                 $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
 
             } else {
-
-                if (fechaactual <= '2024-06-15' && element == "new_york" ) {
-                    let stateParts = element.split('_');
-                    displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
-                    $("#seletc_estados").append(`<option  readonly value='${element}'>${displayText}</option>`);
-                }else{
-
                 let stateParts = element.split('_');
                 displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
                 selectEstadosFinalizado.append(`<option readonly value='${element}'>${displayText}</option>`);
-                }
 
                 $("#seletc_estados_eliminados").append(`<option  readonly value='${element}'>${displayText}</option>`);
             }
@@ -1714,19 +1730,53 @@ function lista_seguimientos(id){
     });
 }
 
-$('#seletc_estados').on('change', function() {
+$('#seminario_disponible').on('change', function() {
+    let seminarioId = $(this).val();
+    let mensaje = $("#seminario-registros-mensaje");
 
-    let selectval = $('#seletc_estados').val(); 
+    registrosSeminarioSeleccionado = null;
+    $("#conteo_seminario td").text("");
+    tblformulario_seminarios([]);
+    mensaje.addClass("d-none").removeClass("alert-danger").addClass("alert-info").text("");
 
-    axios.post(principalUrl + "seminarios")
+    if (!seminarioId) {
+        return;
+    }
+
+    mensaje.removeClass("d-none").text("Cargando registros del seminario...");
+
+    axios.post(principalUrl + "seminarios/" + seminarioId + "/registros")
     .then((respuesta) => {
+        if ($("#seminario_disponible").val() !== String(seminarioId)) {
+            return;
+        }
 
-        let datosformulario = respuesta.data;
-        let frmnuevos = [];
-        let sin_estado=0;
-        let confirmado=0;
-        let no_answer=0;
-        let cancelado=0;
+        registrosSeminarioSeleccionado = respuesta.data;
+        mensaje.addClass("d-none").text("");
+        mostrarRegistrosSeminario(registrosSeminarioSeleccionado);
+    })
+    .catch((error) => {
+        if ($("#seminario_disponible").val() !== String(seminarioId)) {
+            return;
+        }
+
+        console.error("No se pudieron cargar los registros del seminario.", error);
+        let errorMessage = error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "No se pudieron cargar los registros del seminario.";
+        mensaje
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text(errorMessage);
+    });
+});
+
+function mostrarRegistrosSeminario(datosformulario) {
+    let frmnuevos = [];
+    let sin_estado=0;
+    let confirmado=0;
+    let no_answer=0;
+    let cancelado=0;
 
     datosformulario.map(item => {
 
@@ -1743,14 +1793,9 @@ $('#seletc_estados').on('change', function() {
         form = form.slice(6, -1);
     
         var elements = form.split(";");
-    
+
         let cleanData = {};
 
-        var keyestado = elements[7].split(":");
-        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
-
-        if (estadofiltro == selectval) {
-        
         elements.forEach(function(element,i) {  
             var keyValue = element.split(":");
             var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
@@ -1764,9 +1809,7 @@ $('#seletc_estados').on('change', function() {
                 var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
                 cleanData[key] = valor;
             }else if(key == "estado" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
+                cleanData[key] = $("#seminario_disponible option:selected").text();
             }else if(key == "Comentario" ){
                 var formsiguiente = elements[i+1].split(":");
                 var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
@@ -1815,11 +1858,7 @@ $('#seletc_estados').on('change', function() {
             }
         });
         return cleanData;
-
-     }else {
-        return null; 
-     }
-    }).filter(item => item !== null); 
+    });
 
 
     $("#conteo_seminario").find('td:eq(0)').text(sin_estado);
@@ -1831,14 +1870,7 @@ $('#seletc_estados').on('change', function() {
     $("#conteo_seminario").find('td:eq(4)').text(total);
 
     tblformulario_seminarios(datos_limpios);
-
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-});
+}
 
 $('#seletc_estados_finalizado').on('change', function() {
 
@@ -2071,7 +2103,18 @@ function exportseminarioexcel(seminario_estado) {
     if (seminario_estado == 'finalizados') {
         var estado = $("#seletc_estados_finalizado").val();
     } else if (seminario_estado == 'vigentes') {
-        var estado = $("#seletc_estados").val();
+        var seminarioId = $("#seminario_disponible").val();
+        if (!seminarioId) {
+            Swal.fire({
+                text: "Selecciona un seminario para exportar sus registros.",
+                showCancelButton: false,
+                confirmButtonText: "Entiendo",
+            });
+            return;
+        }
+
+        location.href = principalUrl + "seminarios/" + seminarioId + "/exportar-registros";
+        return;
     }
 
     if (estado == "") {
@@ -2255,4 +2298,3 @@ function tbl_guiapdf(datosSemiPre) {
         ],
     });
 }
-

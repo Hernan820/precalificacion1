@@ -266,9 +266,9 @@
                                 <input class="btn btn-primary text-center" id="modalcampanapersonalizada" type="button"
                                     value="Campaña Personalizada">
                             </div>
-                            <div class="form-group col-md-2 mb-1 ml-3">
-                                <select class="form-control" id="seletc_estados">
-                                    <option readonly value="">Seleciona estado</option>
+                            <div class="form-group col-md-4 mb-1 ml-3">
+                                <select class="form-control" id="seminario_disponible">
+                                    <option value="">Selecciona un seminario disponible</option>
                                 </select>
                             </div>
                             <div class="form-group mb-1 ml-auto mr-3">
@@ -277,6 +277,7 @@
                             </div>
                         </div>
                     </div>
+                    <div id="seminario-registros-mensaje" class="alert alert-info d-none" role="status"></div>
                 </div>
             </div>
 
@@ -318,7 +319,7 @@
                             <th class="col-md-">Fechas</th>
                             <th class="col-md-">Nombre Cliente</th>
                             <th class="col-md-">Numero Telefono</th>
-                            <th class="col-md-">Ubicación</th>
+                            <th class="col-md-">Seminario</th>
                             <th class="col-md-">Comentario</th>
                             <th class="col-md-">Resultado</th>
                             <th class="col-md-"></th>
