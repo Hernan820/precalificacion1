@@ -209,6 +209,7 @@ class SeminarioController extends Controller
 
         $request->merge([
             'slug' => $slug,
+            'formulario_id' => $request->input('formulario_id', 4871) ?: 4871,
         ]);
 
         $datos = $request->validate([

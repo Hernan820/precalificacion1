@@ -221,10 +221,11 @@
                                 @enderror
                         </div>
                         <div class="form-group col-md-4 mb-2">
-                            <label for="seminario-formulario-id">ID de WPForms <span class="text-muted">(opcional)</span></label>
-                            <input type="number" class="form-control form-control-sm @error('formulario_id') is-invalid @enderror"
-                                id="seminario-formulario-id" name="formulario_id" min="1" step="1"
-                                value="{{ old('formulario_id') }}">
+                            <label for="seminario-formulario-id">ID de WPForms</label>
+                            <select class="form-control form-control-sm @error('formulario_id') is-invalid @enderror"
+                                id="seminario-formulario-id" name="formulario_id">
+                                <option value="4871" {{ old('formulario_id', 4871) == 4871 ? 'selected' : '' }}>4871</option>
+                            </select>
                             @error('formulario_id')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
