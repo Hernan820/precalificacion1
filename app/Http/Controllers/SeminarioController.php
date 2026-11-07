@@ -27,38 +27,16 @@ class SeminarioController extends Controller
     public function disponibles()
     {
         return Seminario::query()
-            ->withTrashed()
             ->where('activo', true)
             ->where('estatus', 'publicado')
             ->whereDate('fecha', '>=', Carbon::today(self::TIMEZONE_SEMINARIOS))
-            ->where(function ($query) {
-                $query->whereNull('seminarios.deleted_at')
-                    ->orWhereExists(function ($registros) {
-                        $registros->selectRaw('1')
-                            ->from('wp_wpforms_db as wpforms')
-                            ->where(function ($coincidencias) {
-                                $coincidencias
-                                    ->where(function ($slug) {
-                                        $slug->whereColumn(
-                                            'wpforms.form_post_id',
-                                            'seminarios.formulario_id'
-                                        )->whereRaw(
-                                                "wpforms.form_value LIKE (CONCAT('%s:6:\"estado\";s:%:\"', seminarios.slug COLLATE utf8mb4_unicode_520_ci, '\";%') COLLATE utf8mb4_unicode_520_ci)"
-                                        );
-                                    })
-                                    ->orWhereRaw(
-                                            "wpforms.form_value LIKE (CONCAT('%s:6:\"estado\";s:%:\"%', DATE_FORMAT(seminarios.fecha, '%Y-%m-%d') COLLATE utf8mb4_unicode_520_ci, '%\";%') COLLATE utf8mb4_unicode_520_ci)"
-                                    );
-                            });
-                    });
-            })
             ->orderBy('fecha')
-            ->get(['id', 'titulo', 'fecha', 'formulario_id', 'deleted_at']);
+            ->get(['id', 'titulo', 'fecha', 'formulario_id']);
     }
 
     public function registros($seminarioId)
     {
-        $seminario = Seminario::withTrashed()->findOrFail($seminarioId);
+        $seminario = Seminario::findOrFail($seminarioId);
         $this->asegurarSeminarioDisponible($seminario);
 
         $slugSerializado = sprintf(
@@ -99,7 +77,7 @@ class SeminarioController extends Controller
 
     public function exportarRegistros($seminarioId)
     {
-        $seminario = Seminario::withTrashed()->findOrFail($seminarioId);
+        $seminario = Seminario::findOrFail($seminarioId);
         $this->asegurarSeminarioDisponible($seminario);
 
         return Excel::download(

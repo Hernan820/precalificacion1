@@ -12,11 +12,10 @@ $(document).ready(function () {
 
         respuesta.data.forEach(function (seminario) {
             let fecha = moment.utc(seminario.fecha).format("DD/MM/YYYY");
-            let eliminado = seminario.deleted_at ? " (Eliminado)" : "";
             selectorSeminarios.append(
                 $("<option>", {
                     value: seminario.id,
-                    text: seminario.titulo + " - " + fecha + eliminado
+                    text: seminario.titulo + " - " + fecha
                 })
             );
         });
