@@ -55,8 +55,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seminarios/finalizados', [App\Http\Controllers\SeminarioController::class, 'finalizados'])
         ->name('seminarios.finalizados');
 
+    Route::get('/seminarios/eliminados', [App\Http\Controllers\SeminarioController::class, 'eliminados'])
+        ->name('seminarios.eliminados');
+
     Route::post('/seminarios/{seminarioId}/registros', [App\Http\Controllers\SeminarioController::class, 'registros'])
         ->name('seminarios.registros');
+
+    Route::post('/seminarios/{seminarioId}/registros-eliminados', [App\Http\Controllers\SeminarioController::class, 'registrosEliminados'])
+        ->name('seminarios.registros-eliminados');
 
     Route::get('/seminarios/{seminarioId}/exportar-registros', [App\Http\Controllers\SeminarioController::class, 'exportarRegistros'])
         ->name('seminarios.exportar-registros');

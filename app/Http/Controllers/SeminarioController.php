@@ -44,6 +44,35 @@ class SeminarioController extends Controller
             ->get(['id', 'titulo', 'fecha', 'formulario_id']);
     }
 
+    public function eliminados()
+    {
+        return Seminario::withTrashed()
+            ->where('activo', true)
+            ->whereIn('estatus', ['publicado', 'finalizado'])
+            ->whereDate('fecha', '>=', Carbon::today(self::TIMEZONE_SEMINARIOS))
+            ->where(function ($query) {
+                $query->whereNotNull('seminarios.deleted_at')
+                    ->orWhereExists(function ($registros) {
+                        $registros->selectRaw('1')
+                            ->from('wp_wpforms_db as wpforms')
+                            ->join('estadoregistros as estados', 'estados.id_form', '=', 'wpforms.form_id')
+                            ->where('estados.estado', 0)
+                            ->where(function ($coincidencias) {
+                                $coincidencias->whereRaw(
+                                    "wpforms.form_value COLLATE utf8mb4_unicode_520_ci LIKE (CONCAT('%s:6:\"estado\";s:%:\"%', DATE_FORMAT(seminarios.fecha, '%Y-%m-%d'), '%\";%') COLLATE utf8mb4_unicode_520_ci)"
+                                )->orWhere(function ($slug) {
+                                    $slug->whereColumn('wpforms.form_post_id', 'seminarios.formulario_id')
+                                        ->whereRaw(
+                                            "wpforms.form_value COLLATE utf8mb4_unicode_520_ci LIKE (CONCAT('%s:6:\"estado\";s:%:\"', seminarios.slug COLLATE utf8mb4_unicode_520_ci, '\";%') COLLATE utf8mb4_unicode_520_ci)"
+                                        );
+                                });
+                            });
+                    });
+            })
+            ->orderBy('fecha')
+            ->get(['id', 'titulo', 'fecha', 'formulario_id', 'deleted_at']);
+    }
+
     public function registros($seminarioId)
     {
         $seminario = Seminario::findOrFail($seminarioId);
@@ -83,6 +112,47 @@ class SeminarioController extends Controller
             GROUP BY wp_wpforms_db.form_id";
 
         return response()->json(DB::select($sql, $bindings));
+    }
+
+    public function registrosEliminados($seminarioId)
+    {
+        $seminario = Seminario::withTrashed()->findOrFail($seminarioId);
+        $this->asegurarSeminarioConsultable($seminario);
+
+        $fechaSerializada = sprintf(
+            '%%s:6:"estado";s:%%:"%%%s%%";%%',
+            $seminario->fecha->format('Y-m-d')
+        );
+        $query = DB::table('wp_wpforms_db')
+            ->leftJoin('seguimientos', 'seguimientos.id_fomrscontigo', '=', 'wp_wpforms_db.form_id')
+            ->leftJoin('estadoregistros', 'estadoregistros.id_form', '=', 'wp_wpforms_db.form_id')
+            ->select(
+                'wp_wpforms_db.form_id',
+                'wp_wpforms_db.form_value',
+                'wp_wpforms_db.form_date',
+                'wp_wpforms_db.form_post_id',
+                'estadoregistros.estado'
+            )
+            ->selectRaw('(SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id) as total_seguimiento')
+            ->where('estadoregistros.estado', 0)
+            ->where(function ($coincidencias) use ($seminario, $fechaSerializada) {
+                $coincidencias->where('wp_wpforms_db.form_value', 'like', $fechaSerializada);
+
+                if ($seminario->formulario_id) {
+                    $slugSerializado = sprintf(
+                        '%%s:6:"estado";s:%d:"%s";%%',
+                        strlen($seminario->slug),
+                        $seminario->slug
+                    );
+                    $coincidencias->orWhere(function ($slug) use ($seminario, $slugSerializado) {
+                        $slug->where('wp_wpforms_db.form_post_id', $seminario->formulario_id)
+                            ->where('wp_wpforms_db.form_value', 'like', $slugSerializado);
+                    });
+                }
+            })
+            ->groupBy('wp_wpforms_db.form_id');
+
+        return response()->json($query->get());
     }
 
     public function exportarRegistros($seminarioId)

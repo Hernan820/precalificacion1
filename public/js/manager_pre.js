@@ -62,6 +62,37 @@ $(document).ready(function () {
             .text("No se pudieron cargar los seminarios finalizados.");
     });
 
+    axios.get(principalUrl + "seminarios/eliminados")
+    .then((respuesta) => {
+        let selectorSeminarios = $("#seletc_estados_eliminados");
+
+        respuesta.data.forEach(function (seminario) {
+            let fecha = moment.utc(seminario.fecha).format("DD/MM/YYYY");
+            let etiqueta = seminario.deleted_at
+                ? " (Seminario eliminado)"
+                : " (Con registros eliminados)";
+            selectorSeminarios.append(
+                $("<option>", {
+                    value: seminario.id,
+                    text: seminario.titulo + " - " + fecha + etiqueta
+                })
+            );
+        });
+
+        if (respuesta.data.length === 0) {
+            $("#seminario-eliminado-mensaje")
+                .removeClass("d-none")
+                .text("No hay seminarios eliminados ni seminarios con registros eliminados.");
+        }
+    })
+    .catch((error) => {
+        console.error("No se pudieron cargar los seminarios con registros eliminados.", error);
+        $("#seminario-eliminado-mensaje")
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text("No se pudieron cargar los seminarios con registros eliminados.");
+    });
+
     obtenerDatoPreregistro();
     obtenerDatosGuia();
     obtener_datos_evento_entre_nosotras(ID_formulario_entrenosotras);
@@ -70,72 +101,6 @@ $(document).ready(function () {
     obtener_datos_form_contigo_mortgage(ID_formularios_contigo_mortgage);
 
 
-
-    axios.post(principalUrl + "seminarios")
-    .then((respuesta) => {
-
-    let datosformulario = respuesta.data;
-    let frmnuevos = [];
-    let frmeliminados = [];
-
-    let estadosselect=[];
-
-    datosformulario.map(item => {
-
-        if(item.estado != 0){
-
-            var total_seguimientoform =item.total_seguimiento;
-            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
-        }else{
-            frmeliminados.push(item.form_value);
-        }
-
-        return;
-    });
-
-    frmnuevos.map(function(form) {
-        form = form.slice(6, -1);
-    
-        var elements = form.split(";");
-
-        var keyestado = elements[7].split(":");
-        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
-
-        if (estadosselect.includes(estadofiltro) == false) {
-            estadosselect.push(estadofiltro);  
-        }
-
-        return ;
-    }); 
-
-    $("#seletc_estados_eliminados").html("");
-    $("#seletc_estados_eliminados").append("<option selected readonly value=''>Seleciona estado</option>");
-
-    estadosselect.forEach(function (element) {
-        let displayText;
-        if (element.includes('*')) {
-            let parts = element.split('*');
-            let formatfecha = moment(parts[1], "YYYY-MM-DD").format("DD MMM");
-            let stateParts = parts[0].split('_');
-            let state = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
-            displayText = state + ` - ${formatfecha}`;
-        } else {
-            let stateParts = element.split('_');
-            displayText = stateParts.length > 1 ? `${stateParts[0]} ${stateParts[1]}` : stateParts[0];
-        }
-
-        $("#seletc_estados_eliminados").append(
-            $("<option>", { value: element, text: displayText })
-        );
-    });
-
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
 
 });
 
@@ -1920,33 +1885,38 @@ function mostrarRegistrosSeminario(datosformulario, finalizado) {
 
 $('#seletc_estados_eliminados').on('change', function() {
 
-    let selectval = $('#seletc_estados_eliminados').val(); 
+    let seminarioId = $('#seletc_estados_eliminados').val();
+    tblformulario_seminarios_eliminado([]);
+    $("#seminario-eliminado-mensaje")
+        .removeClass("alert-danger")
+        .addClass("alert-info d-none")
+        .text("");
+    if (!seminarioId) {
+        return;
+    }
 
-    axios.post(principalUrl + "seminarios")
+    axios.post(principalUrl + "seminarios/" + seminarioId + "/registros-eliminados")
     .then((respuesta) => {
 
     let datosformulario = respuesta.data;
     let frmseminarios_eliminado = [];
 
-    datosformulario.map(item => {
-
-        if(item.estado == 0){
-             var total_seguimientoform =item.total_seguimiento;
-            frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg: eliminado"+";vacio");
-        }
-        return;
+    datosformulario.forEach(item => {
+        var total_seguimientoform = item.total_seguimiento;
+        frmseminarios_eliminado.push(item.form_value+";fecha:"+moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A")+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg: eliminado"+";vacio");
     });
+
+    if (datosformulario.length === 0) {
+        $("#seminario-eliminado-mensaje")
+            .removeClass("d-none")
+            .text("Este seminario no tiene registros eliminados.");
+    }
 
 
     var datos_seminarios_eliminados = frmseminarios_eliminado.map(function(form) {
         form = form.slice(6, -1);
     
         var elements = form.split(";");
-
-        var keyestado = elements[7].split(":");
-        var estadofiltro = keyestado[keyestado.length - 1].trim().replace(/"/g, '');
-
-        if (estadofiltro == selectval) {
     
         var cleanData = {};
         
@@ -1991,34 +1961,22 @@ $('#seletc_estados_eliminados').on('change', function() {
             }else if(keyValue[0] == "estado_reg" ){
                 var dato = keyValue[0];
                 var valor = keyValue[1];
-                let valorformat;
-                
-                if (valor == "null") {
-                    valorformat = "";
-                } else if(valor == "4") {
-                    valorformat = "Confirmado";
-                }else if (valor == "5") {
-                    valorformat = "No answer";
-                }else if (valor == "6") {
-                    valorformat = "Cancelado";
-                }
-                cleanData[dato] = valorformat;
+                cleanData[dato] = valor == "eliminado" ? "Eliminado" : valor;
             }
         });
     
         return cleanData;
-    }else {
-        return null; 
-     }
-    }).filter(item => item !== null);
+    });
 
     tblformulario_seminarios_eliminado(datos_seminarios_eliminados);
 
     })
     .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
+        console.error("No se pudieron cargar los registros eliminados del seminario.", error);
+        $("#seminario-eliminado-mensaje")
+            .removeClass("d-none alert-info")
+            .addClass("alert-danger")
+            .text("No se pudieron cargar los registros eliminados del seminario.");
     });
 });
 
