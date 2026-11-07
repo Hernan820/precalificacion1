@@ -173,18 +173,49 @@ class ClientesPreController extends Controller
      */
     public function form_semi_preregistro(){
         $sql = "SELECT  wp_wpforms_db.form_id, wp_wpforms_db.form_value, wp_wpforms_db.form_date,wp_wpforms_db.form_post_id,
-        (SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id   ) as total_seguimiento , 
-        estadoregistros.estado
+        (SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id) as total_seguimiento,
+        (SELECT estado FROM estadoregistros WHERE estadoregistros.id_form = wp_wpforms_db.form_id LIMIT 1) as estado_registro
         FROM wp_wpforms_db
-        LEFT JOIN seguimientos on seguimientos.id_fomrscontigo = wp_wpforms_db.form_id
-        LEFT JOIN estadoregistros on estadoregistros.id_form = wp_wpforms_db.form_id
-        WHERE wp_wpforms_db.form_post_id IN(2457)
-        GROUP BY wp_wpforms_db.form_id
+        WHERE wp_wpforms_db.form_post_id = ?
+        ORDER BY wp_wpforms_db.form_date DESC
         ";
 
-        $datosfomr = DB::select($sql);
+        $datosform = DB::select($sql, [2457]);
+        $registros = [];
 
-        return response()->json($datosfomr);
+        foreach ($datosform as $item) {
+            $valores = @unserialize(
+                $item->form_value,
+                ['allowed_classes' => false]
+            );
+
+            if (!is_array($valores)) {
+                Log::warning('No se pudo interpretar un registro de preregistro de seminario.', [
+                    'form_id' => $item->form_id,
+                ]);
+                continue;
+            }
+
+            $registros[] = [
+                'form_id' => $item->form_id,
+                'form_date' => $item->form_date,
+                'total_seguimiento' => $item->total_seguimiento,
+                'estado_registro' => $item->estado_registro,
+                'Nombre' => $valores['Nombre'] ?? '',
+                'Teléfono' => $valores['Teléfono']
+                    ?? $valores['Número de teléfono']
+                    ?? $valores['Telefono']
+                    ?? '',
+                'estado' => $valores['estado']
+                    ?? $valores['pre_resgistro']
+                    ?? '',
+                'Comentario' => $valores['Comentario']
+                    ?? $valores['Comentario o mensaje']
+                    ?? '',
+            ];
+        }
+
+        return response()->json($registros);
     }
     /**
      * 

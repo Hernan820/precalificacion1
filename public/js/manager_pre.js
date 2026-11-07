@@ -286,94 +286,47 @@ function obtenerDatoPreregistro() {
     axios.post(principalUrl + "seminarios-preregistro")
     .then((respuesta) => {
 
-        let datosformulario = respuesta.data;
-        let frmnuevos = [];
-        let sin_estado=0;
-        let confirmado=0;
-        let no_answer=0;
-        let cancelado=0;
+        let sin_estado = 0;
+        let confirmado = 0;
+        let no_answer = 0;
+        let cancelado = 0;
+        const datosSemiPre = respuesta.data
+            .filter((item) => item.estado_registro != 0)
+            .map((item) => {
+                const estadoRegistro = item.estado_registro;
+                let estadoRegistroTexto = "";
 
-    datosformulario.map(item => {
-
-        if(item.estado != 0){
-
-            var total_seguimientoform =item.total_seguimiento;
-            var fecha_formateada = moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A");
-            frmnuevos.push(item.form_value+";fecha:"+fecha_formateada+";id_forms:"+item.form_id+";total:"+total_seguimientoform+";estado_reg:"+item.estado+";vacio");
-        }
-        return;
-    });
-
-    var datosSemiPre = frmnuevos.map(function(form) {
-        form = form.slice(6, -1);
-    
-        var elements = form.split(";");
-    
-        let cleanData = {};
-        
-        elements.forEach(function(element,i) {  
-            var keyValue = element.split(":");
-            var key = keyValue[keyValue.length - 1].trim().replace(/"/g, '');
-
-            if(key == "Nombre"  ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Teléfono" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "estado" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(key == "Comentario" ){
-                var formsiguiente = elements[i+1].split(":");
-                var valor = formsiguiente[formsiguiente.length - 1].trim().replace(/"/g, '');
-                cleanData[key] = valor;
-            }else if(keyValue[0] == "fecha" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1].split(" ");
-                    valor.pop();
-                var ordenado = valor[0]+" "+valor[1]+" "+valor[2]+" "+valor[3];   
-                cleanData[dato] = ordenado;
-            }else if(keyValue[0] == "total" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                if(keyValue[1] == ''){
-                    valor = 0;
+                if (estadoRegistro == null || estadoRegistro === "") {
+                    sin_estado++;
+                } else if (estadoRegistro == 4) {
+                    estadoRegistroTexto = "Confirmado";
+                    confirmado++;
+                } else if (estadoRegistro == 5) {
+                    estadoRegistroTexto = "No answer";
+                    no_answer++;
+                } else if (estadoRegistro == 6) {
+                    estadoRegistroTexto = "Cancelado";
+                    cancelado++;
                 }
-                cleanData[dato] = valor;
-            }else if(keyValue[0] == "id_forms" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                cleanData[dato] = valor;
-            }
-            else if(keyValue[0] == "estado_reg" ){
-                var dato = keyValue[0];
-                var valor = keyValue[1];
-                let valorformat;
-                
-                if (valor == "null") {
-                    valorformat = "";
-                    sin_estado=sin_estado+1;
-                } else if(valor == "4") {
-                    valorformat = "Confirmado";
-                    confirmado=confirmado+1;
-                }else if (valor == "5") {
-                    valorformat = "No answer";
-                    no_answer=no_answer+1;
-                }else if (valor == "6") {
-                    valorformat = "Cancelado";
-                    cancelado=cancelado+1;
-                }
-                cleanData[dato] = valorformat;
-            }
-        });
-        return cleanData;
 
-     
-    }).filter(item => item !== null); 
+                let tipoPreregistro = item.estado || "";
+                if (tipoPreregistro === "pre_resgistro") {
+                    tipoPreregistro = "Preregistro (anterior)";
+                } else if (tipoPreregistro === "preregistro-seminario") {
+                    tipoPreregistro = "Preregistro-seminario";
+                }
+
+                return {
+                    id_forms: item.form_id,
+                    fecha: moment(item.form_date, "YYYY-MM-DD HH:mm:ss").format("ddd DD MMM YYYY hh:mm A"),
+                    Nombre: item.Nombre || "",
+                    "Teléfono": item["Teléfono"] || "",
+                    estado: tipoPreregistro,
+                    Comentario: item.Comentario || "",
+                    estado_reg: estadoRegistroTexto,
+                    total: Number(item.total_seguimiento) || 0,
+                };
+            });
 
     $("#contador-semi-pre").find('td:eq(0)').text(sin_estado);
     $("#contador-semi-pre").find('td:eq(1)').text(confirmado);
