@@ -11,7 +11,7 @@
                 <h5 class="modal-title" id="modalCrearSeminarioLabel">
                     <i class="fas fa-calendar-plus mr-2" aria-hidden="true"></i>{{ $editingSeminarioId ? 'Editar seminario' : 'Crear seminario' }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -50,7 +50,6 @@
                             <select class="form-control form-control-sm @error('estatus') is-invalid @enderror" id="seminario-estatus" name="estatus">
                                 <option value="borrador" {{ old('estatus', 'borrador') === 'borrador' ? 'selected' : '' }}>Borrador</option>
                                 <option value="publicado" {{ old('estatus') === 'publicado' ? 'selected' : '' }}>Publicado</option>
-                                <option value="finalizado" {{ old('estatus') === 'finalizado' ? 'selected' : '' }}>Finalizado</option>
                                 <option value="cancelado" {{ old('estatus') === 'cancelado' ? 'selected' : '' }}>Cancelado</option>
                             </select>
                             @error('estatus')
@@ -265,7 +264,7 @@
                 </div>
 
                 <div class="modal-footer py-2">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-sm btn-primary">
                         <i class="fas fa-save mr-1" aria-hidden="true"></i>Guardar seminario
                     </button>

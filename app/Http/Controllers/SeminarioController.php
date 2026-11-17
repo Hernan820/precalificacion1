@@ -134,7 +134,6 @@ class SeminarioController extends Controller
                 'estadoregistros.estado'
             )
             ->selectRaw('(SELECT COUNT(*) FROM seguimientos WHERE seguimientos.id_fomrscontigo = wp_wpforms_db.form_id) as total_seguimiento')
-            ->where('estadoregistros.estado', 0)
             ->where(function ($coincidencias) use ($seminario, $fechaSerializada) {
                 $coincidencias->where('wp_wpforms_db.form_value', 'like', $fechaSerializada);
 
@@ -149,8 +148,13 @@ class SeminarioController extends Controller
                             ->where('wp_wpforms_db.form_value', 'like', $slugSerializado);
                     });
                 }
-            })
-            ->groupBy('wp_wpforms_db.form_id');
+            });
+
+        if (!$seminario->trashed()) {
+            $query->where('estadoregistros.estado', 0);
+        }
+
+        $query->groupBy('wp_wpforms_db.form_id');
 
         return response()->json($query->get());
     }

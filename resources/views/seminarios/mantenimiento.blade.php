@@ -3,7 +3,7 @@
 @section('content')
 
 <link href="{{ asset('css/tabla_seminarios.css') }}" rel="stylesheet" >
-<script src="{{ asset('js/seminarios.js?456455') }}" defer></script>
+<script src="{{ asset('js/seminarios.js?v=123') }}" defer></script>
 
 <div class="container-fluid pt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -11,7 +11,7 @@
             <h1 class="h3 mb-1">Mantenimiento de seminarios</h1>
             <p class="text-muted mb-0">Administra la información base de los seminarios.</p>
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-crear-seminario">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-crear-seminario">
             <i class="fas fa-plus mr-1" aria-hidden="true"></i> Nuevo seminario
         </button>
     </div>
