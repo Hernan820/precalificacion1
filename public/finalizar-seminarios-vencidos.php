@@ -2,7 +2,7 @@
 
 header('Content-Type: text/plain; charset=utf-8');
 
-echo 'Hora del servidor NUEVO: ' . date('Y-m-d H:i:s') . PHP_EOL;
+// echo 'Hora del servidor NUEVO: ' . date('Y-m-d H:i:s') . PHP_EOL;
 
 try {
     define('LARAVEL_START', microtime(true));
@@ -19,7 +19,25 @@ try {
     $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
     $kernel->bootstrap();
 
-    echo 'Laravel iniciado correctamente.' . PHP_EOL;
+    // echo 'Laravel iniciado correctamente.' . PHP_EOL;
+
+    if (PHP_SAPI !== 'cli') {
+        $tokenConfigurado = config('services.seminarios_cron.token');
+
+        if (!is_string($tokenConfigurado) || $tokenConfigurado === '') {
+            http_response_code(503);
+            echo 'Error: configura SEMINARIOS_CRON_TOKEN en el archivo .env.' . PHP_EOL;
+            exit;
+        }
+
+        $tokenRecibido = $_GET['token'] ?? '';
+
+        if (!is_string($tokenRecibido) || !hash_equals($tokenConfigurado, $tokenRecibido)) {
+            http_response_code(403);
+            echo 'Error: token incorrecto.' . PHP_EOL;
+            exit;
+        }
+    }
 
     Illuminate\Support\Facades\DB::connection()->getPdo();
     echo 'Conexión a la base de datos: correcta.' . PHP_EOL;
